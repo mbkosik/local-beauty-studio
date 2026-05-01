@@ -4,7 +4,8 @@ export const siteSettingsQuery = defineQuery(`
   *[_type == "siteSettings"][0] {
     businessName,
     tagline,
-    logo { ..., asset-> },
+    logoLight { alt, asset-> { _id, url, metadata { dimensions } } },
+    logoDark { alt, asset-> { _id, url, metadata { dimensions } } },
     email,
     phone,
     address,

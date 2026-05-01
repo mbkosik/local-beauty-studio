@@ -18,16 +18,34 @@ export const siteSettings = defineType({
       description: 'Krótki slogan wyświetlany pod nazwą firmy',
     }),
     defineField({
-      name: 'logo',
-      title: 'Logo',
+      name: 'logoLight',
+      title: 'Logo — wariant jasny (light mode)',
       type: 'image',
-      options: { hotspot: true },
+      description:
+        'Logo z ciemnymi literami / elementami na przezroczystym tle. Wyświetlane gdy strona działa w jasnym motywie.',
+      options: { hotspot: false },
       fields: [
         defineField({
           name: 'alt',
           title: 'Tekst alternatywny',
           type: 'string',
-          description: 'Opis logo dla czytników ekranu i SEO',
+          description: 'Opis logo dla czytników ekranu i SEO (np. "Logo Beauty Studio")',
+        }),
+      ],
+    }),
+    defineField({
+      name: 'logoDark',
+      title: 'Logo — wariant ciemny (dark mode)',
+      type: 'image',
+      description:
+        'Logo z białymi / jasnymi literami na przezroczystym tle. Wyświetlane gdy strona działa w ciemnym motywie.',
+      options: { hotspot: false },
+      fields: [
+        defineField({
+          name: 'alt',
+          title: 'Tekst alternatywny',
+          type: 'string',
+          description: 'Opis logo dla czytników ekranu i SEO (np. "Logo Beauty Studio")',
         }),
       ],
     }),

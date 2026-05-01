@@ -214,7 +214,15 @@ export type SiteSettings = {
   _rev: string
   businessName?: string
   tagline?: string
-  logo?: {
+  logoLight?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+  logoDark?: {
     asset?: SanityImageAssetReference
     media?: unknown
     hotspot?: SanityImageHotspot
@@ -365,38 +373,29 @@ export type AllSanitySchemaTypes =
 
 // Source: sanity/queries.ts
 // Variable: siteSettingsQuery
-// Query: *[_type == "siteSettings"][0] {    businessName,    tagline,    logo { ..., asset-> },    email,    phone,    address,    googleMapsUrl,    social {      facebook,      instagram,      tiktok    },    seo {      metaTitle,      metaDescription,      ogImage { ..., asset-> }    }  }
+// Query: *[_type == "siteSettings"][0] {    businessName,    tagline,    logoLight { alt, asset-> { _id, url, metadata { dimensions } } },    logoDark { alt, asset-> { _id, url, metadata { dimensions } } },    email,    phone,    address,    googleMapsUrl,    social {      facebook,      instagram,      tiktok    },    seo {      metaTitle,      metaDescription,      ogImage { ..., asset-> }    }  }
 export type SiteSettingsQueryResult = {
   businessName: string | null
   tagline: string | null
-  logo: {
+  logoLight: {
+    alt: string | null
     asset: {
       _id: string
-      _type: 'sanity.imageAsset'
-      _createdAt: string
-      _updatedAt: string
-      _rev: string
-      originalFilename?: string
-      label?: string
-      title?: string
-      description?: string
-      altText?: string
-      sha1hash?: string
-      extension?: string
-      mimeType?: string
-      size?: number
-      assetId?: string
-      uploadId?: string
-      path?: string
-      url?: string
-      metadata?: SanityImageMetadata
-      source?: SanityAssetSourceData
+      url: string | null
+      metadata: {
+        dimensions: SanityImageDimensions | null
+      } | null
     } | null
-    media?: unknown
-    hotspot?: SanityImageHotspot
-    crop?: SanityImageCrop
-    alt?: string
-    _type: 'image'
+  } | null
+  logoDark: {
+    alt: string | null
+    asset: {
+      _id: string
+      url: string | null
+      metadata: {
+        dimensions: SanityImageDimensions | null
+      } | null
+    } | null
   } | null
   email: string | null
   phone: string | null
@@ -962,7 +961,7 @@ export type AllCategoriesQueryResult = Array<{
 import '@sanity/client'
 declare module '@sanity/client' {
   interface SanityQueries {
-    '\n  *[_type == "siteSettings"][0] {\n    businessName,\n    tagline,\n    logo { ..., asset-> },\n    email,\n    phone,\n    address,\n    googleMapsUrl,\n    social {\n      facebook,\n      instagram,\n      tiktok\n    },\n    seo {\n      metaTitle,\n      metaDescription,\n      ogImage { ..., asset-> }\n    }\n  }\n': SiteSettingsQueryResult
+    '\n  *[_type == "siteSettings"][0] {\n    businessName,\n    tagline,\n    logoLight { alt, asset-> { _id, url, metadata { dimensions } } },\n    logoDark { alt, asset-> { _id, url, metadata { dimensions } } },\n    email,\n    phone,\n    address,\n    googleMapsUrl,\n    social {\n      facebook,\n      instagram,\n      tiktok\n    },\n    seo {\n      metaTitle,\n      metaDescription,\n      ogImage { ..., asset-> }\n    }\n  }\n': SiteSettingsQueryResult
     '\n  *[_type == "service" && featured == true] | order(order asc) {\n    _id,\n    title,\n    slug,\n    description,\n    icon,\n    image { ..., asset-> },\n    order,\n    featured\n  }\n': FeaturedServicesQueryResult
     '\n  *[_type == "service"] | order(order asc) {\n    _id,\n    title,\n    slug,\n    description,\n    icon,\n    image { ..., asset-> },\n    order,\n    featured\n  }\n': AllServicesQueryResult
     '\n  *[_type == "testimonial" && featured == true] {\n    _id,\n    authorName,\n    position,\n    company,\n    content,\n    rating,\n    photo { ..., asset-> },\n    publishedAt\n  }\n': FeaturedTestimonialsQueryResult
