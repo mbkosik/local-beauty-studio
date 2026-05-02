@@ -23,6 +23,24 @@ export const siteSettingsQuery = defineQuery(`
   }
 `)
 
+export const footerQuery = defineQuery(`
+  *[_type == "siteSettings"][0] {
+    businessName,
+    tagline,
+    logoLight { alt, asset-> { _id, url, metadata { dimensions } } },
+    logoDark { alt, asset-> { _id, url, metadata { dimensions } } },
+    email,
+    phone,
+    address,
+    googleMapsUrl,
+    social {
+      facebook,
+      instagram,
+      tiktok
+    }
+  }
+`)
+
 export const featuredServicesQuery = defineQuery(`
   *[_type == "service" && featured == true] | order(order asc) {
     _id,
