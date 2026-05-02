@@ -76,6 +76,7 @@
   --accent: #f0ebe8;
   --accent-foreground: #1a1a1a;
   --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: #ffffff;
   --border: #e8e0dc;
   --input: #e8e0dc;
   --ring: #c9a0a0;
@@ -115,6 +116,7 @@
   --accent: #1f1c1b;
   --accent-foreground: #f0ece9;
   --destructive: oklch(0.704 0.191 22.216);
+  --destructive-foreground: #ffffff;
   --border: #2e2926;
   --input: #2e2926;
   --ring: #c9a0a0;
@@ -149,6 +151,14 @@
   /* Utility class for display/editorial headings */
   .font-heading {
     font-family: var(--font-heading);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-heading);
+    @apply leading-tight font-bold tracking-tight;
   }
 
   button:not(:disabled),
