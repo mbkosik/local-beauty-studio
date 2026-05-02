@@ -16,14 +16,30 @@ export const page = defineType({
         source: 'title',
       },
       validation: (Rule) =>
-        Rule.required().custom(async (slug, context) => {
+        Rule.custom(async (slug, context) => {
           if (!slug?.current) return true
-          const client = context.getClient({ apiVersion: '2024-01-01' })
-          const count = await client.fetch<number>(
-            `count(*[_type == "page" && slug.current == $slug && _id != $id])`,
-            { slug: slug.current, id: context.document?._id ?? '' }
-          )
-          return count === 0 || 'Ten slug jest już zajęty'
+
+          const { document, getClient } = context
+          const client = getClient({ apiVersion: '2024-01-01' })
+
+          const id = document?._id ?? ''
+          // Usuń prefix "drafts." żeby dostać base ID
+          const baseId = id.replace(/^drafts\./, '')
+
+          const query = `*[
+      _type == "page" &&
+      slug.current == $slug &&
+      _id != $id &&
+      _id != $draftId
+    ][0]._id`
+
+          const existing = await client.fetch(query, {
+            slug: slug.current,
+            id: baseId,
+            draftId: `drafts.${baseId}`,
+          })
+
+          return existing ? 'Ten slug jest już zajęty.' : true
         }),
     }),
     defineField({
