@@ -1228,6 +1228,60 @@ export type AllCategoriesQueryResult = Array<{
 }>
 
 // Source: sanity/queries.ts
+// Variable: latestPostsQuery
+// Query: *[_type == "post"] | order(publishedAt desc) [0...$limit] {    _id,    title,    slug,    excerpt,    mainImage { ..., asset-> },    publishedAt,    "author": author-> { name },    "categories": categories[]-> { title, slug }  }
+export type LatestPostsQueryResult = Array<{
+  _id: string
+  title: string | null
+  slug: Slug | null
+  excerpt: string | null
+  mainImage: {
+    asset: {
+      _id: string
+      _type: 'sanity.imageAsset'
+      _createdAt: string
+      _updatedAt: string
+      _rev: string
+      originalFilename?: string
+      label?: string
+      title?: string
+      description?: string
+      altText?: string
+      sha1hash?: string
+      extension?: string
+      mimeType?: string
+      size?: number
+      assetId?: string
+      uploadId?: string
+      path?: string
+      url?: string
+      metadata?: SanityImageMetadata
+      source?: SanityAssetSourceData
+    } | null
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  } | null
+  publishedAt: string | null
+  author: {
+    name: string | null
+  } | null
+  categories: Array<{
+    title: string | null
+    slug: Slug | null
+  }> | null
+}>
+
+// Source: sanity/queries.ts
+// Variable: allPagesSlugsQuery
+// Query: *[_type == "page" && defined(slug.current) && slug.current != "home"] {    "slug": slug.current  }
+export type AllPagesSlugsQueryResult = Array<{
+  slug: string | null
+}>
+
+// Source: sanity/queries.ts
 // Variable: pageQuery
 // Query: *[_type == "page" && slug.current == $slug][0] {    _id,    title,    slug,    seo,    pageBuilder[] {      _type,      _key,      _type == "sectionHero" => {        heading,        subheading,        primaryCta,        secondaryCta,        backgroundImage { ..., asset-> }      },      _type == "sectionTextImage" => {        heading,        body,        image { ..., asset-> },        imagePosition      },      _type == "sectionServices" => {        heading,        subheading,        services[]-> {          _id, title, description, icon,          image { ..., asset-> }        }      },      _type == "sectionPricing" => {        heading,        subheading,        items      },      _type == "sectionTestimonials" => {        heading,        testimonials[]-> {          _id, authorName, position, content, rating        }      },      _type == "sectionStats" => {        heading,        items      },      _type == "sectionGallery" => {        heading,        images[] { ..., asset-> }      },      _type == "sectionBlogPreview" => {        heading,        count      },      _type == "sectionCta" => {        heading,        subheading,        primaryCta,        secondaryCta,        variant      },      _type == "sectionContact" => {        heading,        subheading      }    }  }
 export type PageQueryResult = {
@@ -1488,6 +1542,8 @@ declare module '@sanity/client' {
     '\n  *[_type == "post"] { "slug": slug.current }\n': AllPostsSlugsQueryResult
     '\n  *[_type == "post" && $categorySlug in categories[]->slug.current] | order(publishedAt desc) {\n    _id,\n    title,\n    slug,\n    excerpt,\n    mainImage { ..., asset-> },\n    "author": author-> {\n      name,\n      photo { ..., asset-> }\n    },\n    "categories": categories[]-> { title, slug },\n    publishedAt\n  }\n': PostsByCategoryQueryResult
     '\n  *[_type == "category"] | order(title asc) {\n    _id,\n    title,\n    slug,\n    description\n  }\n': AllCategoriesQueryResult
+    '\n  *[_type == "post"] | order(publishedAt desc) [0...$limit] {\n    _id,\n    title,\n    slug,\n    excerpt,\n    mainImage { ..., asset-> },\n    publishedAt,\n    "author": author-> { name },\n    "categories": categories[]-> { title, slug }\n  }\n': LatestPostsQueryResult
+    '\n  *[_type == "page" && defined(slug.current) && slug.current != "home"] {\n    "slug": slug.current\n  }\n': AllPagesSlugsQueryResult
     '\n  *[_type == "page" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    seo,\n    pageBuilder[] {\n      _type,\n      _key,\n      _type == "sectionHero" => {\n        heading,\n        subheading,\n        primaryCta,\n        secondaryCta,\n        backgroundImage { ..., asset-> }\n      },\n      _type == "sectionTextImage" => {\n        heading,\n        body,\n        image { ..., asset-> },\n        imagePosition\n      },\n      _type == "sectionServices" => {\n        heading,\n        subheading,\n        services[]-> {\n          _id, title, description, icon,\n          image { ..., asset-> }\n        }\n      },\n      _type == "sectionPricing" => {\n        heading,\n        subheading,\n        items\n      },\n      _type == "sectionTestimonials" => {\n        heading,\n        testimonials[]-> {\n          _id, authorName, position, content, rating\n        }\n      },\n      _type == "sectionStats" => {\n        heading,\n        items\n      },\n      _type == "sectionGallery" => {\n        heading,\n        images[] { ..., asset-> }\n      },\n      _type == "sectionBlogPreview" => {\n        heading,\n        count\n      },\n      _type == "sectionCta" => {\n        heading,\n        subheading,\n        primaryCta,\n        secondaryCta,\n        variant\n      },\n      _type == "sectionContact" => {\n        heading,\n        subheading\n      }\n    }\n  }\n': PageQueryResult
   }
 }

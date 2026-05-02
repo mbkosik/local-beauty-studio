@@ -167,6 +167,25 @@ export const allCategoriesQuery = defineQuery(`
   }
 `)
 
+export const latestPostsQuery = defineQuery(`
+  *[_type == "post"] | order(publishedAt desc) [0...$limit] {
+    _id,
+    title,
+    slug,
+    excerpt,
+    mainImage { ..., asset-> },
+    publishedAt,
+    "author": author-> { name },
+    "categories": categories[]-> { title, slug }
+  }
+`)
+
+export const allPagesSlugsQuery = defineQuery(`
+  *[_type == "page" && defined(slug.current) && slug.current != "home"] {
+    "slug": slug.current
+  }
+`)
+
 export const pageQuery = defineQuery(`
   *[_type == "page" && slug.current == $slug][0] {
     _id,
