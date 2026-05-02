@@ -15,6 +15,176 @@
 export declare const internalGroqTypeReferenceTo: unique symbol
 
 // Source: schema.json
+export type PrimaryCta = {
+  label?: string
+  href?: string
+}
+
+export type SecondaryCta = {
+  label?: string
+  href?: string
+}
+
+export type SectionCtaPrimaryCta = {
+  label?: string
+  href?: string
+}
+
+export type SectionCtaSecondaryCta = {
+  label?: string
+  href?: string
+}
+
+export type SectionContact = {
+  _type: 'sectionContact'
+  heading?: string
+  subheading?: string
+}
+
+export type SectionCta = {
+  _type: 'sectionCta'
+  heading?: string
+  subheading?: string
+  primaryCta?: SectionCtaPrimaryCta
+  secondaryCta?: SectionCtaSecondaryCta
+  variant?: 'brand' | 'dark' | 'light'
+}
+
+export type SectionBlogPreview = {
+  _type: 'sectionBlogPreview'
+  heading?: string
+  count?: number
+}
+
+export type SanityImageAssetReference = {
+  _ref: string
+  _type: 'reference'
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+}
+
+export type SectionGallery = {
+  _type: 'sectionGallery'
+  heading?: string
+  images?: Array<{
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+    _key: string
+  }>
+}
+
+export type SectionStats = {
+  _type: 'sectionStats'
+  heading?: string
+  items?: Array<{
+    value?: string
+    label?: string
+    _type: 'statItem'
+    _key: string
+  }>
+}
+
+export type TestimonialReference = {
+  _ref: string
+  _type: 'reference'
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: 'testimonial'
+}
+
+export type SectionTestimonials = {
+  _type: 'sectionTestimonials'
+  heading?: string
+  testimonials?: Array<
+    {
+      _key: string
+    } & TestimonialReference
+  >
+}
+
+export type SectionPricing = {
+  _type: 'sectionPricing'
+  heading?: string
+  subheading?: string
+  items?: Array<{
+    name?: string
+    description?: string
+    price?: string
+    duration?: string
+    _type: 'pricingItem'
+    _key: string
+  }>
+}
+
+export type ServiceReference = {
+  _ref: string
+  _type: 'reference'
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: 'service'
+}
+
+export type SectionServices = {
+  _type: 'sectionServices'
+  heading?: string
+  subheading?: string
+  services?: Array<
+    {
+      _key: string
+    } & ServiceReference
+  >
+}
+
+export type SectionTextImage = {
+  _type: 'sectionTextImage'
+  heading?: string
+  body?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  image?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+  imagePosition?: 'left' | 'right'
+}
+
+export type SectionHero = {
+  _type: 'sectionHero'
+  heading?: string
+  subheading?: string
+  primaryCta?: PrimaryCta
+  secondaryCta?: SecondaryCta
+  backgroundImage?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+}
+
 export type Category = {
   _id: string
   _type: 'category'
@@ -30,13 +200,6 @@ export type Slug = {
   _type: 'slug'
   current?: string
   source?: string
-}
-
-export type SanityImageAssetReference = {
-  _ref: string
-  _type: 'reference'
-  _weak?: boolean
-  [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
 }
 
 export type AuthorReference = {
@@ -206,6 +369,59 @@ export type Service = {
   featured?: boolean
 }
 
+export type Page = {
+  _id: string
+  _type: 'page'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  slug?: Slug
+  pageBuilder?: Array<
+    | ({
+        _key: string
+      } & SectionHero)
+    | ({
+        _key: string
+      } & SectionTextImage)
+    | ({
+        _key: string
+      } & SectionServices)
+    | ({
+        _key: string
+      } & SectionPricing)
+    | ({
+        _key: string
+      } & SectionTestimonials)
+    | ({
+        _key: string
+      } & SectionStats)
+    | ({
+        _key: string
+      } & SectionGallery)
+    | ({
+        _key: string
+      } & SectionBlogPreview)
+    | ({
+        _key: string
+      } & SectionCta)
+    | ({
+        _key: string
+      } & SectionContact)
+  >
+  seo?: {
+    metaTitle?: string
+    metaDescription?: string
+    ogImage?: {
+      asset?: SanityImageAssetReference
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      _type: 'image'
+    }
+  }
+}
+
 export type SiteSettings = {
   _id: string
   _type: 'siteSettings'
@@ -350,9 +566,25 @@ export type Geopoint = {
 }
 
 export type AllSanitySchemaTypes =
+  | PrimaryCta
+  | SecondaryCta
+  | SectionCtaPrimaryCta
+  | SectionCtaSecondaryCta
+  | SectionContact
+  | SectionCta
+  | SectionBlogPreview
+  | SanityImageAssetReference
+  | SectionGallery
+  | SectionStats
+  | TestimonialReference
+  | SectionTestimonials
+  | SectionPricing
+  | ServiceReference
+  | SectionServices
+  | SectionTextImage
+  | SectionHero
   | Category
   | Slug
-  | SanityImageAssetReference
   | AuthorReference
   | CategoryReference
   | Post
@@ -361,6 +593,7 @@ export type AllSanitySchemaTypes =
   | Author
   | Testimonial
   | Service
+  | Page
   | SiteSettings
   | SanityImagePaletteSwatch
   | SanityImagePalette
@@ -437,6 +670,43 @@ export type SiteSettingsQueryResult = {
       crop?: SanityImageCrop
       _type: 'image'
     } | null
+  } | null
+} | null
+
+// Source: sanity/queries.ts
+// Variable: footerQuery
+// Query: *[_type == "siteSettings"][0] {    businessName,    tagline,    logoLight { alt, asset-> { _id, url, metadata { dimensions } } },    logoDark { alt, asset-> { _id, url, metadata { dimensions } } },    email,    phone,    address,    googleMapsUrl,    social {      facebook,      instagram,      tiktok    }  }
+export type FooterQueryResult = {
+  businessName: string | null
+  tagline: string | null
+  logoLight: {
+    alt: string | null
+    asset: {
+      _id: string
+      url: string | null
+      metadata: {
+        dimensions: SanityImageDimensions | null
+      } | null
+    } | null
+  } | null
+  logoDark: {
+    alt: string | null
+    asset: {
+      _id: string
+      url: string | null
+      metadata: {
+        dimensions: SanityImageDimensions | null
+      } | null
+    } | null
+  } | null
+  email: string | null
+  phone: string | null
+  address: string | null
+  googleMapsUrl: string | null
+  social: {
+    facebook: string | null
+    instagram: string | null
+    tiktok: string | null
   } | null
 } | null
 
@@ -957,11 +1227,258 @@ export type AllCategoriesQueryResult = Array<{
   description: string | null
 }>
 
+// Source: sanity/queries.ts
+// Variable: pageQuery
+// Query: *[_type == "page" && slug.current == $slug][0] {    _id,    title,    slug,    seo,    pageBuilder[] {      _type,      _key,      _type == "sectionHero" => {        heading,        subheading,        primaryCta,        secondaryCta,        backgroundImage { ..., asset-> }      },      _type == "sectionTextImage" => {        heading,        body,        image { ..., asset-> },        imagePosition      },      _type == "sectionServices" => {        heading,        subheading,        services[]-> {          _id, title, description, icon,          image { ..., asset-> }        }      },      _type == "sectionPricing" => {        heading,        subheading,        items      },      _type == "sectionTestimonials" => {        heading,        testimonials[]-> {          _id, authorName, position, content, rating        }      },      _type == "sectionStats" => {        heading,        items      },      _type == "sectionGallery" => {        heading,        images[] { ..., asset-> }      },      _type == "sectionBlogPreview" => {        heading,        count      },      _type == "sectionCta" => {        heading,        subheading,        primaryCta,        secondaryCta,        variant      },      _type == "sectionContact" => {        heading,        subheading      }    }  }
+export type PageQueryResult = {
+  _id: string
+  title: string | null
+  slug: Slug | null
+  seo: {
+    metaTitle?: string
+    metaDescription?: string
+    ogImage?: {
+      asset?: SanityImageAssetReference
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      _type: 'image'
+    }
+  } | null
+  pageBuilder: Array<
+    | {
+        _type: 'sectionBlogPreview'
+        _key: string
+        heading: string | null
+        count: number | null
+      }
+    | {
+        _type: 'sectionContact'
+        _key: string
+        heading: string | null
+        subheading: string | null
+      }
+    | {
+        _type: 'sectionCta'
+        _key: string
+        heading: string | null
+        subheading: string | null
+        primaryCta: SectionCtaPrimaryCta | null
+        secondaryCta: SectionCtaSecondaryCta | null
+        variant: 'brand' | 'dark' | 'light' | null
+      }
+    | {
+        _type: 'sectionGallery'
+        _key: string
+        heading: string | null
+        images: Array<{
+          asset: {
+            _id: string
+            _type: 'sanity.imageAsset'
+            _createdAt: string
+            _updatedAt: string
+            _rev: string
+            originalFilename?: string
+            label?: string
+            title?: string
+            description?: string
+            altText?: string
+            sha1hash?: string
+            extension?: string
+            mimeType?: string
+            size?: number
+            assetId?: string
+            uploadId?: string
+            path?: string
+            url?: string
+            metadata?: SanityImageMetadata
+            source?: SanityAssetSourceData
+          } | null
+          media?: unknown
+          hotspot?: SanityImageHotspot
+          crop?: SanityImageCrop
+          alt?: string
+          _type: 'image'
+          _key: string
+        }> | null
+      }
+    | {
+        _type: 'sectionHero'
+        _key: string
+        heading: string | null
+        subheading: string | null
+        primaryCta: PrimaryCta | null
+        secondaryCta: SecondaryCta | null
+        backgroundImage: {
+          asset: {
+            _id: string
+            _type: 'sanity.imageAsset'
+            _createdAt: string
+            _updatedAt: string
+            _rev: string
+            originalFilename?: string
+            label?: string
+            title?: string
+            description?: string
+            altText?: string
+            sha1hash?: string
+            extension?: string
+            mimeType?: string
+            size?: number
+            assetId?: string
+            uploadId?: string
+            path?: string
+            url?: string
+            metadata?: SanityImageMetadata
+            source?: SanityAssetSourceData
+          } | null
+          media?: unknown
+          hotspot?: SanityImageHotspot
+          crop?: SanityImageCrop
+          alt?: string
+          _type: 'image'
+        } | null
+      }
+    | {
+        _type: 'sectionPricing'
+        _key: string
+        heading: string | null
+        subheading: string | null
+        items: Array<{
+          name?: string
+          description?: string
+          price?: string
+          duration?: string
+          _type: 'pricingItem'
+          _key: string
+        }> | null
+      }
+    | {
+        _type: 'sectionServices'
+        _key: string
+        heading: string | null
+        subheading: string | null
+        services: Array<{
+          _id: string
+          title: string | null
+          description: string | null
+          icon: string | null
+          image: {
+            asset: {
+              _id: string
+              _type: 'sanity.imageAsset'
+              _createdAt: string
+              _updatedAt: string
+              _rev: string
+              originalFilename?: string
+              label?: string
+              title?: string
+              description?: string
+              altText?: string
+              sha1hash?: string
+              extension?: string
+              mimeType?: string
+              size?: number
+              assetId?: string
+              uploadId?: string
+              path?: string
+              url?: string
+              metadata?: SanityImageMetadata
+              source?: SanityAssetSourceData
+            } | null
+            media?: unknown
+            hotspot?: SanityImageHotspot
+            crop?: SanityImageCrop
+            alt?: string
+            _type: 'image'
+          } | null
+        }> | null
+      }
+    | {
+        _type: 'sectionStats'
+        _key: string
+        heading: string | null
+        items: Array<{
+          value?: string
+          label?: string
+          _type: 'statItem'
+          _key: string
+        }> | null
+      }
+    | {
+        _type: 'sectionTestimonials'
+        _key: string
+        heading: string | null
+        testimonials: Array<{
+          _id: string
+          authorName: string | null
+          position: string | null
+          content: string | null
+          rating: number | null
+        }> | null
+      }
+    | {
+        _type: 'sectionTextImage'
+        _key: string
+        heading: string | null
+        body: Array<{
+          children?: Array<{
+            marks?: Array<string>
+            text?: string
+            _type: 'span'
+            _key: string
+          }>
+          style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+          listItem?: 'bullet' | 'number'
+          markDefs?: Array<{
+            href?: string
+            _type: 'link'
+            _key: string
+          }>
+          level?: number
+          _type: 'block'
+          _key: string
+        }> | null
+        image: {
+          asset: {
+            _id: string
+            _type: 'sanity.imageAsset'
+            _createdAt: string
+            _updatedAt: string
+            _rev: string
+            originalFilename?: string
+            label?: string
+            title?: string
+            description?: string
+            altText?: string
+            sha1hash?: string
+            extension?: string
+            mimeType?: string
+            size?: number
+            assetId?: string
+            uploadId?: string
+            path?: string
+            url?: string
+            metadata?: SanityImageMetadata
+            source?: SanityAssetSourceData
+          } | null
+          media?: unknown
+          hotspot?: SanityImageHotspot
+          crop?: SanityImageCrop
+          alt?: string
+          _type: 'image'
+        } | null
+        imagePosition: 'left' | 'right' | null
+      }
+  > | null
+} | null
+
 // Query TypeMap
 import '@sanity/client'
 declare module '@sanity/client' {
   interface SanityQueries {
     '\n  *[_type == "siteSettings"][0] {\n    businessName,\n    tagline,\n    logoLight { alt, asset-> { _id, url, metadata { dimensions } } },\n    logoDark { alt, asset-> { _id, url, metadata { dimensions } } },\n    email,\n    phone,\n    address,\n    googleMapsUrl,\n    social {\n      facebook,\n      instagram,\n      tiktok\n    },\n    seo {\n      metaTitle,\n      metaDescription,\n      ogImage { ..., asset-> }\n    }\n  }\n': SiteSettingsQueryResult
+    '\n  *[_type == "siteSettings"][0] {\n    businessName,\n    tagline,\n    logoLight { alt, asset-> { _id, url, metadata { dimensions } } },\n    logoDark { alt, asset-> { _id, url, metadata { dimensions } } },\n    email,\n    phone,\n    address,\n    googleMapsUrl,\n    social {\n      facebook,\n      instagram,\n      tiktok\n    }\n  }\n': FooterQueryResult
     '\n  *[_type == "service" && featured == true] | order(order asc) {\n    _id,\n    title,\n    slug,\n    description,\n    icon,\n    image { ..., asset-> },\n    order,\n    featured\n  }\n': FeaturedServicesQueryResult
     '\n  *[_type == "service"] | order(order asc) {\n    _id,\n    title,\n    slug,\n    description,\n    icon,\n    image { ..., asset-> },\n    order,\n    featured\n  }\n': AllServicesQueryResult
     '\n  *[_type == "testimonial" && featured == true] {\n    _id,\n    authorName,\n    position,\n    company,\n    content,\n    rating,\n    photo { ..., asset-> },\n    publishedAt\n  }\n': FeaturedTestimonialsQueryResult
@@ -971,5 +1488,6 @@ declare module '@sanity/client' {
     '\n  *[_type == "post"] { "slug": slug.current }\n': AllPostsSlugsQueryResult
     '\n  *[_type == "post" && $categorySlug in categories[]->slug.current] | order(publishedAt desc) {\n    _id,\n    title,\n    slug,\n    excerpt,\n    mainImage { ..., asset-> },\n    "author": author-> {\n      name,\n      photo { ..., asset-> }\n    },\n    "categories": categories[]-> { title, slug },\n    publishedAt\n  }\n': PostsByCategoryQueryResult
     '\n  *[_type == "category"] | order(title asc) {\n    _id,\n    title,\n    slug,\n    description\n  }\n': AllCategoriesQueryResult
+    '\n  *[_type == "page" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    seo,\n    pageBuilder[] {\n      _type,\n      _key,\n      _type == "sectionHero" => {\n        heading,\n        subheading,\n        primaryCta,\n        secondaryCta,\n        backgroundImage { ..., asset-> }\n      },\n      _type == "sectionTextImage" => {\n        heading,\n        body,\n        image { ..., asset-> },\n        imagePosition\n      },\n      _type == "sectionServices" => {\n        heading,\n        subheading,\n        services[]-> {\n          _id, title, description, icon,\n          image { ..., asset-> }\n        }\n      },\n      _type == "sectionPricing" => {\n        heading,\n        subheading,\n        items\n      },\n      _type == "sectionTestimonials" => {\n        heading,\n        testimonials[]-> {\n          _id, authorName, position, content, rating\n        }\n      },\n      _type == "sectionStats" => {\n        heading,\n        items\n      },\n      _type == "sectionGallery" => {\n        heading,\n        images[] { ..., asset-> }\n      },\n      _type == "sectionBlogPreview" => {\n        heading,\n        count\n      },\n      _type == "sectionCta" => {\n        heading,\n        subheading,\n        primaryCta,\n        secondaryCta,\n        variant\n      },\n      _type == "sectionContact" => {\n        heading,\n        subheading\n      }\n    }\n  }\n': PageQueryResult
   }
 }

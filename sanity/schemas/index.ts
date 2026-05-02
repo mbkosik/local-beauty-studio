@@ -6,11 +6,15 @@ import { testimonial } from './testimonial'
 import { post } from './post'
 import { author } from './author'
 import { category } from './category'
+import { page } from './page'
+import { sectionSchemas } from './sections'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
     // Singletons
     siteSettings,
+    // Pages
+    page,
     // Main content
     service,
     testimonial,
@@ -18,5 +22,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     // Auxiliary
     author,
     category,
+    // Page builder sections
+    ...sectionSchemas,
   ],
 }

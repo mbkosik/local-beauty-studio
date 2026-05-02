@@ -61,8 +61,6 @@ export default function RootLayout({
         >
           {children}
         </ThemeProvider>
-        {/* Logo from siteSettings.logoLight / siteSettings.logoDark */}
-        {/* Integrated in Navbar component — see Phase 2 Navbar task */}
         <SanityLive />
       </body>
     </html>

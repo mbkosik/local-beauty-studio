@@ -166,3 +166,71 @@ export const allCategoriesQuery = defineQuery(`
     description
   }
 `)
+
+export const pageQuery = defineQuery(`
+  *[_type == "page" && slug.current == $slug][0] {
+    _id,
+    title,
+    slug,
+    seo,
+    pageBuilder[] {
+      _type,
+      _key,
+      _type == "sectionHero" => {
+        heading,
+        subheading,
+        primaryCta,
+        secondaryCta,
+        backgroundImage { ..., asset-> }
+      },
+      _type == "sectionTextImage" => {
+        heading,
+        body,
+        image { ..., asset-> },
+        imagePosition
+      },
+      _type == "sectionServices" => {
+        heading,
+        subheading,
+        services[]-> {
+          _id, title, description, icon,
+          image { ..., asset-> }
+        }
+      },
+      _type == "sectionPricing" => {
+        heading,
+        subheading,
+        items
+      },
+      _type == "sectionTestimonials" => {
+        heading,
+        testimonials[]-> {
+          _id, authorName, position, content, rating
+        }
+      },
+      _type == "sectionStats" => {
+        heading,
+        items
+      },
+      _type == "sectionGallery" => {
+        heading,
+        images[] { ..., asset-> }
+      },
+      _type == "sectionBlogPreview" => {
+        heading,
+        count
+      },
+      _type == "sectionCta" => {
+        heading,
+        subheading,
+        primaryCta,
+        secondaryCta,
+        variant
+      },
+      _type == "sectionContact" => {
+        heading,
+        subheading
+      }
+    }
+  }
+`)
