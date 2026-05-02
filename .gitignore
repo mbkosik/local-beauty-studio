@@ -43,3 +43,7 @@ next-env.d.ts
 
 # markdowns
 *.md
+
+# vendor CSS copied by postinstall (generated from node_modules)
+/app/tw-animate.css
+/app/shadcn.css
