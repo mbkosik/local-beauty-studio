@@ -40,6 +40,7 @@ export function SanityImage({ image, alt, width, height, ...props }: SanityImage
   const src = urlFor(image as any)
     .width(width)
     .height(height)
+    .fit('crop')
     .auto('format')
     .url()
 
