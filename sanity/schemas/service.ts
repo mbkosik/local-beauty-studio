@@ -4,13 +4,6 @@ export const service = defineType({
   name: 'service',
   title: 'Usługa',
   type: 'document',
-  orderings: [
-    {
-      title: 'Kolejność wyświetlania',
-      name: 'orderAsc',
-      by: [{ field: 'order', direction: 'asc' }],
-    },
-  ],
   fields: [
     defineField({
       name: 'title',
@@ -49,19 +42,6 @@ export const service = defineType({
           description: 'Opis zdjęcia dla czytników ekranu i SEO',
         }),
       ],
-    }),
-    defineField({
-      name: 'order',
-      title: 'Kolejność',
-      type: 'number',
-      description: 'Kolejność wyświetlania na stronie — mniejsza liczba oznacza wyżej',
-    }),
-    defineField({
-      name: 'featured',
-      title: 'Wyróżniona',
-      type: 'boolean',
-      description: 'Wyróżnione usługi pojawiają się na stronie głównej',
-      initialValue: false,
     }),
   ],
 })

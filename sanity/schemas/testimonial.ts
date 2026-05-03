@@ -50,13 +50,6 @@ export const testimonial = defineType({
       ],
     }),
     defineField({
-      name: 'featured',
-      title: 'Wyróżniona',
-      type: 'boolean',
-      description: 'Wyróżnione opinie pojawiają się w sekcji na stronie głównej',
-      initialValue: false,
-    }),
-    defineField({
       name: 'publishedAt',
       title: 'Data publikacji',
       type: 'date',

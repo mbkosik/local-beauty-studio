@@ -41,34 +41,19 @@ export const footerQuery = defineQuery(`
   }
 `)
 
-export const featuredServicesQuery = defineQuery(`
-  *[_type == "service" && featured == true] | order(order asc) {
-    _id,
-    title,
-    slug,
-    description,
-    icon,
-    image { ..., asset-> },
-    order,
-    featured
-  }
-`)
-
 export const allServicesQuery = defineQuery(`
-  *[_type == "service"] | order(order asc) {
+  *[_type == "service"] | order(_createdAt asc) {
     _id,
     title,
     slug,
     description,
     icon,
-    image { ..., asset-> },
-    order,
-    featured
+    image { ..., asset-> }
   }
 `)
 
-export const featuredTestimonialsQuery = defineQuery(`
-  *[_type == "testimonial" && featured == true] {
+export const allTestimonialsQuery = defineQuery(`
+  *[_type == "testimonial"] | order(_createdAt asc) {
     _id,
     authorName,
     position,

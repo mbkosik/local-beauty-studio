@@ -711,50 +711,8 @@ export type FooterQueryResult = {
 } | null
 
 // Source: sanity/queries.ts
-// Variable: featuredServicesQuery
-// Query: *[_type == "service" && featured == true] | order(order asc) {    _id,    title,    slug,    description,    icon,    image { ..., asset-> },    order,    featured  }
-export type FeaturedServicesQueryResult = Array<{
-  _id: string
-  title: string | null
-  slug: Slug | null
-  description: string | null
-  icon: string | null
-  image: {
-    asset: {
-      _id: string
-      _type: 'sanity.imageAsset'
-      _createdAt: string
-      _updatedAt: string
-      _rev: string
-      originalFilename?: string
-      label?: string
-      title?: string
-      description?: string
-      altText?: string
-      sha1hash?: string
-      extension?: string
-      mimeType?: string
-      size?: number
-      assetId?: string
-      uploadId?: string
-      path?: string
-      url?: string
-      metadata?: SanityImageMetadata
-      source?: SanityAssetSourceData
-    } | null
-    media?: unknown
-    hotspot?: SanityImageHotspot
-    crop?: SanityImageCrop
-    alt?: string
-    _type: 'image'
-  } | null
-  order: number | null
-  featured: true
-}>
-
-// Source: sanity/queries.ts
 // Variable: allServicesQuery
-// Query: *[_type == "service"] | order(order asc) {    _id,    title,    slug,    description,    icon,    image { ..., asset-> },    order,    featured  }
+// Query: *[_type == "service"] | order(_createdAt asc) {    _id,    title,    slug,    description,    icon,    image { ..., asset-> }  }
 export type AllServicesQueryResult = Array<{
   _id: string
   title: string | null
@@ -790,14 +748,12 @@ export type AllServicesQueryResult = Array<{
     alt?: string
     _type: 'image'
   } | null
-  order: number | null
-  featured: boolean | null
 }>
 
 // Source: sanity/queries.ts
-// Variable: featuredTestimonialsQuery
-// Query: *[_type == "testimonial" && featured == true] {    _id,    authorName,    position,    company,    content,    rating,    photo { ..., asset-> },    publishedAt  }
-export type FeaturedTestimonialsQueryResult = Array<{
+// Variable: allTestimonialsQuery
+// Query: *[_type == "testimonial"] | order(_createdAt asc) {    _id,    authorName,    position,    company,    content,    rating,    photo { ..., asset-> },    publishedAt  }
+export type AllTestimonialsQueryResult = Array<{
   _id: string
   authorName: string | null
   position: string | null
@@ -1533,9 +1489,8 @@ declare module '@sanity/client' {
   interface SanityQueries {
     '\n  *[_type == "siteSettings"][0] {\n    businessName,\n    tagline,\n    logoLight { alt, asset-> { _id, url, metadata { dimensions } } },\n    logoDark { alt, asset-> { _id, url, metadata { dimensions } } },\n    email,\n    phone,\n    address,\n    googleMapsUrl,\n    social {\n      facebook,\n      instagram,\n      tiktok\n    },\n    seo {\n      metaTitle,\n      metaDescription,\n      ogImage { ..., asset-> }\n    }\n  }\n': SiteSettingsQueryResult
     '\n  *[_type == "siteSettings"][0] {\n    businessName,\n    tagline,\n    logoLight { alt, asset-> { _id, url, metadata { dimensions } } },\n    logoDark { alt, asset-> { _id, url, metadata { dimensions } } },\n    email,\n    phone,\n    address,\n    googleMapsUrl,\n    social {\n      facebook,\n      instagram,\n      tiktok\n    }\n  }\n': FooterQueryResult
-    '\n  *[_type == "service" && featured == true] | order(order asc) {\n    _id,\n    title,\n    slug,\n    description,\n    icon,\n    image { ..., asset-> },\n    order,\n    featured\n  }\n': FeaturedServicesQueryResult
-    '\n  *[_type == "service"] | order(order asc) {\n    _id,\n    title,\n    slug,\n    description,\n    icon,\n    image { ..., asset-> },\n    order,\n    featured\n  }\n': AllServicesQueryResult
-    '\n  *[_type == "testimonial" && featured == true] {\n    _id,\n    authorName,\n    position,\n    company,\n    content,\n    rating,\n    photo { ..., asset-> },\n    publishedAt\n  }\n': FeaturedTestimonialsQueryResult
+    '\n  *[_type == "service"] | order(_createdAt asc) {\n    _id,\n    title,\n    slug,\n    description,\n    icon,\n    image { ..., asset-> }\n  }\n': AllServicesQueryResult
+    '\n  *[_type == "testimonial"] | order(_createdAt asc) {\n    _id,\n    authorName,\n    position,\n    company,\n    content,\n    rating,\n    photo { ..., asset-> },\n    publishedAt\n  }\n': AllTestimonialsQueryResult
     '\n  *[_type == "post"] | order(publishedAt desc) {\n    _id,\n    title,\n    slug,\n    excerpt,\n    mainImage { ..., asset-> },\n    "author": author-> {\n      name,\n      photo { ..., asset-> }\n    },\n    "categories": categories[]-> { title, slug },\n    publishedAt\n  }\n': AllPostsQueryResult
     '\n  *[_type == "post" && featured == true] | order(publishedAt desc) [0...3] {\n    _id,\n    title,\n    slug,\n    excerpt,\n    mainImage { ..., asset-> },\n    "author": author-> {\n      name,\n      photo { ..., asset-> }\n    },\n    "categories": categories[]-> { title, slug },\n    publishedAt\n  }\n': FeaturedPostsQueryResult
     '\n  *[_type == "post" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    excerpt,\n    mainImage { ..., asset-> },\n    body,\n    "author": author-> {\n      name,\n      slug,\n      bio,\n      photo { ..., asset-> },\n      social\n    },\n    "categories": categories[]-> { title, slug },\n    publishedAt,\n    featured,\n    seo {\n      metaTitle,\n      metaDescription,\n      ogImage { ..., asset-> }\n    }\n  }\n': PostBySlugQueryResult
