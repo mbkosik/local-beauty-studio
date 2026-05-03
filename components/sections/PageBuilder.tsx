@@ -3,7 +3,6 @@ import type {
   SectionHero,
   SectionTextImage,
   SectionPricing,
-  SectionTestimonials,
   SectionStats,
   SectionGallery,
   SectionBlogPreview,
@@ -20,7 +19,7 @@ import { GallerySection } from './GallerySection'
 import { BlogPreviewSection } from './BlogPreviewSection'
 import { CtaSection } from './CtaSection'
 import { ContactSection } from './ContactSection'
-import { PageBlock, ServicesSectionData } from '@/sanity/custom-types'
+import { PageBlock, ServicesSectionData, TestimonialsSectionData } from '@/sanity/custom-types'
 
 type ExtraData = {
   latestPosts?: LatestPostsQueryResult | null
@@ -50,7 +49,10 @@ export function PageBuilder({ blocks, extraData }: Props) {
             return <PricingSection key={block._key} data={asSection<SectionPricing>(block)} />
           case 'sectionTestimonials':
             return (
-              <TestimonialsSection key={block._key} data={asSection<SectionTestimonials>(block)} />
+              <TestimonialsSection
+                key={block._key}
+                data={asSection<TestimonialsSectionData>(block)}
+              />
             )
           case 'sectionStats':
             return <StatsSection key={block._key} data={asSection<SectionStats>(block)} />

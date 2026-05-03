@@ -209,7 +209,8 @@ export const pageQuery = defineQuery(`
       _type == "sectionTestimonials" => {
         heading,
         testimonials[]-> {
-          _id, authorName, position, content, rating
+          _id, authorName, position, company, content, rating,
+          photo { ..., asset-> }
         }
       },
       _type == "sectionStats" => {

@@ -1239,7 +1239,7 @@ export type AllPagesSlugsQueryResult = Array<{
 
 // Source: sanity/queries.ts
 // Variable: pageQuery
-// Query: *[_type == "page" && slug.current == $slug][0] {    _id,    title,    slug,    seo,    pageBuilder[] {      _type,      _key,      _type == "sectionHero" => {        heading,        subheading,        primaryCta,        secondaryCta,        backgroundImage { ..., asset-> }      },      _type == "sectionTextImage" => {        heading,        body,        image { ..., asset-> },        imagePosition      },      _type == "sectionServices" => {        heading,        subheading,        services[]-> {          _id, title, description, icon,          image { ..., asset-> }        }      },      _type == "sectionPricing" => {        heading,        subheading,        items      },      _type == "sectionTestimonials" => {        heading,        testimonials[]-> {          _id, authorName, position, content, rating        }      },      _type == "sectionStats" => {        heading,        items      },      _type == "sectionGallery" => {        heading,        images[] { ..., asset-> }      },      _type == "sectionBlogPreview" => {        heading,        count      },      _type == "sectionCta" => {        heading,        subheading,        primaryCta,        secondaryCta,        variant      },      _type == "sectionContact" => {        heading,        subheading      }    }  }
+// Query: *[_type == "page" && slug.current == $slug][0] {    _id,    title,    slug,    seo,    pageBuilder[] {      _type,      _key,      _type == "sectionHero" => {        heading,        subheading,        primaryCta,        secondaryCta,        backgroundImage { ..., asset-> }      },      _type == "sectionTextImage" => {        heading,        body,        image { ..., asset-> },        imagePosition      },      _type == "sectionServices" => {        heading,        subheading,        services[]-> {          _id, title, description, icon,          image { ..., asset-> }        }      },      _type == "sectionPricing" => {        heading,        subheading,        items      },      _type == "sectionTestimonials" => {        heading,        testimonials[]-> {          _id, authorName, position, company, content, rating,          photo { ..., asset-> }        }      },      _type == "sectionStats" => {        heading,        items      },      _type == "sectionGallery" => {        heading,        images[] { ..., asset-> }      },      _type == "sectionBlogPreview" => {        heading,        count      },      _type == "sectionCta" => {        heading,        subheading,        primaryCta,        secondaryCta,        variant      },      _type == "sectionContact" => {        heading,        subheading      }    }  }
 export type PageQueryResult = {
   _id: string
   title: string | null
@@ -1423,8 +1423,38 @@ export type PageQueryResult = {
           _id: string
           authorName: string | null
           position: string | null
+          company: string | null
           content: string | null
           rating: number | null
+          photo: {
+            asset: {
+              _id: string
+              _type: 'sanity.imageAsset'
+              _createdAt: string
+              _updatedAt: string
+              _rev: string
+              originalFilename?: string
+              label?: string
+              title?: string
+              description?: string
+              altText?: string
+              sha1hash?: string
+              extension?: string
+              mimeType?: string
+              size?: number
+              assetId?: string
+              uploadId?: string
+              path?: string
+              url?: string
+              metadata?: SanityImageMetadata
+              source?: SanityAssetSourceData
+            } | null
+            media?: unknown
+            hotspot?: SanityImageHotspot
+            crop?: SanityImageCrop
+            alt?: string
+            _type: 'image'
+          } | null
         }> | null
       }
     | {
@@ -1499,6 +1529,6 @@ declare module '@sanity/client' {
     '\n  *[_type == "category"] | order(title asc) {\n    _id,\n    title,\n    slug,\n    description\n  }\n': AllCategoriesQueryResult
     '\n  *[_type == "post"] | order(publishedAt desc) [0...$limit] {\n    _id,\n    title,\n    slug,\n    excerpt,\n    mainImage { ..., asset-> },\n    publishedAt,\n    "author": author-> { name },\n    "categories": categories[]-> { title, slug }\n  }\n': LatestPostsQueryResult
     '\n  *[_type == "page" && defined(slug.current) && slug.current != "home"] {\n    "slug": slug.current\n  }\n': AllPagesSlugsQueryResult
-    '\n  *[_type == "page" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    seo,\n    pageBuilder[] {\n      _type,\n      _key,\n      _type == "sectionHero" => {\n        heading,\n        subheading,\n        primaryCta,\n        secondaryCta,\n        backgroundImage { ..., asset-> }\n      },\n      _type == "sectionTextImage" => {\n        heading,\n        body,\n        image { ..., asset-> },\n        imagePosition\n      },\n      _type == "sectionServices" => {\n        heading,\n        subheading,\n        services[]-> {\n          _id, title, description, icon,\n          image { ..., asset-> }\n        }\n      },\n      _type == "sectionPricing" => {\n        heading,\n        subheading,\n        items\n      },\n      _type == "sectionTestimonials" => {\n        heading,\n        testimonials[]-> {\n          _id, authorName, position, content, rating\n        }\n      },\n      _type == "sectionStats" => {\n        heading,\n        items\n      },\n      _type == "sectionGallery" => {\n        heading,\n        images[] { ..., asset-> }\n      },\n      _type == "sectionBlogPreview" => {\n        heading,\n        count\n      },\n      _type == "sectionCta" => {\n        heading,\n        subheading,\n        primaryCta,\n        secondaryCta,\n        variant\n      },\n      _type == "sectionContact" => {\n        heading,\n        subheading\n      }\n    }\n  }\n': PageQueryResult
+    '\n  *[_type == "page" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    seo,\n    pageBuilder[] {\n      _type,\n      _key,\n      _type == "sectionHero" => {\n        heading,\n        subheading,\n        primaryCta,\n        secondaryCta,\n        backgroundImage { ..., asset-> }\n      },\n      _type == "sectionTextImage" => {\n        heading,\n        body,\n        image { ..., asset-> },\n        imagePosition\n      },\n      _type == "sectionServices" => {\n        heading,\n        subheading,\n        services[]-> {\n          _id, title, description, icon,\n          image { ..., asset-> }\n        }\n      },\n      _type == "sectionPricing" => {\n        heading,\n        subheading,\n        items\n      },\n      _type == "sectionTestimonials" => {\n        heading,\n        testimonials[]-> {\n          _id, authorName, position, company, content, rating,\n          photo { ..., asset-> }\n        }\n      },\n      _type == "sectionStats" => {\n        heading,\n        items\n      },\n      _type == "sectionGallery" => {\n        heading,\n        images[] { ..., asset-> }\n      },\n      _type == "sectionBlogPreview" => {\n        heading,\n        count\n      },\n      _type == "sectionCta" => {\n        heading,\n        subheading,\n        primaryCta,\n        secondaryCta,\n        variant\n      },\n      _type == "sectionContact" => {\n        heading,\n        subheading\n      }\n    }\n  }\n': PageQueryResult
   }
 }
