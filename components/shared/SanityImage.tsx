@@ -44,5 +44,14 @@ export function SanityImage({ image, alt, width, height, ...props }: SanityImage
     .auto('format')
     .url()
 
-  return <Image src={src} alt={alt ?? image.alt ?? ''} width={width} height={height} {...props} />
+  const { fill, ...restProps } = props
+
+  // fill mode: width/height are used only for the CDN URL, not passed to <Image>
+  if (fill) {
+    return <Image src={src} alt={alt ?? image.alt ?? ''} fill {...restProps} />
+  }
+
+  return (
+    <Image src={src} alt={alt ?? image.alt ?? ''} width={width} height={height} {...restProps} />
+  )
 }
