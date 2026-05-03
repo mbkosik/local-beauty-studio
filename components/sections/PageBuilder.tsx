@@ -1,4 +1,17 @@
-import type { PageQueryResult, LatestPostsQueryResult } from '@/sanity.types'
+import type {
+  PageQueryResult,
+  LatestPostsQueryResult,
+  SectionHero,
+  SectionTextImage,
+  SectionServices,
+  SectionPricing,
+  SectionTestimonials,
+  SectionStats,
+  SectionGallery,
+  SectionBlogPreview,
+  SectionCta,
+  SectionContact,
+} from '@/sanity.types'
 
 import { HeroSection } from './HeroSection'
 import { TextImageSection } from './TextImageSection'
@@ -22,33 +35,43 @@ type Props = {
   extraData?: ExtraData
 }
 
+// GROQ query results use `null` for absent fields; standalone schema types use `undefined`.
+// The switch already narrows _type, so these casts are safe.
+const asSection = <T,>(block: unknown) => block as T
+
 export function PageBuilder({ blocks, extraData }: Props) {
   return (
     <>
       {blocks.map((block) => {
         switch (block._type) {
           case 'sectionHero':
-            return <HeroSection key={block._key} data={block} />
+            return <HeroSection key={block._key} data={asSection<SectionHero>(block)} />
           case 'sectionTextImage':
-            return <TextImageSection key={block._key} data={block} />
+            return <TextImageSection key={block._key} data={asSection<SectionTextImage>(block)} />
           case 'sectionServices':
-            return <ServicesSection key={block._key} data={block} />
+            return <ServicesSection key={block._key} data={asSection<SectionServices>(block)} />
           case 'sectionPricing':
-            return <PricingSection key={block._key} data={block} />
+            return <PricingSection key={block._key} data={asSection<SectionPricing>(block)} />
           case 'sectionTestimonials':
-            return <TestimonialsSection key={block._key} data={block} />
+            return (
+              <TestimonialsSection key={block._key} data={asSection<SectionTestimonials>(block)} />
+            )
           case 'sectionStats':
-            return <StatsSection key={block._key} data={block} />
+            return <StatsSection key={block._key} data={asSection<SectionStats>(block)} />
           case 'sectionGallery':
-            return <GallerySection key={block._key} data={block} />
+            return <GallerySection key={block._key} data={asSection<SectionGallery>(block)} />
           case 'sectionBlogPreview':
             return (
-              <BlogPreviewSection key={block._key} data={block} posts={extraData?.latestPosts} />
+              <BlogPreviewSection
+                key={block._key}
+                data={asSection<SectionBlogPreview>(block)}
+                posts={extraData?.latestPosts}
+              />
             )
           case 'sectionCta':
-            return <CtaSection key={block._key} data={block} />
+            return <CtaSection key={block._key} data={asSection<SectionCta>(block)} />
           case 'sectionContact':
-            return <ContactSection key={block._key} data={block} />
+            return <ContactSection key={block._key} data={asSection<SectionContact>(block)} />
           default:
             console.warn('[PageBuilder] Unknown block type:', (block as { _type: string })._type)
             return null
