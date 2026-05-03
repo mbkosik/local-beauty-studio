@@ -32,7 +32,7 @@ export const sectionStats = defineType({
           ],
         },
       ],
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) => Rule.required().max(4),
     }),
   ],
 })
