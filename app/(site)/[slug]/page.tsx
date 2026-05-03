@@ -1,13 +1,14 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import { sanityFetch } from '@/sanity/live'
+import { client } from '@/sanity/client'
 import { pageQuery, latestPostsQuery, allPagesSlugsQuery } from '@/sanity/queries'
 import { PageBuilder } from '@/components/sections/PageBuilder'
 
 export const revalidate = 3600
 
 export async function generateStaticParams() {
-  const { data: pages } = await sanityFetch({ query: allPagesSlugsQuery })
+  const pages = await client.fetch(allPagesSlugsQuery)
   return (pages ?? []).map((page: { slug: string | null }) => ({ slug: page.slug ?? '' }))
 }
 
