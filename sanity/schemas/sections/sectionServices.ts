@@ -16,7 +16,7 @@ export const sectionServices = defineType({
       name: 'services',
       type: 'array',
       of: [{ type: 'reference', to: [{ type: 'service' }] }],
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) => Rule.required().max(3),
     }),
   ],
 })

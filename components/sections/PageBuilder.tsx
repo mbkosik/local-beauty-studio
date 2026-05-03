@@ -1,9 +1,7 @@
 import type {
-  PageQueryResult,
   LatestPostsQueryResult,
   SectionHero,
   SectionTextImage,
-  SectionServices,
   SectionPricing,
   SectionTestimonials,
   SectionStats,
@@ -12,7 +10,6 @@ import type {
   SectionCta,
   SectionContact,
 } from '@/sanity.types'
-
 import { HeroSection } from './HeroSection'
 import { TextImageSection } from './TextImageSection'
 import { ServicesSection } from './ServicesSection'
@@ -23,15 +20,14 @@ import { GallerySection } from './GallerySection'
 import { BlogPreviewSection } from './BlogPreviewSection'
 import { CtaSection } from './CtaSection'
 import { ContactSection } from './ContactSection'
-
-type PageBuilderBlock = NonNullable<NonNullable<PageQueryResult>['pageBuilder']>[number]
+import { PageBlock, ServicesSectionData } from '@/sanity/custom-types'
 
 type ExtraData = {
   latestPosts?: LatestPostsQueryResult | null
 }
 
 type Props = {
-  blocks: PageBuilderBlock[]
+  blocks: PageBlock[]
   extraData?: ExtraData
 }
 
@@ -49,7 +45,7 @@ export function PageBuilder({ blocks, extraData }: Props) {
           case 'sectionTextImage':
             return <TextImageSection key={block._key} data={asSection<SectionTextImage>(block)} />
           case 'sectionServices':
-            return <ServicesSection key={block._key} data={asSection<SectionServices>(block)} />
+            return <ServicesSection key={block._key} data={asSection<ServicesSectionData>(block)} />
           case 'sectionPricing':
             return <PricingSection key={block._key} data={asSection<SectionPricing>(block)} />
           case 'sectionTestimonials':
