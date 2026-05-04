@@ -1246,6 +1246,62 @@ export type LatestPostsQueryResult = Array<{
 }>
 
 // Source: sanity/queries.ts
+// Variable: blogListingQuery
+// Query: {    "posts": *[_type == "post" && (!defined($category) || $category == "" || $category in categories[]->slug.current)] | order(publishedAt desc) [$from...$to] {      _id,      title,      "slug": slug.current,      excerpt,      mainImage { ..., asset-> },      publishedAt,      "categories": categories[]-> { title, "slug": slug.current }    },    "total": count(*[_type == "post" && (!defined($category) || $category == "" || $category in categories[]->slug.current)])  }
+export type BlogListingQueryResult = {
+  posts: Array<{
+    _id: string
+    title: string | null
+    slug: string | null
+    excerpt: string | null
+    mainImage: {
+      asset: {
+        _id: string
+        _type: 'sanity.imageAsset'
+        _createdAt: string
+        _updatedAt: string
+        _rev: string
+        originalFilename?: string
+        label?: string
+        title?: string
+        description?: string
+        altText?: string
+        sha1hash?: string
+        extension?: string
+        mimeType?: string
+        size?: number
+        assetId?: string
+        uploadId?: string
+        path?: string
+        url?: string
+        metadata?: SanityImageMetadata
+        source?: SanityAssetSourceData
+      } | null
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
+    } | null
+    publishedAt: string | null
+    categories: Array<{
+      title: string | null
+      slug: string | null
+    }> | null
+  }>
+  total: number
+}
+
+// Source: sanity/queries.ts
+// Variable: blogCategoriesQuery
+// Query: *[_type == "category"] | order(title asc) {    _id,    title,    "slug": slug.current  }
+export type BlogCategoriesQueryResult = Array<{
+  _id: string
+  title: string | null
+  slug: string | null
+}>
+
+// Source: sanity/queries.ts
 // Variable: allPagesSlugsQuery
 // Query: *[_type == "page" && defined(slug.current) && slug.current != "home"] {    "slug": slug.current  }
 export type AllPagesSlugsQueryResult = Array<{
@@ -1543,6 +1599,8 @@ declare module '@sanity/client' {
     '\n  *[_type == "post" && $categorySlug in categories[]->slug.current] | order(publishedAt desc) {\n    _id,\n    title,\n    slug,\n    excerpt,\n    mainImage { ..., asset-> },\n    "author": author-> {\n      name,\n      photo { ..., asset-> }\n    },\n    "categories": categories[]-> { title, slug },\n    publishedAt\n  }\n': PostsByCategoryQueryResult
     '\n  *[_type == "category"] | order(title asc) {\n    _id,\n    title,\n    slug,\n    description\n  }\n': AllCategoriesQueryResult
     '\n  *[_type == "post"] | order(publishedAt desc) [0...$limit] {\n    _id,\n    title,\n    slug,\n    excerpt,\n    mainImage { ..., asset-> },\n    publishedAt,\n    "author": author-> { name },\n    "categories": categories[]-> { title, slug }\n  }\n': LatestPostsQueryResult
+    '\n  {\n    "posts": *[_type == "post" && (!defined($category) || $category == "" || $category in categories[]->slug.current)] | order(publishedAt desc) [$from...$to] {\n      _id,\n      title,\n      "slug": slug.current,\n      excerpt,\n      mainImage { ..., asset-> },\n      publishedAt,\n      "categories": categories[]-> { title, "slug": slug.current }\n    },\n    "total": count(*[_type == "post" && (!defined($category) || $category == "" || $category in categories[]->slug.current)])\n  }\n': BlogListingQueryResult
+    '\n  *[_type == "category"] | order(title asc) {\n    _id,\n    title,\n    "slug": slug.current\n  }\n': BlogCategoriesQueryResult
     '\n  *[_type == "page" && defined(slug.current) && slug.current != "home"] {\n    "slug": slug.current\n  }\n': AllPagesSlugsQueryResult
     '\n  *[_type == "page" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    seo,\n    pageBuilder[] {\n      _type,\n      _key,\n      _type == "sectionHero" => {\n        heading,\n        subheading,\n        primaryCta,\n        secondaryCta,\n        backgroundImage { ..., asset-> }\n      },\n      _type == "sectionTextImage" => {\n        heading,\n        body,\n        image { ..., asset-> },\n        imagePosition\n      },\n      _type == "sectionServices" => {\n        heading,\n        subheading,\n        services[]-> {\n          _id, title, description, icon,\n          image { ..., asset-> }\n        }\n      },\n      _type == "sectionPricing" => {\n        heading,\n        subheading,\n        items\n      },\n      _type == "sectionTestimonials" => {\n        heading,\n        testimonials[]-> {\n          _id, authorName, position, company, content, rating,\n          photo { ..., asset-> }\n        }\n      },\n      _type == "sectionStats" => {\n        heading,\n        items\n      },\n      _type == "sectionGallery" => {\n        heading,\n        images[] { ..., asset-> }\n      },\n      _type == "sectionBlogPreview" => {\n        heading,\n        count\n      },\n      _type == "sectionCta" => {\n        heading,\n        subheading,\n        primaryCta,\n        secondaryCta,\n        variant\n      },\n      _type == "sectionContact" => {\n        heading,\n        subheading\n      }\n    }\n  }\n': PageQueryResult
   }
