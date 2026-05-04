@@ -2,6 +2,7 @@ import {
   BlogCategoriesQueryResult,
   BlogListingQueryResult,
   PageQueryResult,
+  PostBySlugQueryResult,
   SiteSettingsQueryResult,
 } from '@/sanity.types'
 
@@ -13,3 +14,4 @@ export type TestimonialsSectionData = Extract<PageBlock, { _type: 'sectionTestim
 
 export type BlogPost = NonNullable<BlogListingQueryResult>['posts'][number]
 export type BlogCategory = BlogCategoriesQueryResult[number]
+export type SinglePost = NonNullable<PostBySlugQueryResult>
