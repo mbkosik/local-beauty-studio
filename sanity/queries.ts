@@ -15,6 +15,11 @@ export const siteSettingsQuery = defineQuery(`
       instagram,
       tiktok
     },
+    "navLinks": navLinks[] {
+      label,
+      href,
+      openInNewTab
+    },
     seo {
       metaTitle,
       metaDescription,

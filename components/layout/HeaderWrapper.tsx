@@ -7,15 +7,16 @@ import { ThemeToggle } from '@/components/shared/ThemeToggle'
 import { SanityImage, type SanityImageData } from '@/components/shared/SanityImage'
 import { MobileMenu } from '@/components/layout/MobileMenu'
 import { useScrolled } from '@/hooks/use-scrolled'
-import { navLinks } from '@/config/navigation'
+import type { NavLink } from '@/sanity/custom-types'
 
 interface HeaderWrapperProps {
   businessName: string | null
   logoLight: SanityImageData | null
   logoDark: SanityImageData | null
+  navLinks: NavLink[]
 }
 
-export function HeaderWrapper({ businessName, logoLight, logoDark }: HeaderWrapperProps) {
+export function HeaderWrapper({ businessName, logoLight, logoDark, navLinks }: HeaderWrapperProps) {
   const scrolled = useScrolled()
   const pathname = usePathname()
 
@@ -58,8 +59,10 @@ export function HeaderWrapper({ businessName, logoLight, logoDark }: HeaderWrapp
         <nav className="hidden items-center gap-6 md:flex" aria-label="Główna nawigacja">
           {navLinks.map((link) => (
             <Link
-              key={link.href}
-              href={link.href}
+              key={link.href ?? link.label}
+              href={link.href ?? '#'}
+              target={link.openInNewTab ? '_blank' : undefined}
+              rel={link.openInNewTab ? 'noopener noreferrer' : undefined}
               className={cn(
                 'hover:text-foreground text-sm transition-colors',
                 pathname === link.href ? 'text-foreground font-semibold' : 'text-muted-foreground'
@@ -73,7 +76,7 @@ export function HeaderWrapper({ businessName, logoLight, logoDark }: HeaderWrapp
 
         <div className="flex items-center gap-2 md:hidden">
           <ThemeToggle />
-          <MobileMenu />
+          <MobileMenu navLinks={navLinks} />
         </div>
       </div>
     </header>

@@ -93,6 +93,12 @@ export const siteSettings = defineType({
       ],
     }),
     defineField({
+      name: 'navLinks',
+      title: 'Linki nawigacji',
+      type: 'array',
+      of: [{ type: 'navLink' }],
+    }),
+    defineField({
       name: 'seo',
       title: 'SEO',
       type: 'object',

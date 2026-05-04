@@ -1,6 +1,7 @@
 import { type SchemaTypeDefinition } from 'sanity'
 
 import { siteSettings } from './siteSettings'
+import { navLink } from './navLink'
 import { service } from './service'
 import { testimonial } from './testimonial'
 import { post } from './post'
@@ -22,6 +23,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     // Auxiliary
     author,
     category,
+    navLink,
     // Page builder sections
     ...sectionSchemas,
   ],

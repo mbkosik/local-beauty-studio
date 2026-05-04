@@ -1,4 +1,6 @@
-import { PageQueryResult } from '@/sanity.types'
+import { PageQueryResult, SiteSettingsQueryResult } from '@/sanity.types'
+
+export type NavLink = NonNullable<NonNullable<SiteSettingsQueryResult>['navLinks']>[number]
 
 export type PageBlock = NonNullable<NonNullable<PageQueryResult>['pageBuilder']>[number]
 export type ServicesSectionData = Extract<PageBlock, { _type: 'sectionServices' }>

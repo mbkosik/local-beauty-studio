@@ -9,9 +9,13 @@ import { Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { useMounted } from '@/hooks/use-mounted'
-import { navLinks } from '@/config/navigation'
+import type { NavLink } from '@/sanity/custom-types'
 
-export function MobileMenu() {
+interface MobileMenuProps {
+  navLinks: NavLink[]
+}
+
+export function MobileMenu({ navLinks }: MobileMenuProps) {
   const [isOpen, setIsOpen] = useState(false)
   const mounted = useMounted()
   const pathname = usePathname()
@@ -48,9 +52,11 @@ export function MobileMenu() {
                 <nav className="container flex flex-col gap-1 py-4" aria-label="Nawigacja mobilna">
                   {navLinks.map((link) => (
                     <Link
-                      key={link.href}
-                      href={link.href}
+                      key={link.href ?? link.label}
+                      href={link.href ?? '#'}
                       onClick={close}
+                      target={link.openInNewTab ? '_blank' : undefined}
+                      rel={link.openInNewTab ? 'noopener noreferrer' : undefined}
                       className={cn(
                         'hover:bg-accent hover:text-accent-foreground rounded-md px-3 py-2 text-sm font-medium transition-colors',
                         pathname === link.href

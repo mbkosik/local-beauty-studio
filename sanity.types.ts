@@ -185,6 +185,13 @@ export type SectionHero = {
   }
 }
 
+export type NavLink = {
+  _type: 'navLink'
+  label?: string
+  href?: string
+  openInNewTab?: boolean
+}
+
 export type Category = {
   _id: string
   _type: 'category'
@@ -343,7 +350,6 @@ export type Testimonial = {
     alt?: string
     _type: 'image'
   }
-  featured?: boolean
   publishedAt?: string
 }
 
@@ -365,8 +371,6 @@ export type Service = {
     alt?: string
     _type: 'image'
   }
-  order?: number
-  featured?: boolean
 }
 
 export type Page = {
@@ -455,6 +459,11 @@ export type SiteSettings = {
     instagram?: string
     tiktok?: string
   }
+  navLinks?: Array<
+    {
+      _key: string
+    } & NavLink
+  >
   seo?: {
     metaTitle?: string
     metaDescription?: string
@@ -583,6 +592,7 @@ export type AllSanitySchemaTypes =
   | SectionServices
   | SectionTextImage
   | SectionHero
+  | NavLink
   | Category
   | Slug
   | AuthorReference
@@ -606,7 +616,7 @@ export type AllSanitySchemaTypes =
 
 // Source: sanity/queries.ts
 // Variable: siteSettingsQuery
-// Query: *[_type == "siteSettings"][0] {    businessName,    tagline,    logoLight { alt, asset-> { _id, url, metadata { dimensions } } },    logoDark { alt, asset-> { _id, url, metadata { dimensions } } },    email,    phone,    address,    googleMapsUrl,    social {      facebook,      instagram,      tiktok    },    seo {      metaTitle,      metaDescription,      ogImage { ..., asset-> }    }  }
+// Query: *[_type == "siteSettings"][0] {    businessName,    tagline,    logoLight { alt, asset-> { _id, url, metadata { dimensions } } },    logoDark { alt, asset-> { _id, url, metadata { dimensions } } },    email,    phone,    address,    googleMapsUrl,    social {      facebook,      instagram,      tiktok    },    "navLinks": navLinks[] {      label,      href,      openInNewTab    },    seo {      metaTitle,      metaDescription,      ogImage { ..., asset-> }    }  }
 export type SiteSettingsQueryResult = {
   businessName: string | null
   tagline: string | null
@@ -639,6 +649,11 @@ export type SiteSettingsQueryResult = {
     instagram: string | null
     tiktok: string | null
   } | null
+  navLinks: Array<{
+    label: string | null
+    href: string | null
+    openInNewTab: boolean | null
+  }> | null
   seo: {
     metaTitle: string | null
     metaDescription: string | null
@@ -1517,7 +1532,7 @@ export type PageQueryResult = {
 import '@sanity/client'
 declare module '@sanity/client' {
   interface SanityQueries {
-    '\n  *[_type == "siteSettings"][0] {\n    businessName,\n    tagline,\n    logoLight { alt, asset-> { _id, url, metadata { dimensions } } },\n    logoDark { alt, asset-> { _id, url, metadata { dimensions } } },\n    email,\n    phone,\n    address,\n    googleMapsUrl,\n    social {\n      facebook,\n      instagram,\n      tiktok\n    },\n    seo {\n      metaTitle,\n      metaDescription,\n      ogImage { ..., asset-> }\n    }\n  }\n': SiteSettingsQueryResult
+    '\n  *[_type == "siteSettings"][0] {\n    businessName,\n    tagline,\n    logoLight { alt, asset-> { _id, url, metadata { dimensions } } },\n    logoDark { alt, asset-> { _id, url, metadata { dimensions } } },\n    email,\n    phone,\n    address,\n    googleMapsUrl,\n    social {\n      facebook,\n      instagram,\n      tiktok\n    },\n    "navLinks": navLinks[] {\n      label,\n      href,\n      openInNewTab\n    },\n    seo {\n      metaTitle,\n      metaDescription,\n      ogImage { ..., asset-> }\n    }\n  }\n': SiteSettingsQueryResult
     '\n  *[_type == "siteSettings"][0] {\n    businessName,\n    tagline,\n    logoLight { alt, asset-> { _id, url, metadata { dimensions } } },\n    logoDark { alt, asset-> { _id, url, metadata { dimensions } } },\n    email,\n    phone,\n    address,\n    googleMapsUrl,\n    social {\n      facebook,\n      instagram,\n      tiktok\n    }\n  }\n': FooterQueryResult
     '\n  *[_type == "service"] | order(_createdAt asc) {\n    _id,\n    title,\n    slug,\n    description,\n    icon,\n    image { ..., asset-> }\n  }\n': AllServicesQueryResult
     '\n  *[_type == "testimonial"] | order(_createdAt asc) {\n    _id,\n    authorName,\n    position,\n    company,\n    content,\n    rating,\n    photo { ..., asset-> },\n    publishedAt\n  }\n': AllTestimonialsQueryResult
