@@ -50,14 +50,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     <div className="py-16 md:py-24">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <BlogPostLayout post={post} readingTime={readingTime}>
-          <div className="grid grid-cols-1 gap-12 lg:grid-cols-[65fr_35fr]">
-            <div className="text-foreground min-w-0">
-              {post.body && <PortableText value={post.body} components={portableTextComponents} />}
-            </div>
-
-            <aside className="hidden lg:block" aria-label="Spis treści">
-              {/* ToC — zarezerwowane */}
-            </aside>
+          <div className="text-foreground mx-auto max-w-3xl">
+            {post.body && <PortableText value={post.body} components={portableTextComponents} />}
           </div>
         </BlogPostLayout>
       </div>
