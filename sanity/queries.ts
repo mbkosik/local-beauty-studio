@@ -170,6 +170,29 @@ export const latestPostsQuery = defineQuery(`
   }
 `)
 
+export const blogListingQuery = defineQuery(`
+  {
+    "posts": *[_type == "post" && (!defined($category) || $category == "" || $category in categories[]->slug.current)] | order(publishedAt desc) [$from...$to] {
+      _id,
+      title,
+      "slug": slug.current,
+      excerpt,
+      mainImage { ..., asset-> },
+      publishedAt,
+      "categories": categories[]-> { title, "slug": slug.current }
+    },
+    "total": count(*[_type == "post" && (!defined($category) || $category == "" || $category in categories[]->slug.current)])
+  }
+`)
+
+export const blogCategoriesQuery = defineQuery(`
+  *[_type == "category"] | order(title asc) {
+    _id,
+    title,
+    "slug": slug.current
+  }
+`)
+
 export const allPagesSlugsQuery = defineQuery(`
   *[_type == "page" && defined(slug.current) && slug.current != "home"] {
     "slug": slug.current
