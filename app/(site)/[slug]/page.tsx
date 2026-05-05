@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import { sanityFetch } from '@/sanity/live'
 import { client } from '@/sanity/client'
-import { pageQuery, latestPostsQuery, allPagesSlugsQuery } from '@/sanity/queries'
+import { pageQuery, allPagesSlugsQuery } from '@/sanity/queries'
 import { PageBuilder } from '@/components/sections/PageBuilder'
 
 export const revalidate = 3600
@@ -36,12 +36,5 @@ export default async function SlugPage({ params }: { params: Promise<{ slug: str
     notFound()
   }
 
-  const hasBlogPreview =
-    page.pageBuilder?.some((block) => block._type === 'sectionBlogPreview') ?? false
-
-  const latestPosts = hasBlogPreview
-    ? (await sanityFetch({ query: latestPostsQuery, params: { limit: 3, excludeSlugs: [] } })).data
-    : null
-
-  return <PageBuilder blocks={page.pageBuilder ?? []} extraData={{ latestPosts }} />
+  return <PageBuilder blocks={page.pageBuilder ?? []} />
 }

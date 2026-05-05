@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation'
 import { sanityFetch } from '@/sanity/live'
-import { pageQuery, latestPostsQuery } from '@/sanity/queries'
+import { pageQuery } from '@/sanity/queries'
 import { PageBuilder } from '@/components/sections/PageBuilder'
 
 export const revalidate = 3600
@@ -12,12 +12,5 @@ export default async function HomePage() {
     notFound()
   }
 
-  const hasBlogPreview =
-    page.pageBuilder?.some((block) => block._type === 'sectionBlogPreview') ?? false
-
-  const latestPosts = hasBlogPreview
-    ? (await sanityFetch({ query: latestPostsQuery, params: { limit: 3, excludeSlugs: [] } })).data
-    : null
-
-  return <PageBuilder blocks={page.pageBuilder ?? []} extraData={{ latestPosts }} />
+  return <PageBuilder blocks={page.pageBuilder ?? []} />
 }

@@ -261,8 +261,21 @@ export const pageQuery = defineQuery(`
         images[] { ..., asset-> }
       },
       _type == "sectionBlogPreview" => {
+        _type,
         heading,
-        count
+        subheading,
+        mode,
+        showViewAll,
+        "posts": select(
+          mode == "manual" => posts[]->{
+            _id, title, slug, excerpt, mainImage, publishedAt,
+            "categories": categories[]->{title}
+          },
+          *[_type == "post"] | order(publishedAt desc) [0..2] {
+            _id, title, slug, excerpt, mainImage, publishedAt,
+            "categories": categories[]->{title}
+          }
+        )
       },
       _type == "sectionCta" => {
         heading,
