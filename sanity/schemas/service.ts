@@ -26,8 +26,7 @@ export const service = defineType({
     defineField({
       name: 'icon',
       title: 'Ikona',
-      type: 'string',
-      description: 'Nazwa ikony z biblioteki Lucide React (np. "Scissors", "Sparkles", "Star")',
+      type: 'lucide-icon',
     }),
     defineField({
       name: 'image',

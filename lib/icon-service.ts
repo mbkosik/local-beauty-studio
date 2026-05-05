@@ -5,12 +5,8 @@ import dynamic from 'next/dynamic'
 
 type IconComponent = React.ComponentType<LucideProps>
 
-// "ArrowRight" → "arrow-right"
-function toIconName(name: string): IconName {
-  return name.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase() as IconName
-}
-
-// Maps PascalCase icon names to stable lazy-loaded React components.
+// Maps kebab-case icon names (as stored by sanity-plugin-lucide-icon-picker)
+// to stable lazy-loaded React components.
 // Must live at module level: dynamic() called inside render creates a new
 // component reference on every render, which resets state and causes React
 // to unmount/remount the element. The Map persists the reference after the
@@ -21,7 +17,7 @@ export function getDynamicIcon(name: string | null | undefined): IconComponent |
   if (!name) return null
   if (iconCache.has(name)) return iconCache.get(name)!
 
-  const importer = dynamicIconImports[toIconName(name)]
+  const importer = dynamicIconImports[name as IconName]
   if (!importer) return null
 
   const Comp = dynamic<LucideProps>(
