@@ -243,7 +243,13 @@ export const pageQuery = defineQuery(`
       _type == "sectionPricing" => {
         heading,
         subheading,
-        items
+        items[]-> {
+          _id,
+          name,
+          duration,
+          price,
+          description
+        }
       },
       _type == "sectionTestimonials" => {
         heading,

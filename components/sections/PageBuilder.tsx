@@ -1,7 +1,6 @@
 import type {
   SectionHero,
   SectionTextImage,
-  SectionPricing,
   SectionStats,
   SectionGallery,
   SectionCta,
@@ -22,6 +21,7 @@ import {
   ServicesSectionData,
   TestimonialsSectionData,
   BlogPreviewSectionData,
+  PricingSectionData,
 } from '@/sanity/custom-types'
 
 type Props = {
@@ -44,7 +44,7 @@ export function PageBuilder({ blocks }: Props) {
           case 'sectionServices':
             return <ServicesSection key={block._key} data={asSection<ServicesSectionData>(block)} />
           case 'sectionPricing':
-            return <PricingSection key={block._key} data={asSection<SectionPricing>(block)} />
+            return <PricingSection key={block._key} data={asSection<PricingSectionData>(block)} />
           case 'sectionTestimonials':
             return (
               <TestimonialsSection

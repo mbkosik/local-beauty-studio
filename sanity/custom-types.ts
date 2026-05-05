@@ -12,6 +12,7 @@ export type PageBlock = NonNullable<NonNullable<PageQueryResult>['pageBuilder']>
 export type ServicesSectionData = Extract<PageBlock, { _type: 'sectionServices' }>
 export type TestimonialsSectionData = Extract<PageBlock, { _type: 'sectionTestimonials' }>
 export type BlogPreviewSectionData = Extract<PageBlock, { _type: 'sectionBlogPreview' }>
+export type PricingSectionData = Extract<PageBlock, { _type: 'sectionPricing' }>
 
 export type BlogPost = NonNullable<BlogListingQueryResult>['posts'][number]
 export type BlogCategory = BlogCategoriesQueryResult[number]
