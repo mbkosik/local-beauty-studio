@@ -5,6 +5,7 @@ import { Clock } from 'lucide-react'
 import { SanityImage, type SanityImageData } from '@/components/shared/SanityImage'
 import type { SinglePost } from '@/sanity/custom-types'
 import { DATE_FORMAT_POST } from '@/config/date-formats'
+import { ShareButtons } from '@/components/blog/ShareButtons'
 
 interface BlogPostLayoutProps {
   post: SinglePost
@@ -21,7 +22,7 @@ export function BlogPostLayout({ post, readingTime, children }: BlogPostLayoutPr
 
   return (
     <article>
-      <header className="mb-12">
+      <header className="mb-4">
         {mainImage && (
           <div className="relative mb-8 aspect-video w-full overflow-hidden rounded-xl">
             <SanityImage
@@ -87,6 +88,14 @@ export function BlogPostLayout({ post, readingTime, children }: BlogPostLayoutPr
           </div>
         </div>
       </header>
+
+      <div className="mb-8">
+        <ShareButtons
+          title={post.title ?? ''}
+          slug={post.slug?.current ?? ''}
+          excerpt={post.excerpt ?? undefined}
+        />
+      </div>
 
       {children}
     </article>
