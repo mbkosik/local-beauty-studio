@@ -2,7 +2,17 @@ import { defineField, defineType } from 'sanity'
 
 export const sectionCta = defineType({
   name: 'sectionCta',
+  title: 'Sekcja: Wezwanie do działania',
   type: 'object',
+  preview: {
+    select: { heading: 'heading' },
+    prepare({ heading }) {
+      return {
+        title: 'Sekcja: Wezwanie do działania',
+        subtitle: heading ?? '(bez nagłówka)',
+      }
+    },
+  },
   fields: [
     defineField({
       name: 'heading',

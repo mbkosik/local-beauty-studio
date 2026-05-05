@@ -4,6 +4,7 @@ import './globals.css'
 import { ThemeProvider } from '@/components/shared/ThemeProvider'
 import { SanityLive, sanityFetch } from '@/sanity/live'
 import { siteSettingsQuery } from '@/sanity/queries'
+import { Toaster } from '@/components/ui/sonner'
 
 const playfairDisplay = Playfair_Display({
   variable: '--font-heading',
@@ -60,6 +61,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
+          <Toaster richColors position="bottom-center" />
         </ThemeProvider>
         <SanityLive />
       </body>

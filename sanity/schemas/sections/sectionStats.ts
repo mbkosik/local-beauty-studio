@@ -2,7 +2,17 @@ import { defineField, defineType } from 'sanity'
 
 export const sectionStats = defineType({
   name: 'sectionStats',
+  title: 'Sekcja: Statystyki',
   type: 'object',
+  preview: {
+    select: { heading: 'heading' },
+    prepare({ heading }) {
+      return {
+        title: 'Sekcja: Statystyki',
+        subtitle: heading ?? '(bez nagłówka)',
+      }
+    },
+  },
   fields: [
     defineField({
       name: 'heading',

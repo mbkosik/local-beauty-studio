@@ -8,6 +8,7 @@ import { post } from './post'
 import { author } from './author'
 import { category } from './category'
 import { page } from './page'
+import { pricingItem } from './pricingItem'
 import { sectionSchemas } from './sections'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
@@ -20,6 +21,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     service,
     testimonial,
     post,
+    pricingItem,
     // Auxiliary
     author,
     category,

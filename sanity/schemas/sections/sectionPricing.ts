@@ -2,7 +2,17 @@ import { defineField, defineType } from 'sanity'
 
 export const sectionPricing = defineType({
   name: 'sectionPricing',
+  title: 'Sekcja: Cennik',
   type: 'object',
+  preview: {
+    select: { heading: 'heading' },
+    prepare({ heading }) {
+      return {
+        title: 'Sekcja: Cennik',
+        subtitle: heading ?? '(bez nagłówka)',
+      }
+    },
+  },
   fields: [
     defineField({
       name: 'heading',
@@ -14,38 +24,9 @@ export const sectionPricing = defineType({
     }),
     defineField({
       name: 'items',
+      title: 'Pozycje cennika',
       type: 'array',
-      of: [
-        {
-          type: 'object',
-          name: 'pricingItem',
-          preview: {
-            select: { title: 'name', subtitle: 'price' },
-          },
-          fields: [
-            defineField({
-              name: 'name',
-              type: 'string',
-              validation: (Rule) => Rule.required(),
-            }),
-            defineField({
-              name: 'description',
-              type: 'text',
-              rows: 2,
-            }),
-            defineField({
-              name: 'price',
-              type: 'string',
-              validation: (Rule) => Rule.required(),
-            }),
-            defineField({
-              name: 'duration',
-              type: 'string',
-            }),
-          ],
-        },
-      ],
-      validation: (Rule) => Rule.required(),
+      of: [{ type: 'reference', to: [{ type: 'pricingItem' }] }],
     }),
   ],
 })

@@ -1,11 +1,8 @@
 import type {
-  LatestPostsQueryResult,
   SectionHero,
   SectionTextImage,
-  SectionPricing,
   SectionStats,
   SectionGallery,
-  SectionBlogPreview,
   SectionCta,
   SectionContact,
 } from '@/sanity.types'
@@ -19,22 +16,23 @@ import { GallerySection } from './GallerySection'
 import { BlogPreviewSection } from './BlogPreviewSection'
 import { CtaSection } from './CtaSection'
 import { ContactSection } from './ContactSection'
-import { PageBlock, ServicesSectionData, TestimonialsSectionData } from '@/sanity/custom-types'
-
-type ExtraData = {
-  latestPosts?: LatestPostsQueryResult | null
-}
+import {
+  PageBlock,
+  ServicesSectionData,
+  TestimonialsSectionData,
+  BlogPreviewSectionData,
+  PricingSectionData,
+} from '@/sanity/custom-types'
 
 type Props = {
   blocks: PageBlock[]
-  extraData?: ExtraData
 }
 
 // GROQ query results use `null` for absent fields; standalone schema types use `undefined`.
 // The switch already narrows _type, so these casts are safe.
 const asSection = <T,>(block: unknown) => block as T
 
-export function PageBuilder({ blocks, extraData }: Props) {
+export function PageBuilder({ blocks }: Props) {
   return (
     <>
       {blocks.map((block) => {
@@ -46,7 +44,7 @@ export function PageBuilder({ blocks, extraData }: Props) {
           case 'sectionServices':
             return <ServicesSection key={block._key} data={asSection<ServicesSectionData>(block)} />
           case 'sectionPricing':
-            return <PricingSection key={block._key} data={asSection<SectionPricing>(block)} />
+            return <PricingSection key={block._key} data={asSection<PricingSectionData>(block)} />
           case 'sectionTestimonials':
             return (
               <TestimonialsSection
@@ -62,8 +60,7 @@ export function PageBuilder({ blocks, extraData }: Props) {
             return (
               <BlogPreviewSection
                 key={block._key}
-                data={asSection<SectionBlogPreview>(block)}
-                posts={extraData?.latestPosts}
+                data={asSection<BlogPreviewSectionData>(block)}
               />
             )
           case 'sectionCta':
