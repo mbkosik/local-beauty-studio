@@ -961,7 +961,7 @@ export type FeaturedPostsQueryResult = Array<{
 
 // Source: sanity/queries.ts
 // Variable: postBySlugQuery
-// Query: *[_type == "post" && slug.current == $slug][0] {    _id,    title,    slug,    excerpt,    mainImage { ..., asset-> },    body,    "author": author-> {      name,      slug,      bio,      photo { ..., asset-> },      social    },    "categories": categories[]-> { title, slug },    publishedAt,    featured,    seo {      metaTitle,      metaDescription,      ogImage { ..., asset-> }    }  }
+// Query: *[_type == "post" && slug.current == $slug][0] {    _id,    title,    slug,    excerpt,    mainImage { ..., asset-> },    body,    "author": author-> {      name,      slug,      bio,      photo { ..., asset-> },      social    },    "categories": categories[]-> { _id, title, slug },    publishedAt,    featured,    seo {      metaTitle,      metaDescription,      ogImage { ..., asset-> }    }  }
 export type PostBySlugQueryResult = {
   _id: string
   title: string | null
@@ -1066,6 +1066,7 @@ export type PostBySlugQueryResult = {
     } | null
   } | null
   categories: Array<{
+    _id: string
     title: string | null
     slug: Slug | null
   }> | null
@@ -1199,12 +1200,12 @@ export type AllCategoriesQueryResult = Array<{
 }>
 
 // Source: sanity/queries.ts
-// Variable: latestPostsQuery
-// Query: *[_type == "post"] | order(publishedAt desc) [0...$limit] {    _id,    title,    slug,    excerpt,    mainImage { ..., asset-> },    publishedAt,    "author": author-> { name },    "categories": categories[]-> { title, slug }  }
-export type LatestPostsQueryResult = Array<{
+// Variable: relatedPostsQuery
+// Query: *[_type == "post" && slug.current != $slug && count((categories[]._ref)[@ in $categoryIds]) > 0] | order(publishedAt desc) [0...2] {    _id,    title,    "slug": slug.current,    excerpt,    mainImage { ..., asset-> },    publishedAt,    "categories": categories[]-> { title, "slug": slug.current }  }
+export type RelatedPostsQueryResult = Array<{
   _id: string
   title: string | null
-  slug: Slug | null
+  slug: string | null
   excerpt: string | null
   mainImage: {
     asset: {
@@ -1236,12 +1237,53 @@ export type LatestPostsQueryResult = Array<{
     _type: 'image'
   } | null
   publishedAt: string | null
-  author: {
-    name: string | null
-  } | null
   categories: Array<{
     title: string | null
-    slug: Slug | null
+    slug: string | null
+  }> | null
+}>
+
+// Source: sanity/queries.ts
+// Variable: latestPostsQuery
+// Query: *[_type == "post" && (!defined($excludeSlugs) || !(slug.current in $excludeSlugs))] | order(publishedAt desc) [0...$limit] {    _id,    title,    "slug": slug.current,    excerpt,    mainImage { ..., asset-> },    publishedAt,    "categories": categories[]-> { title, "slug": slug.current }  }
+export type LatestPostsQueryResult = Array<{
+  _id: string
+  title: string | null
+  slug: string | null
+  excerpt: string | null
+  mainImage: {
+    asset: {
+      _id: string
+      _type: 'sanity.imageAsset'
+      _createdAt: string
+      _updatedAt: string
+      _rev: string
+      originalFilename?: string
+      label?: string
+      title?: string
+      description?: string
+      altText?: string
+      sha1hash?: string
+      extension?: string
+      mimeType?: string
+      size?: number
+      assetId?: string
+      uploadId?: string
+      path?: string
+      url?: string
+      metadata?: SanityImageMetadata
+      source?: SanityAssetSourceData
+    } | null
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  } | null
+  publishedAt: string | null
+  categories: Array<{
+    title: string | null
+    slug: string | null
   }> | null
 }>
 
@@ -1594,11 +1636,12 @@ declare module '@sanity/client' {
     '\n  *[_type == "testimonial"] | order(_createdAt asc) {\n    _id,\n    authorName,\n    position,\n    company,\n    content,\n    rating,\n    photo { ..., asset-> },\n    publishedAt\n  }\n': AllTestimonialsQueryResult
     '\n  *[_type == "post"] | order(publishedAt desc) {\n    _id,\n    title,\n    slug,\n    excerpt,\n    mainImage { ..., asset-> },\n    "author": author-> {\n      name,\n      photo { ..., asset-> }\n    },\n    "categories": categories[]-> { title, slug },\n    publishedAt\n  }\n': AllPostsQueryResult
     '\n  *[_type == "post" && featured == true] | order(publishedAt desc) [0...3] {\n    _id,\n    title,\n    slug,\n    excerpt,\n    mainImage { ..., asset-> },\n    "author": author-> {\n      name,\n      photo { ..., asset-> }\n    },\n    "categories": categories[]-> { title, slug },\n    publishedAt\n  }\n': FeaturedPostsQueryResult
-    '\n  *[_type == "post" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    excerpt,\n    mainImage { ..., asset-> },\n    body,\n    "author": author-> {\n      name,\n      slug,\n      bio,\n      photo { ..., asset-> },\n      social\n    },\n    "categories": categories[]-> { title, slug },\n    publishedAt,\n    featured,\n    seo {\n      metaTitle,\n      metaDescription,\n      ogImage { ..., asset-> }\n    }\n  }\n': PostBySlugQueryResult
+    '\n  *[_type == "post" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    excerpt,\n    mainImage { ..., asset-> },\n    body,\n    "author": author-> {\n      name,\n      slug,\n      bio,\n      photo { ..., asset-> },\n      social\n    },\n    "categories": categories[]-> { _id, title, slug },\n    publishedAt,\n    featured,\n    seo {\n      metaTitle,\n      metaDescription,\n      ogImage { ..., asset-> }\n    }\n  }\n': PostBySlugQueryResult
     '\n  *[_type == "post"] { "slug": slug.current }\n': AllPostsSlugsQueryResult
     '\n  *[_type == "post" && $categorySlug in categories[]->slug.current] | order(publishedAt desc) {\n    _id,\n    title,\n    slug,\n    excerpt,\n    mainImage { ..., asset-> },\n    "author": author-> {\n      name,\n      photo { ..., asset-> }\n    },\n    "categories": categories[]-> { title, slug },\n    publishedAt\n  }\n': PostsByCategoryQueryResult
     '\n  *[_type == "category"] | order(title asc) {\n    _id,\n    title,\n    slug,\n    description\n  }\n': AllCategoriesQueryResult
-    '\n  *[_type == "post"] | order(publishedAt desc) [0...$limit] {\n    _id,\n    title,\n    slug,\n    excerpt,\n    mainImage { ..., asset-> },\n    publishedAt,\n    "author": author-> { name },\n    "categories": categories[]-> { title, slug }\n  }\n': LatestPostsQueryResult
+    '\n  *[_type == "post" && slug.current != $slug && count((categories[]._ref)[@ in $categoryIds]) > 0] | order(publishedAt desc) [0...2] {\n    _id,\n    title,\n    "slug": slug.current,\n    excerpt,\n    mainImage { ..., asset-> },\n    publishedAt,\n    "categories": categories[]-> { title, "slug": slug.current }\n  }\n': RelatedPostsQueryResult
+    '\n  *[_type == "post" && (!defined($excludeSlugs) || !(slug.current in $excludeSlugs))] | order(publishedAt desc) [0...$limit] {\n    _id,\n    title,\n    "slug": slug.current,\n    excerpt,\n    mainImage { ..., asset-> },\n    publishedAt,\n    "categories": categories[]-> { title, "slug": slug.current }\n  }\n': LatestPostsQueryResult
     '\n  {\n    "posts": *[_type == "post" && (!defined($category) || $category == "" || $category in categories[]->slug.current)] | order(publishedAt desc) [$from...$to] {\n      _id,\n      title,\n      "slug": slug.current,\n      excerpt,\n      mainImage { ..., asset-> },\n      publishedAt,\n      "categories": categories[]-> { title, "slug": slug.current }\n    },\n    "total": count(*[_type == "post" && (!defined($category) || $category == "" || $category in categories[]->slug.current)])\n  }\n': BlogListingQueryResult
     '\n  *[_type == "category"] | order(title asc) {\n    _id,\n    title,\n    "slug": slug.current\n  }\n': BlogCategoriesQueryResult
     '\n  *[_type == "page" && defined(slug.current) && slug.current != "home"] {\n    "slug": slug.current\n  }\n': AllPagesSlugsQueryResult

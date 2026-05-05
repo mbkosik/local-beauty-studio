@@ -3,10 +3,18 @@ import type { Metadata } from 'next'
 import { PortableText } from '@portabletext/react'
 import { client } from '@/sanity/client'
 import { sanityFetch } from '@/sanity/live'
-import { postBySlugQuery, allPostsSlugsQuery, siteSettingsQuery } from '@/sanity/queries'
+import {
+  postBySlugQuery,
+  allPostsSlugsQuery,
+  siteSettingsQuery,
+  relatedPostsQuery,
+  latestPostsQuery,
+} from '@/sanity/queries'
 import { BlogPostLayout } from '@/components/blog/BlogPostLayout'
 import { portableTextComponents } from '@/components/blog/PortableTextComponents'
+import { PostCard } from '@/components/blog/PostCard'
 import { estimateReadingTime } from '@/lib/readingTime'
+import type { BlogPost } from '@/sanity/custom-types'
 
 export const revalidate = 3600
 
@@ -46,6 +54,25 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   const readingTime = estimateReadingTime(post.body ?? [])
 
+  const categoryIds = post.categories?.map((c) => c._id) ?? []
+  const related = await client.fetch(relatedPostsQuery, { slug, categoryIds })
+
+  const relatedPosts: BlogPost[] = (related ?? []).map((p) => p as unknown as BlogPost)
+
+  if (relatedPosts.length < 2) {
+    const excludeSlugs = [
+      slug,
+      ...relatedPosts.map((p) => p.slug).filter((s): s is string => s !== null),
+    ]
+    const fallback = await client.fetch(latestPostsQuery, {
+      limit: 2 - relatedPosts.length,
+      excludeSlugs,
+    })
+    for (const p of fallback ?? []) {
+      relatedPosts.push(p as unknown as BlogPost)
+    }
+  }
+
   return (
     <div className="py-16 md:py-24">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -54,6 +81,19 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             {post.body && <PortableText value={post.body} components={portableTextComponents} />}
           </div>
         </BlogPostLayout>
+
+        {relatedPosts.length > 0 && (
+          <section className="border-border mt-16 border-t pt-12">
+            <h2 className="font-heading text-foreground mb-8 text-2xl font-bold">
+              Powiązane artykuły
+            </h2>
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+              {relatedPosts.map((relatedPost) => (
+                <PostCard key={relatedPost._id} post={relatedPost} />
+              ))}
+            </div>
+          </section>
+        )}
       </div>
     </div>
   )

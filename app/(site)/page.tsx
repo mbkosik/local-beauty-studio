@@ -16,7 +16,7 @@ export default async function HomePage() {
     page.pageBuilder?.some((block) => block._type === 'sectionBlogPreview') ?? false
 
   const latestPosts = hasBlogPreview
-    ? (await sanityFetch({ query: latestPostsQuery, params: { limit: 3 } })).data
+    ? (await sanityFetch({ query: latestPostsQuery, params: { limit: 3, excludeSlugs: [] } })).data
     : null
 
   return <PageBuilder blocks={page.pageBuilder ?? []} extraData={{ latestPosts }} />

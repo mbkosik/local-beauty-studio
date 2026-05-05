@@ -117,7 +117,7 @@ export const postBySlugQuery = defineQuery(`
       photo { ..., asset-> },
       social
     },
-    "categories": categories[]-> { title, slug },
+    "categories": categories[]-> { _id, title, slug },
     publishedAt,
     featured,
     seo {
@@ -157,16 +157,27 @@ export const allCategoriesQuery = defineQuery(`
   }
 `)
 
-export const latestPostsQuery = defineQuery(`
-  *[_type == "post"] | order(publishedAt desc) [0...$limit] {
+export const relatedPostsQuery = defineQuery(`
+  *[_type == "post" && slug.current != $slug && count((categories[]._ref)[@ in $categoryIds]) > 0] | order(publishedAt desc) [0...2] {
     _id,
     title,
-    slug,
+    "slug": slug.current,
     excerpt,
     mainImage { ..., asset-> },
     publishedAt,
-    "author": author-> { name },
-    "categories": categories[]-> { title, slug }
+    "categories": categories[]-> { title, "slug": slug.current }
+  }
+`)
+
+export const latestPostsQuery = defineQuery(`
+  *[_type == "post" && (!defined($excludeSlugs) || !(slug.current in $excludeSlugs))] | order(publishedAt desc) [0...$limit] {
+    _id,
+    title,
+    "slug": slug.current,
+    excerpt,
+    mainImage { ..., asset-> },
+    publishedAt,
+    "categories": categories[]-> { title, "slug": slug.current }
   }
 `)
 
