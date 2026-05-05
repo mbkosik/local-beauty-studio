@@ -2,7 +2,17 @@ import { defineField, defineType } from 'sanity'
 
 export const sectionTextImage = defineType({
   name: 'sectionTextImage',
+  title: 'Sekcja: Tekst i zdjęcie',
   type: 'object',
+  preview: {
+    select: { heading: 'heading' },
+    prepare({ heading }) {
+      return {
+        title: 'Sekcja: Tekst i zdjęcie',
+        subtitle: heading ?? '(bez nagłówka)',
+      }
+    },
+  },
   fields: [
     defineField({
       name: 'heading',

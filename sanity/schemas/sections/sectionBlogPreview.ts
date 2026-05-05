@@ -2,8 +2,17 @@ import { defineField, defineType } from 'sanity'
 
 export const sectionBlogPreview = defineType({
   name: 'sectionBlogPreview',
+  title: 'Sekcja: Aktualności',
   type: 'object',
-  title: 'Sekcja: Podgląd bloga',
+  preview: {
+    select: { heading: 'heading' },
+    prepare({ heading }) {
+      return {
+        title: 'Sekcja: Aktualności',
+        subtitle: heading ?? '(bez nagłówka)',
+      }
+    },
+  },
   fields: [
     defineField({
       name: 'heading',

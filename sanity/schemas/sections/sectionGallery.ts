@@ -2,7 +2,17 @@ import { defineField, defineType } from 'sanity'
 
 export const sectionGallery = defineType({
   name: 'sectionGallery',
+  title: 'Sekcja: Galeria',
   type: 'object',
+  preview: {
+    select: { heading: 'heading' },
+    prepare({ heading }) {
+      return {
+        title: 'Sekcja: Galeria',
+        subtitle: heading ?? '(bez nagłówka)',
+      }
+    },
+  },
   fields: [
     defineField({
       name: 'heading',
