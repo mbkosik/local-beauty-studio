@@ -138,6 +138,14 @@
   --sidebar-ring: #c9a0a0;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+section[id] {
+  scroll-margin-top: 80px; /* wysokość navbara */
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

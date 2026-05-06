@@ -111,6 +111,14 @@
           },
           "optional": true
         },
+        "anchor": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "slug"
+          },
+          "optional": true
+        },
         "subheading": {
           "type": "objectAttribute",
           "value": {
@@ -138,6 +146,14 @@
           "type": "objectAttribute",
           "value": {
             "type": "string"
+          },
+          "optional": true
+        },
+        "anchor": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "slug"
           },
           "optional": true
         },
@@ -235,6 +251,14 @@
           "type": "objectAttribute",
           "value": {
             "type": "string"
+          },
+          "optional": true
+        },
+        "anchor": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "slug"
           },
           "optional": true
         },
@@ -344,6 +368,14 @@
           },
           "optional": true
         },
+        "anchor": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "slug"
+          },
+          "optional": true
+        },
         "images": {
           "type": "objectAttribute",
           "value": {
@@ -432,6 +464,14 @@
           "type": "objectAttribute",
           "value": {
             "type": "string"
+          },
+          "optional": true
+        },
+        "anchor": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "slug"
           },
           "optional": true
         },
@@ -532,6 +572,14 @@
           },
           "optional": true
         },
+        "anchor": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "slug"
+          },
+          "optional": true
+        },
         "testimonials": {
           "type": "objectAttribute",
           "value": {
@@ -604,6 +652,14 @@
           "type": "objectAttribute",
           "value": {
             "type": "string"
+          },
+          "optional": true
+        },
+        "anchor": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "slug"
           },
           "optional": true
         },
@@ -689,6 +745,14 @@
           },
           "optional": true
         },
+        "anchor": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "slug"
+          },
+          "optional": true
+        },
         "subheading": {
           "type": "objectAttribute",
           "value": {
@@ -738,6 +802,14 @@
           "type": "objectAttribute",
           "value": {
             "type": "string"
+          },
+          "optional": true
+        },
+        "anchor": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "slug"
           },
           "optional": true
         },
@@ -1011,6 +1083,14 @@
           "type": "objectAttribute",
           "value": {
             "type": "string"
+          },
+          "optional": true
+        },
+        "anchor": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "slug"
           },
           "optional": true
         },

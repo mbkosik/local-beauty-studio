@@ -4,13 +4,14 @@ import type { SectionStats } from '@/sanity.types'
 
 interface StatsSectionProps {
   data: SectionStats
+  id?: string
 }
 
-export function StatsSection({ data }: StatsSectionProps) {
+export function StatsSection({ data, id }: StatsSectionProps) {
   const { heading, items } = data
 
   return (
-    <AnimatedSection as="section" className="py-16 md:py-24">
+    <AnimatedSection as="section" id={id} className="py-16 md:py-24">
       <div className="container mx-auto px-4">
         {heading && (
           <h2 className="font-heading mb-12 text-center text-3xl font-bold md:text-4xl">

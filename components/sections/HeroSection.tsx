@@ -9,9 +9,10 @@ import type { SectionHero } from '@/sanity.types'
 
 interface HeroSectionProps {
   data: SectionHero
+  id?: string
 }
 
-export function HeroSection({ data }: HeroSectionProps) {
+export function HeroSection({ data, id }: HeroSectionProps) {
   const { heading, subheading, primaryCta, secondaryCta, backgroundImage } = data
   const reducedMotion = useReducedMotion()
   const hasImage = !!backgroundImage?.asset
@@ -24,6 +25,7 @@ export function HeroSection({ data }: HeroSectionProps) {
 
   return (
     <section
+      id={id}
       aria-label="Baner główny"
       className={cn('relative min-h-svh', !hasImage && 'bg-brand/20')}
     >

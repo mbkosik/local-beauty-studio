@@ -7,6 +7,7 @@ import type { SectionTextImage } from '@/sanity.types'
 
 interface TextImageSectionProps {
   data: SectionTextImage
+  id?: string
 }
 
 const portableTextComponents = {
@@ -17,7 +18,7 @@ const portableTextComponents = {
   },
 }
 
-export function TextImageSection({ data }: TextImageSectionProps) {
+export function TextImageSection({ data, id }: TextImageSectionProps) {
   const { heading, body, image, imagePosition = 'right' } = data
   const prefersReducedMotion = useReducedMotion()
 
@@ -27,7 +28,7 @@ export function TextImageSection({ data }: TextImageSectionProps) {
   if (!image?.asset || !body) return null
 
   return (
-    <section className="py-16 md:py-24">
+    <section id={id} className="py-16 md:py-24">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
           {/* Image — always on top on mobile (first in DOM), position swapped on desktop */}

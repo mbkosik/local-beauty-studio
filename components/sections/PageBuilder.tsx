@@ -36,37 +36,62 @@ export function PageBuilder({ blocks }: Props) {
   return (
     <>
       {blocks.map((block) => {
+        const id = block.anchor?.current ?? undefined
         switch (block._type) {
           case 'sectionHero':
-            return <HeroSection key={block._key} data={asSection<SectionHero>(block)} />
+            return <HeroSection key={block._key} id={id} data={asSection<SectionHero>(block)} />
           case 'sectionTextImage':
-            return <TextImageSection key={block._key} data={asSection<SectionTextImage>(block)} />
+            return (
+              <TextImageSection
+                key={block._key}
+                id={id}
+                data={asSection<SectionTextImage>(block)}
+              />
+            )
           case 'sectionServices':
-            return <ServicesSection key={block._key} data={asSection<ServicesSectionData>(block)} />
+            return (
+              <ServicesSection
+                key={block._key}
+                id={id}
+                data={asSection<ServicesSectionData>(block)}
+              />
+            )
           case 'sectionPricing':
-            return <PricingSection key={block._key} data={asSection<PricingSectionData>(block)} />
+            return (
+              <PricingSection
+                key={block._key}
+                id={id}
+                data={asSection<PricingSectionData>(block)}
+              />
+            )
           case 'sectionTestimonials':
             return (
               <TestimonialsSection
                 key={block._key}
+                id={id}
                 data={asSection<TestimonialsSectionData>(block)}
               />
             )
           case 'sectionStats':
-            return <StatsSection key={block._key} data={asSection<SectionStats>(block)} />
+            return <StatsSection key={block._key} id={id} data={asSection<SectionStats>(block)} />
           case 'sectionGallery':
-            return <GallerySection key={block._key} data={asSection<SectionGallery>(block)} />
+            return (
+              <GallerySection key={block._key} id={id} data={asSection<SectionGallery>(block)} />
+            )
           case 'sectionBlogPreview':
             return (
               <BlogPreviewSection
                 key={block._key}
+                id={id}
                 data={asSection<BlogPreviewSectionData>(block)}
               />
             )
           case 'sectionCta':
-            return <CtaSection key={block._key} data={asSection<SectionCta>(block)} />
+            return <CtaSection key={block._key} id={id} data={asSection<SectionCta>(block)} />
           case 'sectionContact':
-            return <ContactSection key={block._key} data={asSection<SectionContact>(block)} />
+            return (
+              <ContactSection key={block._key} id={id} data={asSection<SectionContact>(block)} />
+            )
           default:
             console.warn('[PageBuilder] Unknown block type:', (block as { _type: string })._type)
             return null

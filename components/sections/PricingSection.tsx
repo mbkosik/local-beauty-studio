@@ -13,16 +13,17 @@ import type { PricingSectionData } from '@/sanity/custom-types'
 
 interface PricingSectionProps {
   data: PricingSectionData
+  id?: string
 }
 
-export function PricingSection({ data }: PricingSectionProps) {
+export function PricingSection({ data, id }: PricingSectionProps) {
   const { heading, subheading, items } = data
 
   const validItems = items?.filter((item) => item !== null) ?? []
   if (!validItems.length) return null
 
   return (
-    <AnimatedSection as="section" className="py-16 md:py-24">
+    <AnimatedSection as="section" id={id} className="py-16 md:py-24">
       <div className="container mx-auto px-4">
         {(heading || subheading) && (
           <div className="mb-12 text-center">

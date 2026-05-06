@@ -7,9 +7,10 @@ import type { BlogPost } from '@/sanity/custom-types'
 
 interface BlogPreviewSectionProps {
   data: BlogPreviewSectionData
+  id?: string
 }
 
-export function BlogPreviewSection({ data }: BlogPreviewSectionProps) {
+export function BlogPreviewSection({ data, id }: BlogPreviewSectionProps) {
   const { heading, subheading, posts, showViewAll } = data
 
   if (!posts || posts.length === 0) return null
@@ -23,7 +24,7 @@ export function BlogPreviewSection({ data }: BlogPreviewSectionProps) {
   })) as unknown as BlogPost[]
 
   return (
-    <AnimatedSection as="section" className="py-16 md:py-24">
+    <AnimatedSection as="section" id={id} className="py-16 md:py-24">
       <div className="container mx-auto px-4">
         <div className="mb-12 text-center">
           <h2 className="text-3xl font-bold tracking-tight md:text-4xl">{heading}</h2>

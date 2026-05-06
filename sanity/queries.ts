@@ -220,6 +220,7 @@ export const pageQuery = defineQuery(`
       _type,
       _key,
       _type == "sectionHero" => {
+        anchor,
         heading,
         subheading,
         primaryCta,
@@ -227,12 +228,14 @@ export const pageQuery = defineQuery(`
         backgroundImage { ..., asset-> }
       },
       _type == "sectionTextImage" => {
+        anchor,
         heading,
         body,
         image { ..., asset-> },
         imagePosition
       },
       _type == "sectionServices" => {
+        anchor,
         heading,
         subheading,
         services[]-> {
@@ -241,6 +244,7 @@ export const pageQuery = defineQuery(`
         }
       },
       _type == "sectionPricing" => {
+        anchor,
         heading,
         subheading,
         items[]-> {
@@ -252,6 +256,7 @@ export const pageQuery = defineQuery(`
         }
       },
       _type == "sectionTestimonials" => {
+        anchor,
         heading,
         testimonials[]-> {
           _id, authorName, position, company, content, rating,
@@ -259,15 +264,18 @@ export const pageQuery = defineQuery(`
         }
       },
       _type == "sectionStats" => {
+        anchor,
         heading,
         items
       },
       _type == "sectionGallery" => {
+        anchor,
         heading,
         images[] { ..., asset-> }
       },
       _type == "sectionBlogPreview" => {
         _type,
+        anchor,
         heading,
         subheading,
         mode,
@@ -284,6 +292,7 @@ export const pageQuery = defineQuery(`
         )
       },
       _type == "sectionCta" => {
+        anchor,
         heading,
         subheading,
         primaryCta,
@@ -291,6 +300,7 @@ export const pageQuery = defineQuery(`
         variant
       },
       _type == "sectionContact" => {
+        anchor,
         heading,
         subheading
       }
