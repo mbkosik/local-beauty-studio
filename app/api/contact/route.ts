@@ -8,9 +8,14 @@ import { client } from '@/sanity/client'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
-const OWNER_EMAIL = 'delivered@resend.dev'
-
 export async function POST(request: Request) {
+  if (!process.env.CONTACT_FROM_EMAIL || !process.env.CONTACT_TO_EMAIL) {
+    return Response.json({ error: 'Brak konfiguracji email' }, { status: 500 })
+  }
+
+  const fromEmail = process.env.CONTACT_FROM_EMAIL
+  const toEmail = process.env.CONTACT_TO_EMAIL
+
   let body: unknown
   try {
     body = await request.json()
@@ -42,15 +47,15 @@ export async function POST(request: Request) {
   try {
     await Promise.all([
       resend.emails.send({
-        from: 'Formularz kontaktowy <onboarding@resend.dev>',
-        to: OWNER_EMAIL,
+        from: `Formularz kontaktowy <${fromEmail}>`,
+        to: toEmail,
         subject: `Nowa wiadomość od: ${data.name}`,
         html: await render(ContactNotificationEmail(emailProps)),
       }),
       resend.emails.send({
-        from: `${businessName} <onboarding@resend.dev>`,
+        from: `${businessName} <${fromEmail}>`,
         to: data.email,
-        replyTo: OWNER_EMAIL,
+        replyTo: toEmail,
         subject: `Dziękujemy za wiadomość, ${data.name}`,
         html: await render(ContactConfirmationEmail({ ...emailProps, studioName: businessName })),
       }),
