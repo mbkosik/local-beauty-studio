@@ -14,10 +14,11 @@ import {
 export interface ContactEmailProps {
   name: string
   email: string
+  phone?: string
   message: string
 }
 
-export function ContactNotificationEmail({ name, email, message }: ContactEmailProps) {
+export function ContactNotificationEmail({ name, email, phone, message }: ContactEmailProps) {
   return (
     <Html lang="pl">
       <Head />
@@ -87,6 +88,19 @@ export function ContactNotificationEmail({ name, email, message }: ContactEmailP
               >
                 {email}
               </Link>
+
+              {phone && (
+                <Text
+                  style={{
+                    fontFamily: 'Arial, Helvetica, sans-serif',
+                    fontSize: '15px',
+                    color: '#555555',
+                    margin: '8px 0 0',
+                  }}
+                >
+                  {phone}
+                </Text>
+              )}
 
               <Hr style={{ borderColor: '#f0e8e8', margin: '24px 0' }} />
 

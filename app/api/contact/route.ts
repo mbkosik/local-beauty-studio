@@ -25,7 +25,7 @@ export async function POST(request: Request) {
 
   const result = contactSchema.safeParse(body)
   if (!result.success) {
-    return Response.json({ errors: result.error.flatten().fieldErrors }, { status: 400 })
+    return Response.json({ errors: result.error.issues }, { status: 400 })
   }
 
   const data = result.data
@@ -42,7 +42,12 @@ export async function POST(request: Request) {
     `*[_type == "siteSettings"][0]{ businessName }`
   )
 
-  const emailProps = { name: data.name, email: data.email, message: data.message }
+  const emailProps = {
+    name: data.name,
+    email: data.email,
+    phone: data.phone,
+    message: data.message,
+  }
 
   try {
     await Promise.all([

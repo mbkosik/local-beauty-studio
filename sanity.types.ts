@@ -40,6 +40,25 @@ export type SectionContact = {
   heading?: string
   anchor?: Slug
   subheading?: string
+  body?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'normal'
+    listItem?: never
+    markDefs?: Array<{
+      href?: string
+      blank?: boolean
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
 }
 
 export type SectionCta = {
@@ -1400,6 +1419,16 @@ export type BlogCategoriesQueryResult = Array<{
 }>
 
 // Source: sanity/queries.ts
+// Variable: contactSiteSettingsQuery
+// Query: *[_type == "siteSettings"][0] {    businessName,    email,    phone,    address  }
+export type ContactSiteSettingsQueryResult = {
+  businessName: string | null
+  email: string | null
+  phone: string | null
+  address: string | null
+} | null
+
+// Source: sanity/queries.ts
 // Variable: allPagesSlugsQuery
 // Query: *[_type == "page" && defined(slug.current) && slug.current != "home"] {    "slug": slug.current  }
 export type AllPagesSlugsQueryResult = Array<{
@@ -1729,6 +1758,7 @@ declare module '@sanity/client' {
     '\n  *[_type == "post" && (!defined($excludeSlugs) || !(slug.current in $excludeSlugs))] | order(publishedAt desc) [0...$limit] {\n    _id,\n    title,\n    "slug": slug.current,\n    excerpt,\n    mainImage { ..., asset-> },\n    publishedAt,\n    "categories": categories[]-> { title, "slug": slug.current }\n  }\n': LatestPostsQueryResult
     '\n  {\n    "posts": *[_type == "post" && (!defined($category) || $category == "" || $category in categories[]->slug.current)] | order(publishedAt desc) [$from...$to] {\n      _id,\n      title,\n      "slug": slug.current,\n      excerpt,\n      mainImage { ..., asset-> },\n      publishedAt,\n      "categories": categories[]-> { title, "slug": slug.current }\n    },\n    "total": count(*[_type == "post" && (!defined($category) || $category == "" || $category in categories[]->slug.current)])\n  }\n': BlogListingQueryResult
     '\n  *[_type == "category"] | order(title asc) {\n    _id,\n    title,\n    "slug": slug.current\n  }\n': BlogCategoriesQueryResult
+    '\n  *[_type == "siteSettings"][0] {\n    businessName,\n    email,\n    phone,\n    address\n  }\n': ContactSiteSettingsQueryResult
     '\n  *[_type == "page" && defined(slug.current) && slug.current != "home"] {\n    "slug": slug.current\n  }\n': AllPagesSlugsQueryResult
     '\n  *[_type == "page" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    seo,\n    pageBuilder[] {\n      _type,\n      _key,\n      _type == "sectionHero" => {\n        anchor,\n        heading,\n        subheading,\n        primaryCta,\n        secondaryCta,\n        backgroundImage { ..., asset-> }\n      },\n      _type == "sectionTextImage" => {\n        anchor,\n        heading,\n        body,\n        image { ..., asset-> },\n        imagePosition\n      },\n      _type == "sectionServices" => {\n        anchor,\n        heading,\n        subheading,\n        services[]-> {\n          _id, title, description, icon,\n          image { ..., asset-> }\n        }\n      },\n      _type == "sectionPricing" => {\n        anchor,\n        heading,\n        subheading,\n        items[]-> {\n          _id,\n          name,\n          duration,\n          price,\n          description\n        }\n      },\n      _type == "sectionTestimonials" => {\n        anchor,\n        heading,\n        testimonials[]-> {\n          _id, authorName, position, company, content, rating,\n          photo { ..., asset-> }\n        }\n      },\n      _type == "sectionStats" => {\n        anchor,\n        heading,\n        items\n      },\n      _type == "sectionGallery" => {\n        anchor,\n        heading,\n        images[] { ..., asset-> }\n      },\n      _type == "sectionBlogPreview" => {\n        _type,\n        anchor,\n        heading,\n        subheading,\n        mode,\n        showViewAll,\n        "posts": select(\n          mode == "manual" => posts[]->{\n            _id, title, slug, excerpt, mainImage, publishedAt,\n            "categories": categories[]->{title}\n          },\n          *[_type == "post"] | order(publishedAt desc) [0..2] {\n            _id, title, slug, excerpt, mainImage, publishedAt,\n            "categories": categories[]->{title}\n          }\n        )\n      },\n      _type == "sectionCta" => {\n        anchor,\n        heading,\n        subheading,\n        primaryCta,\n        secondaryCta,\n        variant\n      },\n      _type == "sectionContact" => {\n        anchor,\n        heading,\n        subheading\n      }\n    }\n  }\n': PageQueryResult
   }

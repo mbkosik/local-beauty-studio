@@ -204,6 +204,15 @@ export const blogCategoriesQuery = defineQuery(`
   }
 `)
 
+export const contactSiteSettingsQuery = defineQuery(`
+  *[_type == "siteSettings"][0] {
+    businessName,
+    email,
+    phone,
+    address
+  }
+`)
+
 export const allPagesSlugsQuery = defineQuery(`
   *[_type == "page" && defined(slug.current) && slug.current != "home"] {
     "slug": slug.current
@@ -302,7 +311,8 @@ export const pageQuery = defineQuery(`
       _type == "sectionContact" => {
         anchor,
         heading,
-        subheading
+        subheading,
+        body
       }
     }
   }

@@ -41,5 +41,40 @@ export const sectionContact = defineType({
       name: 'subheading',
       type: 'string',
     }),
+    defineField({
+      name: 'body',
+      title: 'Treść boczna (prawa kolumna)',
+      description: 'Tekst wyświetlany obok formularza. Obsługuje pogrubienie, kursywę i linki.',
+      type: 'array',
+      of: [
+        {
+          type: 'block',
+          styles: [{ title: 'Normalny', value: 'normal' }],
+          lists: [],
+          marks: {
+            decorators: [
+              { title: 'Pogrubienie', value: 'strong' },
+              { title: 'Kursywa', value: 'em' },
+            ],
+            annotations: [
+              {
+                name: 'link',
+                type: 'object',
+                title: 'Link',
+                fields: [
+                  { name: 'href', type: 'url', title: 'URL' },
+                  {
+                    name: 'blank',
+                    type: 'boolean',
+                    title: 'Otwórz w nowej karcie',
+                    initialValue: false,
+                  },
+                ],
+              },
+            ],
+          },
+        },
+      ],
+    }),
   ],
 })
