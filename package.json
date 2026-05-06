@@ -12,7 +12,8 @@
     "format:check": "prettier --check .",
     "prepare": "husky",
     "postinstall": "node scripts/copy-vendor-css.mjs",
-    "typegen": "sanity schema extract && sanity typegen generate"
+    "typegen": "sanity schema extract && sanity typegen generate",
+    "import-posts": "npx tsx scripts/import-posts.ts"
   },
   "dependencies": {
     "@portabletext/react": "^6.0.3",
