@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@portabletext/react": "^6.0.3",
+    "@react-email/components": "^1.0.12",
     "@sanity/image-url": "^2.1.1",
     "@sanity/vision": "^5.23.0",
     "class-variance-authority": "^0.7.1",
@@ -32,6 +33,7 @@
     "radix-ui": "^1.4.3",
     "react": "19.2.4",
     "react-dom": "19.2.4",
+    "react-email": "^6.1.1",
     "resend": "^6.12.2",
     "sanity": "^5.23.0",
     "sanity-plugin-lucide-icon-picker": "^1.0.3",
