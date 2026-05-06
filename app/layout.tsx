@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Playfair_Display, Lato } from 'next/font/google'
 import './globals.css'
 import { ThemeProvider } from '@/components/shared/ThemeProvider'
-import { SanityLive, sanityFetch } from '@/sanity/live'
+import { sanityFetch } from '@/sanity/live'
 import { siteSettingsQuery } from '@/sanity/queries'
 import { Toaster } from '@/components/ui/sonner'
 
@@ -63,7 +63,6 @@ export default function RootLayout({
           {children}
           <Toaster richColors position="bottom-center" />
         </ThemeProvider>
-        <SanityLive />
       </body>
     </html>
   )
