@@ -20,8 +20,61 @@ export const sectionContact = defineType({
       initialValue: 'Kontakt',
     }),
     defineField({
+      name: 'anchor',
+      title: 'Anchor (link kotwicy)',
+      description: 'Unikalny identyfikator sekcji. Używany do linków #anchor.',
+      type: 'slug',
+      options: {
+        source: (_, options) => (options.parent as { heading?: string | null })?.heading ?? '',
+        slugify: (input: string) =>
+          input
+            .toLowerCase()
+            .replace(/ł/g, 'l')
+            .replace(/Ł/g, 'L')
+            .normalize('NFD')
+            .replace(/[̀-ͯ]/g, '')
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/(^-|-$)/g, ''),
+      },
+    }),
+    defineField({
       name: 'subheading',
       type: 'string',
+    }),
+    defineField({
+      name: 'body',
+      title: 'Treść boczna (prawa kolumna)',
+      description: 'Tekst wyświetlany obok formularza. Obsługuje pogrubienie, kursywę i linki.',
+      type: 'array',
+      of: [
+        {
+          type: 'block',
+          styles: [{ title: 'Normalny', value: 'normal' }],
+          lists: [],
+          marks: {
+            decorators: [
+              { title: 'Pogrubienie', value: 'strong' },
+              { title: 'Kursywa', value: 'em' },
+            ],
+            annotations: [
+              {
+                name: 'link',
+                type: 'object',
+                title: 'Link',
+                fields: [
+                  { name: 'href', type: 'url', title: 'URL' },
+                  {
+                    name: 'blank',
+                    type: 'boolean',
+                    title: 'Otwórz w nowej karcie',
+                    initialValue: false,
+                  },
+                ],
+              },
+            ],
+          },
+        },
+      ],
     }),
   ],
 })

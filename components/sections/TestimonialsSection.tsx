@@ -17,9 +17,10 @@ import type { TestimonialsSectionData } from '@/sanity/custom-types'
 
 interface TestimonialsSectionProps {
   data: TestimonialsSectionData
+  id?: string
 }
 
-export function TestimonialsSection({ data }: TestimonialsSectionProps) {
+export function TestimonialsSection({ data, id }: TestimonialsSectionProps) {
   const { heading, testimonials } = data
   const prefersReducedMotion = useReducedMotion()
 
@@ -73,7 +74,7 @@ export function TestimonialsSection({ data }: TestimonialsSectionProps) {
   const showDots = testimonials.length > 1 && visibleCount < testimonials.length
 
   return (
-    <AnimatedSection as="section" className="py-16 md:py-24">
+    <AnimatedSection as="section" id={id} className="py-16 md:py-24">
       <div className="container mx-auto px-4">
         {heading && (
           <div className="mb-12 text-center">

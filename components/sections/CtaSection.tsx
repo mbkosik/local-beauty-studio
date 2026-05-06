@@ -9,6 +9,7 @@ import type { SectionCta } from '@/sanity.types'
 
 interface CtaSectionProps {
   data: SectionCta
+  id?: string
 }
 
 const BTN_VARIANTS: Variants = {
@@ -61,7 +62,7 @@ function externalProps(href: string) {
   return href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {}
 }
 
-export function CtaSection({ data }: CtaSectionProps) {
+export function CtaSection({ data, id }: CtaSectionProps) {
   const { heading, subheading, primaryCta, secondaryCta, variant = 'brand' } = data
   const prefersReducedMotion = useReducedMotion()
 
@@ -70,7 +71,7 @@ export function CtaSection({ data }: CtaSectionProps) {
   const hasSecondary = !!(secondaryCta?.label && secondaryCta?.href)
 
   return (
-    <AnimatedSection as="section" className={cn('py-20 lg:py-28', cfg.section)}>
+    <AnimatedSection as="section" id={id} className={cn('py-20 lg:py-28', cfg.section)}>
       <div className="container mx-auto px-4">
         <div className="mx-auto max-w-3xl text-center">
           {heading && (

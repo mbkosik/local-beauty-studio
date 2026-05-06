@@ -38,12 +38,33 @@ export type SectionCtaSecondaryCta = {
 export type SectionContact = {
   _type: 'sectionContact'
   heading?: string
+  anchor?: Slug
   subheading?: string
+  body?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'normal'
+    listItem?: never
+    markDefs?: Array<{
+      href?: string
+      blank?: boolean
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
 }
 
 export type SectionCta = {
   _type: 'sectionCta'
   heading?: string
+  anchor?: Slug
   subheading?: string
   primaryCta?: SectionCtaPrimaryCta
   secondaryCta?: SectionCtaSecondaryCta
@@ -60,6 +81,7 @@ export type PostReference = {
 export type SectionBlogPreview = {
   _type: 'sectionBlogPreview'
   heading?: string
+  anchor?: Slug
   subheading?: string
   mode?: 'latest' | 'manual'
   posts?: Array<
@@ -80,6 +102,7 @@ export type SanityImageAssetReference = {
 export type SectionGallery = {
   _type: 'sectionGallery'
   heading?: string
+  anchor?: Slug
   images?: Array<{
     asset?: SanityImageAssetReference
     media?: unknown
@@ -94,6 +117,7 @@ export type SectionGallery = {
 export type SectionStats = {
   _type: 'sectionStats'
   heading?: string
+  anchor?: Slug
   items?: Array<{
     value?: string
     label?: string
@@ -112,6 +136,7 @@ export type TestimonialReference = {
 export type SectionTestimonials = {
   _type: 'sectionTestimonials'
   heading?: string
+  anchor?: Slug
   testimonials?: Array<
     {
       _key: string
@@ -129,6 +154,7 @@ export type PricingItemReference = {
 export type SectionPricing = {
   _type: 'sectionPricing'
   heading?: string
+  anchor?: Slug
   subheading?: string
   items?: Array<
     {
@@ -147,6 +173,7 @@ export type ServiceReference = {
 export type SectionServices = {
   _type: 'sectionServices'
   heading?: string
+  anchor?: Slug
   subheading?: string
   services?: Array<
     {
@@ -158,6 +185,7 @@ export type SectionServices = {
 export type SectionTextImage = {
   _type: 'sectionTextImage'
   heading?: string
+  anchor?: Slug
   body?: Array<{
     children?: Array<{
       marks?: Array<string>
@@ -190,6 +218,7 @@ export type SectionTextImage = {
 export type SectionHero = {
   _type: 'sectionHero'
   heading?: string
+  anchor?: Slug
   subheading?: string
   primaryCta?: PrimaryCta
   secondaryCta?: SecondaryCta
@@ -1390,6 +1419,16 @@ export type BlogCategoriesQueryResult = Array<{
 }>
 
 // Source: sanity/queries.ts
+// Variable: contactSiteSettingsQuery
+// Query: *[_type == "siteSettings"][0] {    businessName,    email,    phone,    address  }
+export type ContactSiteSettingsQueryResult = {
+  businessName: string | null
+  email: string | null
+  phone: string | null
+  address: string | null
+} | null
+
+// Source: sanity/queries.ts
 // Variable: allPagesSlugsQuery
 // Query: *[_type == "page" && defined(slug.current) && slug.current != "home"] {    "slug": slug.current  }
 export type AllPagesSlugsQueryResult = Array<{
@@ -1398,7 +1437,7 @@ export type AllPagesSlugsQueryResult = Array<{
 
 // Source: sanity/queries.ts
 // Variable: pageQuery
-// Query: *[_type == "page" && slug.current == $slug][0] {    _id,    title,    slug,    seo,    pageBuilder[] {      _type,      _key,      _type == "sectionHero" => {        heading,        subheading,        primaryCta,        secondaryCta,        backgroundImage { ..., asset-> }      },      _type == "sectionTextImage" => {        heading,        body,        image { ..., asset-> },        imagePosition      },      _type == "sectionServices" => {        heading,        subheading,        services[]-> {          _id, title, description, icon,          image { ..., asset-> }        }      },      _type == "sectionPricing" => {        heading,        subheading,        items[]-> {          _id,          name,          duration,          price,          description        }      },      _type == "sectionTestimonials" => {        heading,        testimonials[]-> {          _id, authorName, position, company, content, rating,          photo { ..., asset-> }        }      },      _type == "sectionStats" => {        heading,        items      },      _type == "sectionGallery" => {        heading,        images[] { ..., asset-> }      },      _type == "sectionBlogPreview" => {        _type,        heading,        subheading,        mode,        showViewAll,        "posts": select(          mode == "manual" => posts[]->{            _id, title, slug, excerpt, mainImage, publishedAt,            "categories": categories[]->{title}          },          *[_type == "post"] | order(publishedAt desc) [0..2] {            _id, title, slug, excerpt, mainImage, publishedAt,            "categories": categories[]->{title}          }        )      },      _type == "sectionCta" => {        heading,        subheading,        primaryCta,        secondaryCta,        variant      },      _type == "sectionContact" => {        heading,        subheading      }    }  }
+// Query: *[_type == "page" && slug.current == $slug][0] {    _id,    title,    slug,    seo,    pageBuilder[] {      _type,      _key,      _type == "sectionHero" => {        anchor,        heading,        subheading,        primaryCta,        secondaryCta,        backgroundImage { ..., asset-> }      },      _type == "sectionTextImage" => {        anchor,        heading,        body,        image { ..., asset-> },        imagePosition      },      _type == "sectionServices" => {        anchor,        heading,        subheading,        services[]-> {          _id, title, description, icon,          image { ..., asset-> }        }      },      _type == "sectionPricing" => {        anchor,        heading,        subheading,        items[]-> {          _id,          name,          duration,          price,          description        }      },      _type == "sectionTestimonials" => {        anchor,        heading,        testimonials[]-> {          _id, authorName, position, company, content, rating,          photo { ..., asset-> }        }      },      _type == "sectionStats" => {        anchor,        heading,        items      },      _type == "sectionGallery" => {        anchor,        heading,        images[] { ..., asset-> }      },      _type == "sectionBlogPreview" => {        _type,        anchor,        heading,        subheading,        mode,        showViewAll,        "posts": select(          mode == "manual" => posts[]->{            _id, title, slug, excerpt, mainImage, publishedAt,            "categories": categories[]->{title}          },          *[_type == "post"] | order(publishedAt desc) [0..2] {            _id, title, slug, excerpt, mainImage, publishedAt,            "categories": categories[]->{title}          }        )      },      _type == "sectionCta" => {        anchor,        heading,        subheading,        primaryCta,        secondaryCta,        variant      },      _type == "sectionContact" => {        anchor,        heading,        subheading      }    }  }
 export type PageQueryResult = {
   _id: string
   title: string | null
@@ -1418,6 +1457,7 @@ export type PageQueryResult = {
     | {
         _type: 'sectionBlogPreview'
         _key: string
+        anchor: Slug | null
         heading: string | null
         subheading: string | null
         mode: 'latest' | 'manual' | null
@@ -1444,12 +1484,14 @@ export type PageQueryResult = {
     | {
         _type: 'sectionContact'
         _key: string
+        anchor: Slug | null
         heading: string | null
         subheading: string | null
       }
     | {
         _type: 'sectionCta'
         _key: string
+        anchor: Slug | null
         heading: string | null
         subheading: string | null
         primaryCta: SectionCtaPrimaryCta | null
@@ -1459,6 +1501,7 @@ export type PageQueryResult = {
     | {
         _type: 'sectionGallery'
         _key: string
+        anchor: Slug | null
         heading: string | null
         images: Array<{
           asset: {
@@ -1494,6 +1537,7 @@ export type PageQueryResult = {
     | {
         _type: 'sectionHero'
         _key: string
+        anchor: Slug | null
         heading: string | null
         subheading: string | null
         primaryCta: PrimaryCta | null
@@ -1531,6 +1575,7 @@ export type PageQueryResult = {
     | {
         _type: 'sectionPricing'
         _key: string
+        anchor: Slug | null
         heading: string | null
         subheading: string | null
         items: Array<{
@@ -1544,6 +1589,7 @@ export type PageQueryResult = {
     | {
         _type: 'sectionServices'
         _key: string
+        anchor: Slug | null
         heading: string | null
         subheading: string | null
         services: Array<{
@@ -1585,6 +1631,7 @@ export type PageQueryResult = {
     | {
         _type: 'sectionStats'
         _key: string
+        anchor: Slug | null
         heading: string | null
         items: Array<{
           value?: string
@@ -1596,6 +1643,7 @@ export type PageQueryResult = {
     | {
         _type: 'sectionTestimonials'
         _key: string
+        anchor: Slug | null
         heading: string | null
         testimonials: Array<{
           _id: string
@@ -1638,6 +1686,7 @@ export type PageQueryResult = {
     | {
         _type: 'sectionTextImage'
         _key: string
+        anchor: Slug | null
         heading: string | null
         body: Array<{
           children?: Array<{
@@ -1709,7 +1758,8 @@ declare module '@sanity/client' {
     '\n  *[_type == "post" && (!defined($excludeSlugs) || !(slug.current in $excludeSlugs))] | order(publishedAt desc) [0...$limit] {\n    _id,\n    title,\n    "slug": slug.current,\n    excerpt,\n    mainImage { ..., asset-> },\n    publishedAt,\n    "categories": categories[]-> { title, "slug": slug.current }\n  }\n': LatestPostsQueryResult
     '\n  {\n    "posts": *[_type == "post" && (!defined($category) || $category == "" || $category in categories[]->slug.current)] | order(publishedAt desc) [$from...$to] {\n      _id,\n      title,\n      "slug": slug.current,\n      excerpt,\n      mainImage { ..., asset-> },\n      publishedAt,\n      "categories": categories[]-> { title, "slug": slug.current }\n    },\n    "total": count(*[_type == "post" && (!defined($category) || $category == "" || $category in categories[]->slug.current)])\n  }\n': BlogListingQueryResult
     '\n  *[_type == "category"] | order(title asc) {\n    _id,\n    title,\n    "slug": slug.current\n  }\n': BlogCategoriesQueryResult
+    '\n  *[_type == "siteSettings"][0] {\n    businessName,\n    email,\n    phone,\n    address\n  }\n': ContactSiteSettingsQueryResult
     '\n  *[_type == "page" && defined(slug.current) && slug.current != "home"] {\n    "slug": slug.current\n  }\n': AllPagesSlugsQueryResult
-    '\n  *[_type == "page" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    seo,\n    pageBuilder[] {\n      _type,\n      _key,\n      _type == "sectionHero" => {\n        heading,\n        subheading,\n        primaryCta,\n        secondaryCta,\n        backgroundImage { ..., asset-> }\n      },\n      _type == "sectionTextImage" => {\n        heading,\n        body,\n        image { ..., asset-> },\n        imagePosition\n      },\n      _type == "sectionServices" => {\n        heading,\n        subheading,\n        services[]-> {\n          _id, title, description, icon,\n          image { ..., asset-> }\n        }\n      },\n      _type == "sectionPricing" => {\n        heading,\n        subheading,\n        items[]-> {\n          _id,\n          name,\n          duration,\n          price,\n          description\n        }\n      },\n      _type == "sectionTestimonials" => {\n        heading,\n        testimonials[]-> {\n          _id, authorName, position, company, content, rating,\n          photo { ..., asset-> }\n        }\n      },\n      _type == "sectionStats" => {\n        heading,\n        items\n      },\n      _type == "sectionGallery" => {\n        heading,\n        images[] { ..., asset-> }\n      },\n      _type == "sectionBlogPreview" => {\n        _type,\n        heading,\n        subheading,\n        mode,\n        showViewAll,\n        "posts": select(\n          mode == "manual" => posts[]->{\n            _id, title, slug, excerpt, mainImage, publishedAt,\n            "categories": categories[]->{title}\n          },\n          *[_type == "post"] | order(publishedAt desc) [0..2] {\n            _id, title, slug, excerpt, mainImage, publishedAt,\n            "categories": categories[]->{title}\n          }\n        )\n      },\n      _type == "sectionCta" => {\n        heading,\n        subheading,\n        primaryCta,\n        secondaryCta,\n        variant\n      },\n      _type == "sectionContact" => {\n        heading,\n        subheading\n      }\n    }\n  }\n': PageQueryResult
+    '\n  *[_type == "page" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    seo,\n    pageBuilder[] {\n      _type,\n      _key,\n      _type == "sectionHero" => {\n        anchor,\n        heading,\n        subheading,\n        primaryCta,\n        secondaryCta,\n        backgroundImage { ..., asset-> }\n      },\n      _type == "sectionTextImage" => {\n        anchor,\n        heading,\n        body,\n        image { ..., asset-> },\n        imagePosition\n      },\n      _type == "sectionServices" => {\n        anchor,\n        heading,\n        subheading,\n        services[]-> {\n          _id, title, description, icon,\n          image { ..., asset-> }\n        }\n      },\n      _type == "sectionPricing" => {\n        anchor,\n        heading,\n        subheading,\n        items[]-> {\n          _id,\n          name,\n          duration,\n          price,\n          description\n        }\n      },\n      _type == "sectionTestimonials" => {\n        anchor,\n        heading,\n        testimonials[]-> {\n          _id, authorName, position, company, content, rating,\n          photo { ..., asset-> }\n        }\n      },\n      _type == "sectionStats" => {\n        anchor,\n        heading,\n        items\n      },\n      _type == "sectionGallery" => {\n        anchor,\n        heading,\n        images[] { ..., asset-> }\n      },\n      _type == "sectionBlogPreview" => {\n        _type,\n        anchor,\n        heading,\n        subheading,\n        mode,\n        showViewAll,\n        "posts": select(\n          mode == "manual" => posts[]->{\n            _id, title, slug, excerpt, mainImage, publishedAt,\n            "categories": categories[]->{title}\n          },\n          *[_type == "post"] | order(publishedAt desc) [0..2] {\n            _id, title, slug, excerpt, mainImage, publishedAt,\n            "categories": categories[]->{title}\n          }\n        )\n      },\n      _type == "sectionCta" => {\n        anchor,\n        heading,\n        subheading,\n        primaryCta,\n        secondaryCta,\n        variant\n      },\n      _type == "sectionContact" => {\n        anchor,\n        heading,\n        subheading\n      }\n    }\n  }\n': PageQueryResult
   }
 }

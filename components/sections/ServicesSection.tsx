@@ -10,6 +10,7 @@ import { ServicesSectionData } from '@/sanity/custom-types'
 
 interface ServicesSectionProps {
   data: ServicesSectionData
+  id?: string
 }
 
 const CONTAINER_VARIANTS: Variants = {
@@ -22,14 +23,14 @@ const CARD_VARIANTS: Variants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
 }
 
-export function ServicesSection({ data }: ServicesSectionProps) {
+export function ServicesSection({ data, id }: ServicesSectionProps) {
   const { heading, subheading, services } = data
   const prefersReducedMotion = useReducedMotion()
 
   if (!services?.length) return null
 
   return (
-    <AnimatedSection as="section" className="py-16 md:py-24">
+    <AnimatedSection as="section" id={id} className="py-16 md:py-24">
       <div className="container mx-auto px-4">
         {(heading || subheading) && (
           <div className="mb-12 text-center">

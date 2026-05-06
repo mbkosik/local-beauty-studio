@@ -8,6 +8,7 @@ interface AnimatedSectionProps {
   className?: string
   delay?: number
   as?: MotionTagName
+  id?: string
 }
 
 const VARIANTS: Variants = {
@@ -25,6 +26,7 @@ export function AnimatedSection({
   className,
   delay = 0,
   as: Tag = 'div',
+  id,
 }: AnimatedSectionProps) {
   const prefersReducedMotion = useReducedMotion()
   const MotionTag = motion[Tag] as unknown as MotionEl
@@ -32,6 +34,7 @@ export function AnimatedSection({
 
   return (
     <MotionTag
+      id={id}
       className={className}
       variants={activeVariants}
       initial="hidden"

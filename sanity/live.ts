@@ -1,10 +1,11 @@
-// Querying with "sanityFetch" will keep content automatically updated
-// Before using it, import and render "<SanityLive />" in your layout, see
-// https://github.com/sanity-io/next-sanity#live-content-api for more information.
+// Eksportujemy tylko sanityFetch — NIE SanityLive.
+// Projekt nie używa live preview ani Presentation Tool.
+// SanityLive w root layout powoduje przeładowania embedded Studio.
+// sanityFetch zostaje dla cache tags (potrzebne przy ISR + webhook).
 import { defineLive } from 'next-sanity/live'
 import { client } from './client'
 
-export const { sanityFetch, SanityLive } = defineLive({
+export const { sanityFetch } = defineLive({
   client,
   serverToken: false,
   browserToken: false,

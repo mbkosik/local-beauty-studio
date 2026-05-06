@@ -7,6 +7,7 @@ import { SectionGallery } from '@/sanity.types'
 
 interface GallerySectionProps {
   data: SectionGallery
+  id?: string
 }
 
 const CONTAINER_VARIANTS: Variants = {
@@ -19,14 +20,14 @@ const TILE_VARIANTS: Variants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
 }
 
-export function GallerySection({ data }: GallerySectionProps) {
+export function GallerySection({ data, id }: GallerySectionProps) {
   const { heading, images } = data
   const prefersReducedMotion = useReducedMotion()
 
   if (!images?.length) return null
 
   return (
-    <AnimatedSection as="section" className="py-16 md:py-24">
+    <AnimatedSection as="section" id={id} className="py-16 md:py-24">
       <div className="container mx-auto px-4">
         {heading && (
           <h2 className="font-heading mb-12 text-center text-3xl font-bold md:text-4xl">
