@@ -98,7 +98,7 @@ export function TeamCard({ member }: TeamCardProps) {
         {/* BACK */}
         <div
           className={cn(
-            'bg-card absolute inset-0 flex flex-col items-center justify-center rounded-xl p-6 text-center',
+            'bg-card absolute inset-0 flex flex-col items-center rounded-xl p-6 text-center',
             prefersReducedMotion
               ? 'transition-opacity duration-300'
               : 'transform-[rotateY(180deg)] backface-hidden',
@@ -107,10 +107,17 @@ export function TeamCard({ member }: TeamCardProps) {
         >
           <p className="font-heading text-foreground text-lg font-semibold">{name}</p>
           <p className="text-brand mb-3 text-sm font-medium">{role}</p>
-          {bio && <p className="text-muted-foreground mb-4 line-clamp-4 text-sm">{bio}</p>}
+          {bio && (
+            <div
+              className="min-h-0 w-full flex-1 overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <p className="text-muted-foreground mb-4 text-sm">{bio}</p>
+            </div>
+          )}
 
           {socialMedia && (
-            <div className="flex items-center gap-3">
+            <div className="mt-auto flex items-center gap-3">
               {socialMedia.instagram && (
                 <a
                   href={socialMedia.instagram}
