@@ -10,6 +10,7 @@ import { sectionCta } from './sectionCta'
 import { sectionContact } from './sectionContact'
 import { sectionTeam } from './sectionTeam'
 import { sectionFaq } from './sectionFaq'
+import { sectionProcess } from './sectionProcess'
 
 export const sectionSchemas = [
   sectionHero,
@@ -24,4 +25,5 @@ export const sectionSchemas = [
   sectionContact,
   sectionTeam,
   sectionFaq,
+  sectionProcess,
 ]

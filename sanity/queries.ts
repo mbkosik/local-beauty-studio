@@ -360,6 +360,18 @@ export const pageQuery = defineQuery(`
           question,
           answer
         }
+      },
+      _type == "sectionProcess" => {
+        _type,
+        anchor,
+        title,
+        subtitle,
+        layout,
+        steps[] {
+          icon,
+          title,
+          description
+        }
       }
     }
   }
