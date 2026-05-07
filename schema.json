@@ -92,6 +92,96 @@
     }
   },
   {
+    "type": "type",
+    "name": "person.reference",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_ref": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          }
+        },
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "reference"
+          }
+        },
+        "_weak": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        }
+      },
+      "dereferencesTo": "person"
+    }
+  },
+  {
+    "name": "sectionTeam",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "sectionTeam"
+          }
+        },
+        "title": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "anchor": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "slug"
+          },
+          "optional": true
+        },
+        "subtitle": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "members": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "array",
+            "of": {
+              "type": "object",
+              "attributes": {
+                "_key": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "rest": {
+                "type": "inline",
+                "name": "person.reference"
+              }
+            }
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
     "name": "sectionContact",
     "type": "type",
     "value": {
@@ -1516,36 +1606,6 @@
   },
   {
     "type": "type",
-    "name": "author.reference",
-    "value": {
-      "type": "object",
-      "attributes": {
-        "_ref": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string"
-          }
-        },
-        "_type": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string",
-            "value": "reference"
-          }
-        },
-        "_weak": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": true
-        }
-      },
-      "dereferencesTo": "author"
-    }
-  },
-  {
-    "type": "type",
     "name": "category.reference",
     "value": {
       "type": "object",
@@ -1941,7 +2001,7 @@
         "type": "objectAttribute",
         "value": {
           "type": "inline",
-          "name": "author.reference"
+          "name": "person.reference"
         },
         "optional": true
       },
@@ -2142,7 +2202,7 @@
     }
   },
   {
-    "name": "author",
+    "name": "person",
     "type": "document",
     "attributes": {
       "_id": {
@@ -2155,7 +2215,7 @@
         "type": "objectAttribute",
         "value": {
           "type": "string",
-          "value": "author"
+          "value": "person"
         }
       },
       "_createdAt": {
@@ -2183,11 +2243,10 @@
         },
         "optional": true
       },
-      "slug": {
+      "role": {
         "type": "objectAttribute",
         "value": {
-          "type": "inline",
-          "name": "slug"
+          "type": "string"
         },
         "optional": true
       },
@@ -2234,13 +2293,6 @@
               },
               "optional": true
             },
-            "alt": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "string"
-              },
-              "optional": true
-            },
             "_type": {
               "type": "objectAttribute",
               "value": {
@@ -2252,7 +2304,7 @@
         },
         "optional": true
       },
-      "social": {
+      "socialMedia": {
         "type": "objectAttribute",
         "value": {
           "type": "object",
@@ -2271,7 +2323,7 @@
               },
               "optional": true
             },
-            "website": {
+            "linkedin": {
               "type": "objectAttribute",
               "value": {
                 "type": "string"
@@ -2750,6 +2802,21 @@
                 "rest": {
                   "type": "inline",
                   "name": "sectionContact"
+                }
+              },
+              {
+                "type": "object",
+                "attributes": {
+                  "_key": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "rest": {
+                  "type": "inline",
+                  "name": "sectionTeam"
                 }
               }
             ]

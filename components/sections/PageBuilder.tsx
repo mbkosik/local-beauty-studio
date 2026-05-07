@@ -16,12 +16,14 @@ import { GallerySection } from './GallerySection'
 import { BlogPreviewSection } from './BlogPreviewSection'
 import { CtaSection } from './CtaSection'
 import { ContactSection } from './ContactSection'
+import { TeamSection } from './TeamSection'
 import {
   PageBlock,
   ServicesSectionData,
   TestimonialsSectionData,
   BlogPreviewSectionData,
   PricingSectionData,
+  TeamSectionData,
 } from '@/sanity/custom-types'
 
 type Props = {
@@ -92,6 +94,8 @@ export function PageBuilder({ blocks }: Props) {
             return (
               <ContactSection key={block._key} id={id} data={asSection<SectionContact>(block)} />
             )
+          case 'sectionTeam':
+            return <TeamSection key={block._key} id={id} data={asSection<TeamSectionData>(block)} />
           default:
             console.warn('[PageBuilder] Unknown block type:', (block as { _type: string })._type)
             return null

@@ -35,6 +35,25 @@ export type SectionCtaSecondaryCta = {
   href?: string
 }
 
+export type PersonReference = {
+  _ref: string
+  _type: 'reference'
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: 'person'
+}
+
+export type SectionTeam = {
+  _type: 'sectionTeam'
+  title?: string
+  anchor?: Slug
+  subtitle?: string
+  members?: Array<
+    {
+      _key: string
+    } & PersonReference
+  >
+}
+
 export type SectionContact = {
   _type: 'sectionContact'
   heading?: string
@@ -268,13 +287,6 @@ export type PricingItem = {
   description?: string
 }
 
-export type AuthorReference = {
-  _ref: string
-  _type: 'reference'
-  _weak?: boolean
-  [internalGroqTypeReferenceTo]?: 'author'
-}
-
 export type CategoryReference = {
   _ref: string
   _type: 'reference'
@@ -329,7 +341,7 @@ export type Post = {
         _key: string
       }
   >
-  author?: AuthorReference
+  author?: PersonReference
   categories?: Array<
     {
       _key: string
@@ -366,27 +378,26 @@ export type SanityImageHotspot = {
   width?: number
 }
 
-export type Author = {
+export type Person = {
   _id: string
-  _type: 'author'
+  _type: 'person'
   _createdAt: string
   _updatedAt: string
   _rev: string
   name?: string
-  slug?: Slug
+  role?: string
   bio?: string
   photo?: {
     asset?: SanityImageAssetReference
     media?: unknown
     hotspot?: SanityImageHotspot
     crop?: SanityImageCrop
-    alt?: string
     _type: 'image'
   }
-  social?: {
+  socialMedia?: {
     instagram?: string
     facebook?: string
-    website?: string
+    linkedin?: string
   }
 }
 
@@ -473,6 +484,9 @@ export type Page = {
     | ({
         _key: string
       } & SectionContact)
+    | ({
+        _key: string
+      } & SectionTeam)
   >
   seo?: {
     metaTitle?: string
@@ -649,6 +663,8 @@ export type AllSanitySchemaTypes =
   | SecondaryCta
   | SectionCtaPrimaryCta
   | SectionCtaSecondaryCta
+  | PersonReference
+  | SectionTeam
   | SectionContact
   | SectionCta
   | PostReference
@@ -668,12 +684,11 @@ export type AllSanitySchemaTypes =
   | Category
   | Slug
   | PricingItem
-  | AuthorReference
   | CategoryReference
   | Post
   | SanityImageCrop
   | SanityImageHotspot
-  | Author
+  | Person
   | Testimonial
   | Service
   | LucideIcon
@@ -883,8 +898,94 @@ export type AllTestimonialsQueryResult = Array<{
 }>
 
 // Source: sanity/queries.ts
+// Variable: allPersonsQuery
+// Query: *[_type == "person"] | order(name asc) {    _id,    name,    role,    bio,    photo { ..., asset-> },    socialMedia  }
+export type AllPersonsQueryResult = Array<{
+  _id: string
+  name: string | null
+  role: string | null
+  bio: string | null
+  photo: {
+    asset: {
+      _id: string
+      _type: 'sanity.imageAsset'
+      _createdAt: string
+      _updatedAt: string
+      _rev: string
+      originalFilename?: string
+      label?: string
+      title?: string
+      description?: string
+      altText?: string
+      sha1hash?: string
+      extension?: string
+      mimeType?: string
+      size?: number
+      assetId?: string
+      uploadId?: string
+      path?: string
+      url?: string
+      metadata?: SanityImageMetadata
+      source?: SanityAssetSourceData
+    } | null
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  } | null
+  socialMedia: {
+    instagram?: string
+    facebook?: string
+    linkedin?: string
+  } | null
+}>
+
+// Source: sanity/queries.ts
+// Variable: personQuery
+// Query: *[_type == "person" && _id == $id][0] {    _id,    name,    role,    bio,    photo { ..., asset-> },    socialMedia  }
+export type PersonQueryResult = {
+  _id: string
+  name: string | null
+  role: string | null
+  bio: string | null
+  photo: {
+    asset: {
+      _id: string
+      _type: 'sanity.imageAsset'
+      _createdAt: string
+      _updatedAt: string
+      _rev: string
+      originalFilename?: string
+      label?: string
+      title?: string
+      description?: string
+      altText?: string
+      sha1hash?: string
+      extension?: string
+      mimeType?: string
+      size?: number
+      assetId?: string
+      uploadId?: string
+      path?: string
+      url?: string
+      metadata?: SanityImageMetadata
+      source?: SanityAssetSourceData
+    } | null
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  } | null
+  socialMedia: {
+    instagram?: string
+    facebook?: string
+    linkedin?: string
+  } | null
+} | null
+
+// Source: sanity/queries.ts
 // Variable: allPostsQuery
-// Query: *[_type == "post"] | order(publishedAt desc) {    _id,    title,    slug,    excerpt,    mainImage { ..., asset-> },    "author": author-> {      name,      photo { ..., asset-> }    },    "categories": categories[]-> { title, slug },    publishedAt  }
+// Query: *[_type == "post"] | order(publishedAt desc) {    _id,    title,    slug,    excerpt,    mainImage { ..., asset-> },    "author": author-> {      name,      role,      photo { ..., asset-> }    },    "categories": categories[]-> { title, slug },    publishedAt  }
 export type AllPostsQueryResult = Array<{
   _id: string
   title: string | null
@@ -921,6 +1022,7 @@ export type AllPostsQueryResult = Array<{
   } | null
   author: {
     name: string | null
+    role: string | null
     photo: {
       asset: {
         _id: string
@@ -947,7 +1049,6 @@ export type AllPostsQueryResult = Array<{
       media?: unknown
       hotspot?: SanityImageHotspot
       crop?: SanityImageCrop
-      alt?: string
       _type: 'image'
     } | null
   } | null
@@ -960,7 +1061,7 @@ export type AllPostsQueryResult = Array<{
 
 // Source: sanity/queries.ts
 // Variable: featuredPostsQuery
-// Query: *[_type == "post" && featured == true] | order(publishedAt desc) [0...3] {    _id,    title,    slug,    excerpt,    mainImage { ..., asset-> },    "author": author-> {      name,      photo { ..., asset-> }    },    "categories": categories[]-> { title, slug },    publishedAt  }
+// Query: *[_type == "post" && featured == true] | order(publishedAt desc) [0...3] {    _id,    title,    slug,    excerpt,    mainImage { ..., asset-> },    "author": author-> {      name,      role,      photo { ..., asset-> }    },    "categories": categories[]-> { title, slug },    publishedAt  }
 export type FeaturedPostsQueryResult = Array<{
   _id: string
   title: string | null
@@ -997,6 +1098,7 @@ export type FeaturedPostsQueryResult = Array<{
   } | null
   author: {
     name: string | null
+    role: string | null
     photo: {
       asset: {
         _id: string
@@ -1023,7 +1125,6 @@ export type FeaturedPostsQueryResult = Array<{
       media?: unknown
       hotspot?: SanityImageHotspot
       crop?: SanityImageCrop
-      alt?: string
       _type: 'image'
     } | null
   } | null
@@ -1036,7 +1137,7 @@ export type FeaturedPostsQueryResult = Array<{
 
 // Source: sanity/queries.ts
 // Variable: postBySlugQuery
-// Query: *[_type == "post" && slug.current == $slug][0] {    _id,    title,    slug,    excerpt,    mainImage { ..., asset-> },    body,    "author": author-> {      name,      slug,      bio,      photo { ..., asset-> },      social    },    "categories": categories[]-> { _id, title, slug },    publishedAt,    featured,    seo {      metaTitle,      metaDescription,      ogImage { ..., asset-> }    }  }
+// Query: *[_type == "post" && slug.current == $slug][0] {    _id,    title,    slug,    excerpt,    mainImage { ..., asset-> },    body,    "author": author-> {      name,      role,      bio,      photo { ..., asset-> },      socialMedia    },    "categories": categories[]-> { _id, title, slug },    publishedAt,    featured,    seo {      metaTitle,      metaDescription,      ogImage { ..., asset-> }    }  }
 export type PostBySlugQueryResult = {
   _id: string
   title: string | null
@@ -1103,7 +1204,7 @@ export type PostBySlugQueryResult = {
   > | null
   author: {
     name: string | null
-    slug: Slug | null
+    role: string | null
     bio: string | null
     photo: {
       asset: {
@@ -1131,13 +1232,12 @@ export type PostBySlugQueryResult = {
       media?: unknown
       hotspot?: SanityImageHotspot
       crop?: SanityImageCrop
-      alt?: string
       _type: 'image'
     } | null
-    social: {
+    socialMedia: {
       instagram?: string
       facebook?: string
-      website?: string
+      linkedin?: string
     } | null
   } | null
   categories: Array<{
@@ -1190,7 +1290,7 @@ export type AllPostsSlugsQueryResult = Array<{
 
 // Source: sanity/queries.ts
 // Variable: postsByCategoryQuery
-// Query: *[_type == "post" && $categorySlug in categories[]->slug.current] | order(publishedAt desc) {    _id,    title,    slug,    excerpt,    mainImage { ..., asset-> },    "author": author-> {      name,      photo { ..., asset-> }    },    "categories": categories[]-> { title, slug },    publishedAt  }
+// Query: *[_type == "post" && $categorySlug in categories[]->slug.current] | order(publishedAt desc) {    _id,    title,    slug,    excerpt,    mainImage { ..., asset-> },    "author": author-> {      name,      role,      photo { ..., asset-> }    },    "categories": categories[]-> { title, slug },    publishedAt  }
 export type PostsByCategoryQueryResult = Array<{
   _id: string
   title: string | null
@@ -1227,6 +1327,7 @@ export type PostsByCategoryQueryResult = Array<{
   } | null
   author: {
     name: string | null
+    role: string | null
     photo: {
       asset: {
         _id: string
@@ -1253,7 +1354,6 @@ export type PostsByCategoryQueryResult = Array<{
       media?: unknown
       hotspot?: SanityImageHotspot
       crop?: SanityImageCrop
-      alt?: string
       _type: 'image'
     } | null
   } | null
@@ -1437,7 +1537,7 @@ export type AllPagesSlugsQueryResult = Array<{
 
 // Source: sanity/queries.ts
 // Variable: pageQuery
-// Query: *[_type == "page" && slug.current == $slug][0] {    _id,    title,    slug,    seo,    pageBuilder[] {      _type,      _key,      _type == "sectionHero" => {        anchor,        heading,        subheading,        primaryCta,        secondaryCta,        backgroundImage { ..., asset-> }      },      _type == "sectionTextImage" => {        anchor,        heading,        body,        image { ..., asset-> },        imagePosition      },      _type == "sectionServices" => {        anchor,        heading,        subheading,        services[]-> {          _id, title, description, icon,          image { ..., asset-> }        }      },      _type == "sectionPricing" => {        anchor,        heading,        subheading,        items[]-> {          _id,          name,          duration,          price,          description        }      },      _type == "sectionTestimonials" => {        anchor,        heading,        testimonials[]-> {          _id, authorName, position, company, content, rating,          photo { ..., asset-> }        }      },      _type == "sectionStats" => {        anchor,        heading,        items      },      _type == "sectionGallery" => {        anchor,        heading,        images[] { ..., asset-> }      },      _type == "sectionBlogPreview" => {        _type,        anchor,        heading,        subheading,        mode,        showViewAll,        "posts": select(          mode == "manual" => posts[]->{            _id, title, slug, excerpt, mainImage, publishedAt,            "categories": categories[]->{title}          },          *[_type == "post"] | order(publishedAt desc) [0..2] {            _id, title, slug, excerpt, mainImage, publishedAt,            "categories": categories[]->{title}          }        )      },      _type == "sectionCta" => {        anchor,        heading,        subheading,        primaryCta,        secondaryCta,        variant      },      _type == "sectionContact" => {        anchor,        heading,        subheading      }    }  }
+// Query: *[_type == "page" && slug.current == $slug][0] {    _id,    title,    slug,    seo,    pageBuilder[] {      _type,      _key,      _type == "sectionHero" => {        anchor,        heading,        subheading,        primaryCta,        secondaryCta,        backgroundImage { ..., asset-> }      },      _type == "sectionTextImage" => {        anchor,        heading,        body,        image { ..., asset-> },        imagePosition      },      _type == "sectionServices" => {        anchor,        heading,        subheading,        services[]-> {          _id, title, description, icon,          image { ..., asset-> }        }      },      _type == "sectionPricing" => {        anchor,        heading,        subheading,        items[]-> {          _id,          name,          duration,          price,          description        }      },      _type == "sectionTestimonials" => {        anchor,        heading,        testimonials[]-> {          _id, authorName, position, company, content, rating,          photo { ..., asset-> }        }      },      _type == "sectionStats" => {        anchor,        heading,        items      },      _type == "sectionGallery" => {        anchor,        heading,        images[] { ..., asset-> }      },      _type == "sectionBlogPreview" => {        _type,        anchor,        heading,        subheading,        mode,        showViewAll,        "posts": select(          mode == "manual" => posts[]->{            _id, title, slug, excerpt, mainImage, publishedAt,            "categories": categories[]->{title}          },          *[_type == "post"] | order(publishedAt desc) [0..2] {            _id, title, slug, excerpt, mainImage, publishedAt,            "categories": categories[]->{title}          }        )      },      _type == "sectionCta" => {        anchor,        heading,        subheading,        primaryCta,        secondaryCta,        variant      },      _type == "sectionContact" => {        anchor,        heading,        subheading,        body      },      _type == "sectionTeam" => {        anchor,        title,        subtitle,        members[]-> {          _id,          name,          role,          bio,          photo { asset->, hotspot, crop },          socialMedia        }      }    }  }
 export type PageQueryResult = {
   _id: string
   title: string | null
@@ -1487,6 +1587,25 @@ export type PageQueryResult = {
         anchor: Slug | null
         heading: string | null
         subheading: string | null
+        body: Array<{
+          children?: Array<{
+            marks?: Array<string>
+            text?: string
+            _type: 'span'
+            _key: string
+          }>
+          style?: 'normal'
+          listItem?: never
+          markDefs?: Array<{
+            href?: string
+            blank?: boolean
+            _type: 'link'
+            _key: string
+          }>
+          level?: number
+          _type: 'block'
+          _key: string
+        }> | null
       }
     | {
         _type: 'sectionCta'
@@ -1641,6 +1760,50 @@ export type PageQueryResult = {
         }> | null
       }
     | {
+        _type: 'sectionTeam'
+        _key: string
+        anchor: Slug | null
+        title: string | null
+        subtitle: string | null
+        members: Array<{
+          _id: string
+          name: string | null
+          role: string | null
+          bio: string | null
+          photo: {
+            asset: {
+              _id: string
+              _type: 'sanity.imageAsset'
+              _createdAt: string
+              _updatedAt: string
+              _rev: string
+              originalFilename?: string
+              label?: string
+              title?: string
+              description?: string
+              altText?: string
+              sha1hash?: string
+              extension?: string
+              mimeType?: string
+              size?: number
+              assetId?: string
+              uploadId?: string
+              path?: string
+              url?: string
+              metadata?: SanityImageMetadata
+              source?: SanityAssetSourceData
+            } | null
+            hotspot: SanityImageHotspot | null
+            crop: SanityImageCrop | null
+          } | null
+          socialMedia: {
+            instagram?: string
+            facebook?: string
+            linkedin?: string
+          } | null
+        }> | null
+      }
+    | {
         _type: 'sectionTestimonials'
         _key: string
         anchor: Slug | null
@@ -1748,11 +1911,13 @@ declare module '@sanity/client' {
     '\n  *[_type == "siteSettings"][0] {\n    businessName,\n    tagline,\n    logoLight { alt, asset-> { _id, url, metadata { dimensions } } },\n    logoDark { alt, asset-> { _id, url, metadata { dimensions } } },\n    email,\n    phone,\n    address,\n    googleMapsUrl,\n    social {\n      facebook,\n      instagram,\n      tiktok\n    }\n  }\n': FooterQueryResult
     '\n  *[_type == "service"] | order(_createdAt asc) {\n    _id,\n    title,\n    slug,\n    description,\n    icon,\n    image { ..., asset-> }\n  }\n': AllServicesQueryResult
     '\n  *[_type == "testimonial"] | order(_createdAt asc) {\n    _id,\n    authorName,\n    position,\n    company,\n    content,\n    rating,\n    photo { ..., asset-> },\n    publishedAt\n  }\n': AllTestimonialsQueryResult
-    '\n  *[_type == "post"] | order(publishedAt desc) {\n    _id,\n    title,\n    slug,\n    excerpt,\n    mainImage { ..., asset-> },\n    "author": author-> {\n      name,\n      photo { ..., asset-> }\n    },\n    "categories": categories[]-> { title, slug },\n    publishedAt\n  }\n': AllPostsQueryResult
-    '\n  *[_type == "post" && featured == true] | order(publishedAt desc) [0...3] {\n    _id,\n    title,\n    slug,\n    excerpt,\n    mainImage { ..., asset-> },\n    "author": author-> {\n      name,\n      photo { ..., asset-> }\n    },\n    "categories": categories[]-> { title, slug },\n    publishedAt\n  }\n': FeaturedPostsQueryResult
-    '\n  *[_type == "post" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    excerpt,\n    mainImage { ..., asset-> },\n    body,\n    "author": author-> {\n      name,\n      slug,\n      bio,\n      photo { ..., asset-> },\n      social\n    },\n    "categories": categories[]-> { _id, title, slug },\n    publishedAt,\n    featured,\n    seo {\n      metaTitle,\n      metaDescription,\n      ogImage { ..., asset-> }\n    }\n  }\n': PostBySlugQueryResult
+    '\n  *[_type == "person"] | order(name asc) {\n    _id,\n    name,\n    role,\n    bio,\n    photo { ..., asset-> },\n    socialMedia\n  }\n': AllPersonsQueryResult
+    '\n  *[_type == "person" && _id == $id][0] {\n    _id,\n    name,\n    role,\n    bio,\n    photo { ..., asset-> },\n    socialMedia\n  }\n': PersonQueryResult
+    '\n  *[_type == "post"] | order(publishedAt desc) {\n    _id,\n    title,\n    slug,\n    excerpt,\n    mainImage { ..., asset-> },\n    "author": author-> {\n      name,\n      role,\n      photo { ..., asset-> }\n    },\n    "categories": categories[]-> { title, slug },\n    publishedAt\n  }\n': AllPostsQueryResult
+    '\n  *[_type == "post" && featured == true] | order(publishedAt desc) [0...3] {\n    _id,\n    title,\n    slug,\n    excerpt,\n    mainImage { ..., asset-> },\n    "author": author-> {\n      name,\n      role,\n      photo { ..., asset-> }\n    },\n    "categories": categories[]-> { title, slug },\n    publishedAt\n  }\n': FeaturedPostsQueryResult
+    '\n  *[_type == "post" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    excerpt,\n    mainImage { ..., asset-> },\n    body,\n    "author": author-> {\n      name,\n      role,\n      bio,\n      photo { ..., asset-> },\n      socialMedia\n    },\n    "categories": categories[]-> { _id, title, slug },\n    publishedAt,\n    featured,\n    seo {\n      metaTitle,\n      metaDescription,\n      ogImage { ..., asset-> }\n    }\n  }\n': PostBySlugQueryResult
     '\n  *[_type == "post"] { "slug": slug.current }\n': AllPostsSlugsQueryResult
-    '\n  *[_type == "post" && $categorySlug in categories[]->slug.current] | order(publishedAt desc) {\n    _id,\n    title,\n    slug,\n    excerpt,\n    mainImage { ..., asset-> },\n    "author": author-> {\n      name,\n      photo { ..., asset-> }\n    },\n    "categories": categories[]-> { title, slug },\n    publishedAt\n  }\n': PostsByCategoryQueryResult
+    '\n  *[_type == "post" && $categorySlug in categories[]->slug.current] | order(publishedAt desc) {\n    _id,\n    title,\n    slug,\n    excerpt,\n    mainImage { ..., asset-> },\n    "author": author-> {\n      name,\n      role,\n      photo { ..., asset-> }\n    },\n    "categories": categories[]-> { title, slug },\n    publishedAt\n  }\n': PostsByCategoryQueryResult
     '\n  *[_type == "category"] | order(title asc) {\n    _id,\n    title,\n    slug,\n    description\n  }\n': AllCategoriesQueryResult
     '\n  *[_type == "post" && slug.current != $slug && count((categories[]._ref)[@ in $categoryIds]) > 0] | order(publishedAt desc) [0...2] {\n    _id,\n    title,\n    "slug": slug.current,\n    excerpt,\n    mainImage { ..., asset-> },\n    publishedAt,\n    "categories": categories[]-> { title, "slug": slug.current }\n  }\n': RelatedPostsQueryResult
     '\n  *[_type == "post" && (!defined($excludeSlugs) || !(slug.current in $excludeSlugs))] | order(publishedAt desc) [0...$limit] {\n    _id,\n    title,\n    "slug": slug.current,\n    excerpt,\n    mainImage { ..., asset-> },\n    publishedAt,\n    "categories": categories[]-> { title, "slug": slug.current }\n  }\n': LatestPostsQueryResult
@@ -1760,6 +1925,6 @@ declare module '@sanity/client' {
     '\n  *[_type == "category"] | order(title asc) {\n    _id,\n    title,\n    "slug": slug.current\n  }\n': BlogCategoriesQueryResult
     '\n  *[_type == "siteSettings"][0] {\n    businessName,\n    email,\n    phone,\n    address\n  }\n': ContactSiteSettingsQueryResult
     '\n  *[_type == "page" && defined(slug.current) && slug.current != "home"] {\n    "slug": slug.current\n  }\n': AllPagesSlugsQueryResult
-    '\n  *[_type == "page" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    seo,\n    pageBuilder[] {\n      _type,\n      _key,\n      _type == "sectionHero" => {\n        anchor,\n        heading,\n        subheading,\n        primaryCta,\n        secondaryCta,\n        backgroundImage { ..., asset-> }\n      },\n      _type == "sectionTextImage" => {\n        anchor,\n        heading,\n        body,\n        image { ..., asset-> },\n        imagePosition\n      },\n      _type == "sectionServices" => {\n        anchor,\n        heading,\n        subheading,\n        services[]-> {\n          _id, title, description, icon,\n          image { ..., asset-> }\n        }\n      },\n      _type == "sectionPricing" => {\n        anchor,\n        heading,\n        subheading,\n        items[]-> {\n          _id,\n          name,\n          duration,\n          price,\n          description\n        }\n      },\n      _type == "sectionTestimonials" => {\n        anchor,\n        heading,\n        testimonials[]-> {\n          _id, authorName, position, company, content, rating,\n          photo { ..., asset-> }\n        }\n      },\n      _type == "sectionStats" => {\n        anchor,\n        heading,\n        items\n      },\n      _type == "sectionGallery" => {\n        anchor,\n        heading,\n        images[] { ..., asset-> }\n      },\n      _type == "sectionBlogPreview" => {\n        _type,\n        anchor,\n        heading,\n        subheading,\n        mode,\n        showViewAll,\n        "posts": select(\n          mode == "manual" => posts[]->{\n            _id, title, slug, excerpt, mainImage, publishedAt,\n            "categories": categories[]->{title}\n          },\n          *[_type == "post"] | order(publishedAt desc) [0..2] {\n            _id, title, slug, excerpt, mainImage, publishedAt,\n            "categories": categories[]->{title}\n          }\n        )\n      },\n      _type == "sectionCta" => {\n        anchor,\n        heading,\n        subheading,\n        primaryCta,\n        secondaryCta,\n        variant\n      },\n      _type == "sectionContact" => {\n        anchor,\n        heading,\n        subheading\n      }\n    }\n  }\n': PageQueryResult
+    '\n  *[_type == "page" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    seo,\n    pageBuilder[] {\n      _type,\n      _key,\n      _type == "sectionHero" => {\n        anchor,\n        heading,\n        subheading,\n        primaryCta,\n        secondaryCta,\n        backgroundImage { ..., asset-> }\n      },\n      _type == "sectionTextImage" => {\n        anchor,\n        heading,\n        body,\n        image { ..., asset-> },\n        imagePosition\n      },\n      _type == "sectionServices" => {\n        anchor,\n        heading,\n        subheading,\n        services[]-> {\n          _id, title, description, icon,\n          image { ..., asset-> }\n        }\n      },\n      _type == "sectionPricing" => {\n        anchor,\n        heading,\n        subheading,\n        items[]-> {\n          _id,\n          name,\n          duration,\n          price,\n          description\n        }\n      },\n      _type == "sectionTestimonials" => {\n        anchor,\n        heading,\n        testimonials[]-> {\n          _id, authorName, position, company, content, rating,\n          photo { ..., asset-> }\n        }\n      },\n      _type == "sectionStats" => {\n        anchor,\n        heading,\n        items\n      },\n      _type == "sectionGallery" => {\n        anchor,\n        heading,\n        images[] { ..., asset-> }\n      },\n      _type == "sectionBlogPreview" => {\n        _type,\n        anchor,\n        heading,\n        subheading,\n        mode,\n        showViewAll,\n        "posts": select(\n          mode == "manual" => posts[]->{\n            _id, title, slug, excerpt, mainImage, publishedAt,\n            "categories": categories[]->{title}\n          },\n          *[_type == "post"] | order(publishedAt desc) [0..2] {\n            _id, title, slug, excerpt, mainImage, publishedAt,\n            "categories": categories[]->{title}\n          }\n        )\n      },\n      _type == "sectionCta" => {\n        anchor,\n        heading,\n        subheading,\n        primaryCta,\n        secondaryCta,\n        variant\n      },\n      _type == "sectionContact" => {\n        anchor,\n        heading,\n        subheading,\n        body\n      },\n      _type == "sectionTeam" => {\n        anchor,\n        title,\n        subtitle,\n        members[]-> {\n          _id,\n          name,\n          role,\n          bio,\n          photo { asset->, hotspot, crop },\n          socialMedia\n        }\n      }\n    }\n  }\n': PageQueryResult
   }
 }

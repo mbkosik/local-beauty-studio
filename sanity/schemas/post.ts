@@ -102,7 +102,7 @@ export const post = defineType({
       name: 'author',
       title: 'Autor',
       type: 'reference',
-      to: [{ type: 'author' }],
+      to: [{ type: 'person' }],
       validation: (Rule) => Rule.required(),
     }),
     defineField({
