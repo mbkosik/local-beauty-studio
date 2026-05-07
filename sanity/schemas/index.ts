@@ -5,7 +5,7 @@ import { navLink } from './navLink'
 import { service } from './service'
 import { testimonial } from './testimonial'
 import { post } from './post'
-import { author } from './author'
+import { person } from './person'
 import { category } from './category'
 import { page } from './page'
 import { pricingItem } from './pricingItem'
@@ -22,8 +22,8 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     testimonial,
     post,
     pricingItem,
+    person,
     // Auxiliary
-    author,
     category,
     navLink,
     // Page builder sections

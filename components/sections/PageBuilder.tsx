@@ -5,6 +5,10 @@ import type {
   SectionGallery,
   SectionCta,
   SectionContact,
+  SectionFaq,
+  SectionProcess,
+  SectionBadges,
+  SectionTextVideo,
 } from '@/sanity.types'
 import { HeroSection } from './HeroSection'
 import { TextImageSection } from './TextImageSection'
@@ -16,12 +20,18 @@ import { GallerySection } from './GallerySection'
 import { BlogPreviewSection } from './BlogPreviewSection'
 import { CtaSection } from './CtaSection'
 import { ContactSection } from './ContactSection'
+import { TeamSection } from './TeamSection'
+import { FaqSection } from './FaqSection'
+import { ProcessSection } from './ProcessSection'
+import { BadgesSection } from './BadgesSection'
+import { TextVideoSection } from './TextVideoSection'
 import {
   PageBlock,
   ServicesSectionData,
   TestimonialsSectionData,
   BlogPreviewSectionData,
   PricingSectionData,
+  TeamSectionData,
 } from '@/sanity/custom-types'
 
 type Props = {
@@ -91,6 +101,24 @@ export function PageBuilder({ blocks }: Props) {
           case 'sectionContact':
             return (
               <ContactSection key={block._key} id={id} data={asSection<SectionContact>(block)} />
+            )
+          case 'sectionTeam':
+            return <TeamSection key={block._key} id={id} data={asSection<TeamSectionData>(block)} />
+          case 'sectionFaq':
+            return <FaqSection key={block._key} id={id} data={asSection<SectionFaq>(block)} />
+          case 'sectionProcess':
+            return (
+              <ProcessSection key={block._key} id={id} data={asSection<SectionProcess>(block)} />
+            )
+          case 'sectionBadges':
+            return <BadgesSection key={block._key} id={id} data={asSection<SectionBadges>(block)} />
+          case 'sectionTextVideo':
+            return (
+              <TextVideoSection
+                key={block._key}
+                id={id}
+                data={asSection<SectionTextVideo>(block)}
+              />
             )
           default:
             console.warn('[PageBuilder] Unknown block type:', (block as { _type: string })._type)

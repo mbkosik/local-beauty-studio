@@ -55,12 +55,13 @@ export const sectionTextImage = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'imagePosition',
+      name: 'mediaPosition',
+      title: 'Pozycja obrazka',
       type: 'string',
       options: {
         list: [
-          { title: 'Left', value: 'left' },
-          { title: 'Right', value: 'right' },
+          { title: 'Obrazek po prawej', value: 'right' },
+          { title: 'Obrazek po lewej', value: 'left' },
         ],
         layout: 'radio',
       },

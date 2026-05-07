@@ -70,6 +70,28 @@ export const allTestimonialsQuery = defineQuery(`
   }
 `)
 
+export const allPersonsQuery = defineQuery(`
+  *[_type == "person"] | order(name asc) {
+    _id,
+    name,
+    role,
+    bio,
+    photo { ..., asset-> },
+    socialMedia
+  }
+`)
+
+export const personQuery = defineQuery(`
+  *[_type == "person" && _id == $id][0] {
+    _id,
+    name,
+    role,
+    bio,
+    photo { ..., asset-> },
+    socialMedia
+  }
+`)
+
 export const allPostsQuery = defineQuery(`
   *[_type == "post"] | order(publishedAt desc) {
     _id,
@@ -79,6 +101,7 @@ export const allPostsQuery = defineQuery(`
     mainImage { ..., asset-> },
     "author": author-> {
       name,
+      role,
       photo { ..., asset-> }
     },
     "categories": categories[]-> { title, slug },
@@ -95,6 +118,7 @@ export const featuredPostsQuery = defineQuery(`
     mainImage { ..., asset-> },
     "author": author-> {
       name,
+      role,
       photo { ..., asset-> }
     },
     "categories": categories[]-> { title, slug },
@@ -112,10 +136,10 @@ export const postBySlugQuery = defineQuery(`
     body,
     "author": author-> {
       name,
-      slug,
+      role,
       bio,
       photo { ..., asset-> },
-      social
+      socialMedia
     },
     "categories": categories[]-> { _id, title, slug },
     publishedAt,
@@ -141,6 +165,7 @@ export const postsByCategoryQuery = defineQuery(`
     mainImage { ..., asset-> },
     "author": author-> {
       name,
+      role,
       photo { ..., asset-> }
     },
     "categories": categories[]-> { title, slug },
@@ -234,14 +259,17 @@ export const pageQuery = defineQuery(`
         subheading,
         primaryCta,
         secondaryCta,
-        backgroundImage { ..., asset-> }
+        backgroundImage { ..., asset-> },
+        mediaType,
+        videoUrl,
+        videoPoster { asset, crop }
       },
       _type == "sectionTextImage" => {
         anchor,
         heading,
         body,
         image { ..., asset-> },
-        imagePosition
+        mediaPosition
       },
       _type == "sectionServices" => {
         anchor,
@@ -313,6 +341,58 @@ export const pageQuery = defineQuery(`
         heading,
         subheading,
         body
+      },
+      _type == "sectionTeam" => {
+        anchor,
+        title,
+        subtitle,
+        members[]-> {
+          _id,
+          name,
+          role,
+          bio,
+          photo { asset->, hotspot, crop },
+          socialMedia
+        }
+      },
+      _type == "sectionFaq" => {
+        anchor,
+        title,
+        subtitle,
+        items[] {
+          question,
+          answer
+        }
+      },
+      _type == "sectionProcess" => {
+        _type,
+        anchor,
+        title,
+        subtitle,
+        layout,
+        steps[] {
+          icon,
+          title,
+          description
+        }
+      },
+      _type == "sectionBadges" => {
+        anchor,
+        label,
+        badges[] {
+          logo { asset, crop },
+          alt,
+          url,
+          label
+        }
+      },
+      _type == "sectionTextVideo" => {
+        anchor,
+        title,
+        body,
+        videoUrl,
+        mediaPosition,
+        caption
       }
     }
   }

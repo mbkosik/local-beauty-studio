@@ -1,9 +1,23 @@
 import { defineField, defineType } from 'sanity'
 
-export const author = defineType({
-  name: 'author',
-  title: 'Autor',
+export const person = defineType({
+  name: 'person',
+  title: 'Osoba',
   type: 'document',
+  preview: {
+    select: {
+      name: 'name',
+      role: 'role',
+      photo: 'photo',
+    },
+    prepare({ name, role, photo }) {
+      return {
+        title: name ?? '(bez nazwy)',
+        subtitle: role ?? '',
+        media: photo,
+      }
+    },
+  },
   fields: [
     defineField({
       name: 'name',
@@ -12,31 +26,28 @@ export const author = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'slug',
-      title: 'Slug',
-      type: 'slug',
-      options: { source: 'name', maxLength: 96 },
+      name: 'role',
+      title: 'Stanowisko / rola',
+      type: 'string',
+      description: 'Np. "Stylistka", "Kosmetyczka"',
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'bio',
-      title: 'Biografia',
+      title: 'Bio',
       type: 'text',
+      description: 'Maks. ~300 znaków',
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'photo',
       title: 'Zdjęcie',
       type: 'image',
       options: { hotspot: true },
-      fields: [
-        defineField({
-          name: 'alt',
-          title: 'Tekst alternatywny',
-          type: 'string',
-        }),
-      ],
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'social',
+      name: 'socialMedia',
       title: 'Media społecznościowe',
       type: 'object',
       fields: [
@@ -51,8 +62,8 @@ export const author = defineType({
           type: 'url',
         }),
         defineField({
-          name: 'website',
-          title: 'Strona internetowa',
+          name: 'linkedin',
+          title: 'LinkedIn',
           type: 'url',
         }),
       ],

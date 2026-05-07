@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { motion, useReducedMotion } from 'motion/react'
 import { Button } from '@/components/ui/button'
 import { SanityImage, type SanityImageData } from '@/components/shared/SanityImage'
+import { urlFor } from '@/sanity/image'
 import { cn } from '@/lib/utils'
 import type { SectionHero } from '@/sanity.types'
 
@@ -13,9 +14,27 @@ interface HeroSectionProps {
 }
 
 export function HeroSection({ data, id }: HeroSectionProps) {
-  const { heading, subheading, primaryCta, secondaryCta, backgroundImage } = data
+  const {
+    heading,
+    subheading,
+    primaryCta,
+    secondaryCta,
+    backgroundImage,
+    mediaType,
+    videoUrl,
+    videoPoster,
+  } = data
   const reducedMotion = useReducedMotion()
-  const hasImage = !!backgroundImage?.asset
+  const isVideo = mediaType === 'video' && !!videoUrl
+  const hasImage = !isVideo && !!backgroundImage?.asset
+  const hasMedia = isVideo || hasImage
+
+  const posterUrl = videoPoster?.asset
+    ? urlFor(videoPoster as Parameters<typeof urlFor>[0])
+        .width(1920)
+        .fit('crop')
+        .url()
+    : undefined
 
   const fadeUp = (delay = 0) => ({
     initial: reducedMotion ? (false as const) : { opacity: 0, y: 32 },
@@ -27,19 +46,32 @@ export function HeroSection({ data, id }: HeroSectionProps) {
     <section
       id={id}
       aria-label="Baner główny"
-      className={cn('relative min-h-svh', !hasImage && 'bg-brand/20')}
+      className={cn('relative min-h-svh', !hasMedia && 'bg-brand/20')}
     >
-      {hasImage && (
+      {hasMedia && (
         <>
           <div aria-hidden="true" className="absolute inset-0">
-            <SanityImage
-              image={backgroundImage as unknown as SanityImageData}
-              alt=""
-              width={1920}
-              height={1080}
-              fill
-              className="object-cover"
-            />
+            {isVideo ? (
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                poster={posterUrl}
+                className="absolute inset-0 h-full w-full object-cover"
+              >
+                <source src={videoUrl} type="video/mp4" />
+              </video>
+            ) : (
+              <SanityImage
+                image={backgroundImage as unknown as SanityImageData}
+                alt=""
+                width={1920}
+                height={1080}
+                fill
+                className="object-cover"
+              />
+            )}
           </div>
           <div className="absolute inset-0 bg-black/30" />
           <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/25 to-transparent" />
