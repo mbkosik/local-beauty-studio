@@ -65,7 +65,7 @@ export function TeamCard({ member }: TeamCardProps) {
           'transform-3d',
           prefersReducedMotion
             ? 'transition-opacity duration-300'
-            : 'transition-transform duration-500',
+            : 'transition-transform duration-700',
           !prefersReducedMotion && isFlipped && 'transform-[rotateY(180deg)]'
         )}
       >
