@@ -259,14 +259,17 @@ export const pageQuery = defineQuery(`
         subheading,
         primaryCta,
         secondaryCta,
-        backgroundImage { ..., asset-> }
+        backgroundImage { ..., asset-> },
+        mediaType,
+        videoUrl,
+        videoPoster { asset, crop }
       },
       _type == "sectionTextImage" => {
         anchor,
         heading,
         body,
         image { ..., asset-> },
-        imagePosition
+        mediaPosition
       },
       _type == "sectionServices" => {
         anchor,
@@ -382,6 +385,14 @@ export const pageQuery = defineQuery(`
           url,
           label
         }
+      },
+      _type == "sectionTextVideo" => {
+        anchor,
+        title,
+        body,
+        videoUrl,
+        mediaPosition,
+        caption
       }
     }
   }

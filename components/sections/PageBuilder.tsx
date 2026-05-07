@@ -8,6 +8,7 @@ import type {
   SectionFaq,
   SectionProcess,
   SectionBadges,
+  SectionTextVideo,
 } from '@/sanity.types'
 import { HeroSection } from './HeroSection'
 import { TextImageSection } from './TextImageSection'
@@ -23,6 +24,7 @@ import { TeamSection } from './TeamSection'
 import { FaqSection } from './FaqSection'
 import { ProcessSection } from './ProcessSection'
 import { BadgesSection } from './BadgesSection'
+import { TextVideoSection } from './TextVideoSection'
 import {
   PageBlock,
   ServicesSectionData,
@@ -110,6 +112,14 @@ export function PageBuilder({ blocks }: Props) {
             )
           case 'sectionBadges':
             return <BadgesSection key={block._key} id={id} data={asSection<SectionBadges>(block)} />
+          case 'sectionTextVideo':
+            return (
+              <TextVideoSection
+                key={block._key}
+                id={id}
+                data={asSection<SectionTextVideo>(block)}
+              />
+            )
           default:
             console.warn('[PageBuilder] Unknown block type:', (block as { _type: string })._type)
             return null

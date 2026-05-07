@@ -74,16 +74,47 @@ export const sectionHero = defineType({
         }),
       ],
     }),
+
+    defineField({
+      name: 'mediaType',
+      title: 'Typ mediów tła',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Zdjęcie', value: 'image' },
+          { title: 'Wideo w tle', value: 'video' },
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'image',
+    }),
     defineField({
       name: 'backgroundImage',
       type: 'image',
       options: { hotspot: true },
+      hidden: ({ parent }) => parent?.mediaType === 'video',
       fields: [
         defineField({
           name: 'alt',
           type: 'string',
         }),
       ],
+    }),
+    defineField({
+      name: 'videoUrl',
+      title: 'URL wideo (.mp4)',
+      description:
+        'Bezpośredni link do pliku .mp4. Wideo będzie odtwarzane automatycznie, bez dźwięku, w pętli.',
+      type: 'url',
+      hidden: ({ parent }) => parent?.mediaType !== 'video',
+    }),
+    defineField({
+      name: 'videoPoster',
+      title: 'Plakat wideo',
+      description: 'Obrazek wyświetlany przed załadowaniem wideo. Zalecany dla wydajności.',
+      type: 'image',
+      options: { hotspot: true },
+      hidden: ({ parent }) => parent?.mediaType !== 'video',
     }),
   ],
 })

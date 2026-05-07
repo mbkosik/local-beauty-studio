@@ -60,6 +60,7 @@ export const page = defineType({
         { type: 'sectionFaq' },
         { type: 'sectionProcess' },
         { type: 'sectionBadges' },
+        { type: 'sectionTextVideo' },
       ],
       validation: (Rule) => Rule.required(),
     }),
