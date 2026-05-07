@@ -11,6 +11,7 @@ import { sectionContact } from './sectionContact'
 import { sectionTeam } from './sectionTeam'
 import { sectionFaq } from './sectionFaq'
 import { sectionProcess } from './sectionProcess'
+import { sectionBadges } from './sectionBadges'
 
 export const sectionSchemas = [
   sectionHero,
@@ -26,4 +27,5 @@ export const sectionSchemas = [
   sectionTeam,
   sectionFaq,
   sectionProcess,
+  sectionBadges,
 ]

@@ -372,6 +372,16 @@ export const pageQuery = defineQuery(`
           title,
           description
         }
+      },
+      _type == "sectionBadges" => {
+        anchor,
+        label,
+        badges[] {
+          logo { asset, crop },
+          alt,
+          url,
+          label
+        }
       }
     }
   }
