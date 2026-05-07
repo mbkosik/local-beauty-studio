@@ -351,6 +351,15 @@ export const pageQuery = defineQuery(`
           photo { asset->, hotspot, crop },
           socialMedia
         }
+      },
+      _type == "sectionFaq" => {
+        anchor,
+        title,
+        subtitle,
+        items[] {
+          question,
+          answer
+        }
       }
     }
   }

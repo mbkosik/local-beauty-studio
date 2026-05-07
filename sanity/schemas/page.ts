@@ -57,6 +57,7 @@ export const page = defineType({
         { type: 'sectionCta' },
         { type: 'sectionContact' },
         { type: 'sectionTeam' },
+        { type: 'sectionFaq' },
       ],
       validation: (Rule) => Rule.required(),
     }),
