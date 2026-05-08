@@ -2,6 +2,7 @@ import { Mail, Phone, MapPin } from 'lucide-react'
 import { sanityFetch } from '@/sanity/live'
 import { footerQuery } from '@/sanity/queries'
 import { SanityImage } from '@/components/shared/SanityImage'
+import { SectionDivider } from '@/components/shared/SectionDivider'
 import { FacebookIcon } from '@/components/icons/FacebookIcon'
 import { InstagramIcon } from '@/components/icons/InstagramIcon'
 import { TikTokIcon } from '@/components/icons/TikTokIcon'
@@ -136,7 +137,8 @@ export async function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 border-t pt-6">
+        <div className="mt-10">
+          <SectionDivider className="mb-6" />
           <p className="text-muted-foreground text-center text-sm">
             &copy; {year} {businessName}. Wszelkie prawa zastrzeżone.
           </p>
