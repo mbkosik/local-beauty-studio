@@ -148,7 +148,8 @@ export const postBySlugQuery = defineQuery(`
       metaTitle,
       metaDescription,
       ogImage { ..., asset-> }
-    }
+    },
+    cta { heading, text, buttonLabel, buttonUrl }
   }
 `)
 

@@ -13,6 +13,7 @@ import {
 import { BlogPostLayout } from '@/components/blog/BlogPostLayout'
 import { portableTextComponents } from '@/components/blog/PortableTextComponents'
 import { PostCard } from '@/components/blog/PostCard'
+import { PostCta } from '@/components/blog/PostCta'
 import { estimateReadingTime } from '@/lib/readingTime'
 import type { BlogPost } from '@/sanity/custom-types'
 
@@ -77,6 +78,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <BlogPostLayout post={post} readingTime={readingTime}>
           <div className="text-foreground mx-auto max-w-3xl">
             {post.body && <PortableText value={post.body} components={portableTextComponents} />}
+            {post.cta?.buttonLabel && <PostCta cta={post.cta} />}
           </div>
         </BlogPostLayout>
 

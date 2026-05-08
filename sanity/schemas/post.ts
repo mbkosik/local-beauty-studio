@@ -152,5 +152,35 @@ export const post = defineType({
         }),
       ],
     }),
+    defineField({
+      name: 'cta',
+      title: 'Wezwanie do działania (opcjonalne)',
+      type: 'object',
+      options: { collapsible: true, collapsed: true },
+      fields: [
+        defineField({
+          name: 'heading',
+          title: 'Nagłówek',
+          type: 'string',
+        }),
+        defineField({
+          name: 'text',
+          title: 'Tekst zachęty',
+          type: 'text',
+          rows: 2,
+        }),
+        defineField({
+          name: 'buttonLabel',
+          title: 'Tekst przycisku',
+          type: 'string',
+        }),
+        defineField({
+          name: 'buttonUrl',
+          title: 'Link przycisku',
+          type: 'string',
+          description: 'np. /kontakt lub https://...',
+        }),
+      ],
+    }),
   ],
 })

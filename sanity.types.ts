@@ -475,6 +475,12 @@ export type Post = {
       _type: 'image'
     }
   }
+  cta?: {
+    heading?: string
+    text?: string
+    buttonLabel?: string
+    buttonUrl?: string
+  }
 }
 
 export type SanityImageCrop = {
@@ -1269,7 +1275,7 @@ export type FeaturedPostsQueryResult = Array<{
 
 // Source: sanity/queries.ts
 // Variable: postBySlugQuery
-// Query: *[_type == "post" && slug.current == $slug][0] {    _id,    title,    slug,    excerpt,    mainImage { ..., asset-> },    body,    "author": author-> {      name,      role,      bio,      photo { ..., asset-> },      socialMedia    },    "categories": categories[]-> { _id, title, slug },    publishedAt,    featured,    seo {      metaTitle,      metaDescription,      ogImage { ..., asset-> }    }  }
+// Query: *[_type == "post" && slug.current == $slug][0] {    _id,    title,    slug,    excerpt,    mainImage { ..., asset-> },    body,    "author": author-> {      name,      role,      bio,      photo { ..., asset-> },      socialMedia    },    "categories": categories[]-> { _id, title, slug },    publishedAt,    featured,    seo {      metaTitle,      metaDescription,      ogImage { ..., asset-> }    },    cta { heading, text, buttonLabel, buttonUrl }  }
 export type PostBySlugQueryResult = {
   _id: string
   title: string | null
@@ -1410,6 +1416,12 @@ export type PostBySlugQueryResult = {
       crop?: SanityImageCrop
       _type: 'image'
     } | null
+  } | null
+  cta: {
+    heading: string | null
+    text: string | null
+    buttonLabel: string | null
+    buttonUrl: string | null
   } | null
 } | null
 
@@ -2151,7 +2163,7 @@ declare module '@sanity/client' {
     '\n  *[_type == "person" && _id == $id][0] {\n    _id,\n    name,\n    role,\n    bio,\n    photo { ..., asset-> },\n    socialMedia\n  }\n': PersonQueryResult
     '\n  *[_type == "post"] | order(publishedAt desc) {\n    _id,\n    title,\n    slug,\n    excerpt,\n    mainImage { ..., asset-> },\n    "author": author-> {\n      name,\n      role,\n      photo { ..., asset-> }\n    },\n    "categories": categories[]-> { title, slug },\n    publishedAt\n  }\n': AllPostsQueryResult
     '\n  *[_type == "post" && featured == true] | order(publishedAt desc) [0...3] {\n    _id,\n    title,\n    slug,\n    excerpt,\n    mainImage { ..., asset-> },\n    "author": author-> {\n      name,\n      role,\n      photo { ..., asset-> }\n    },\n    "categories": categories[]-> { title, slug },\n    publishedAt\n  }\n': FeaturedPostsQueryResult
-    '\n  *[_type == "post" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    excerpt,\n    mainImage { ..., asset-> },\n    body,\n    "author": author-> {\n      name,\n      role,\n      bio,\n      photo { ..., asset-> },\n      socialMedia\n    },\n    "categories": categories[]-> { _id, title, slug },\n    publishedAt,\n    featured,\n    seo {\n      metaTitle,\n      metaDescription,\n      ogImage { ..., asset-> }\n    }\n  }\n': PostBySlugQueryResult
+    '\n  *[_type == "post" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    excerpt,\n    mainImage { ..., asset-> },\n    body,\n    "author": author-> {\n      name,\n      role,\n      bio,\n      photo { ..., asset-> },\n      socialMedia\n    },\n    "categories": categories[]-> { _id, title, slug },\n    publishedAt,\n    featured,\n    seo {\n      metaTitle,\n      metaDescription,\n      ogImage { ..., asset-> }\n    },\n    cta { heading, text, buttonLabel, buttonUrl }\n  }\n': PostBySlugQueryResult
     '\n  *[_type == "post"] { "slug": slug.current }\n': AllPostsSlugsQueryResult
     '\n  *[_type == "post" && $categorySlug in categories[]->slug.current] | order(publishedAt desc) {\n    _id,\n    title,\n    slug,\n    excerpt,\n    mainImage { ..., asset-> },\n    "author": author-> {\n      name,\n      role,\n      photo { ..., asset-> }\n    },\n    "categories": categories[]-> { title, slug },\n    publishedAt\n  }\n': PostsByCategoryQueryResult
     '\n  *[_type == "category"] | order(title asc) {\n    _id,\n    title,\n    slug,\n    description\n  }\n': AllCategoriesQueryResult
