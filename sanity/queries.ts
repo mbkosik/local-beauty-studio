@@ -318,6 +318,7 @@ export const pageQuery = defineQuery(`
         anchor,
         colorVariant,
         heading,
+        layout,
         images[] { ..., asset-> }
       },
       _type == "sectionBlogPreview" => {
