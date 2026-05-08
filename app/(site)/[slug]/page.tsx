@@ -5,8 +5,6 @@ import { client } from '@/sanity/client'
 import { pageQuery, allPagesSlugsQuery } from '@/sanity/queries'
 import { PageBuilder } from '@/components/sections/PageBuilder'
 
-export const revalidate = 3600
-
 export async function generateStaticParams() {
   const pages = await client.fetch(allPagesSlugsQuery)
   return (pages ?? []).map((page: { slug: string | null }) => ({ slug: page.slug ?? '' }))

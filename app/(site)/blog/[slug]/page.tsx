@@ -16,8 +16,6 @@ import { PostCard } from '@/components/blog/PostCard'
 import { estimateReadingTime } from '@/lib/readingTime'
 import type { BlogPost } from '@/sanity/custom-types'
 
-export const revalidate = 3600
-
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>
 }
