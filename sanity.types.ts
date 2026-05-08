@@ -667,6 +667,12 @@ export type SiteSettings = {
     instagram?: string
     tiktok?: string
   }
+  openingHours?: Array<{
+    days?: string
+    hours?: string
+    _type: 'dayRange'
+    _key: string
+  }>
   navLinks?: Array<
     {
       _key: string
@@ -918,7 +924,7 @@ export type SiteSettingsQueryResult = {
 
 // Source: sanity/queries.ts
 // Variable: footerQuery
-// Query: *[_type == "siteSettings"][0] {    businessName,    tagline,    logoLight { alt, asset-> { _id, url, metadata { dimensions } } },    logoDark { alt, asset-> { _id, url, metadata { dimensions } } },    email,    phone,    address,    googleMapsUrl,    social {      facebook,      instagram,      tiktok    }  }
+// Query: *[_type == "siteSettings"][0] {    businessName,    tagline,    logoLight { alt, asset-> { _id, url, metadata { dimensions } } },    logoDark { alt, asset-> { _id, url, metadata { dimensions } } },    email,    phone,    address,    googleMapsUrl,    social {      facebook,      instagram,      tiktok    },    openingHours[] { days, hours }  }
 export type FooterQueryResult = {
   businessName: string | null
   tagline: string | null
@@ -951,6 +957,10 @@ export type FooterQueryResult = {
     instagram: string | null
     tiktok: string | null
   } | null
+  openingHours: Array<{
+    days: string | null
+    hours: string | null
+  }> | null
 } | null
 
 // Source: sanity/queries.ts
@@ -1664,12 +1674,16 @@ export type BlogCategoriesQueryResult = Array<{
 
 // Source: sanity/queries.ts
 // Variable: contactSiteSettingsQuery
-// Query: *[_type == "siteSettings"][0] {    businessName,    email,    phone,    address  }
+// Query: *[_type == "siteSettings"][0] {    businessName,    email,    phone,    address,    openingHours[] { days, hours }  }
 export type ContactSiteSettingsQueryResult = {
   businessName: string | null
   email: string | null
   phone: string | null
   address: string | null
+  openingHours: Array<{
+    days: string | null
+    hours: string | null
+  }> | null
 } | null
 
 // Source: sanity/queries.ts
@@ -2156,7 +2170,7 @@ import '@sanity/client'
 declare module '@sanity/client' {
   interface SanityQueries {
     '\n  *[_type == "siteSettings"][0] {\n    businessName,\n    tagline,\n    logoLight { alt, asset-> { _id, url, metadata { dimensions } } },\n    logoDark { alt, asset-> { _id, url, metadata { dimensions } } },\n    email,\n    phone,\n    address,\n    googleMapsUrl,\n    social {\n      facebook,\n      instagram,\n      tiktok\n    },\n    "navLinks": navLinks[] {\n      label,\n      href,\n      openInNewTab\n    },\n    seo {\n      metaTitle,\n      metaDescription,\n      ogImage { ..., asset-> }\n    }\n  }\n': SiteSettingsQueryResult
-    '\n  *[_type == "siteSettings"][0] {\n    businessName,\n    tagline,\n    logoLight { alt, asset-> { _id, url, metadata { dimensions } } },\n    logoDark { alt, asset-> { _id, url, metadata { dimensions } } },\n    email,\n    phone,\n    address,\n    googleMapsUrl,\n    social {\n      facebook,\n      instagram,\n      tiktok\n    }\n  }\n': FooterQueryResult
+    '\n  *[_type == "siteSettings"][0] {\n    businessName,\n    tagline,\n    logoLight { alt, asset-> { _id, url, metadata { dimensions } } },\n    logoDark { alt, asset-> { _id, url, metadata { dimensions } } },\n    email,\n    phone,\n    address,\n    googleMapsUrl,\n    social {\n      facebook,\n      instagram,\n      tiktok\n    },\n    openingHours[] { days, hours }\n  }\n': FooterQueryResult
     '\n  *[_type == "service"] | order(_createdAt asc) {\n    _id,\n    title,\n    slug,\n    description,\n    icon,\n    image { ..., asset-> }\n  }\n': AllServicesQueryResult
     '\n  *[_type == "testimonial"] | order(_createdAt asc) {\n    _id,\n    authorName,\n    position,\n    company,\n    content,\n    rating,\n    photo { ..., asset-> },\n    publishedAt\n  }\n': AllTestimonialsQueryResult
     '\n  *[_type == "person"] | order(name asc) {\n    _id,\n    name,\n    role,\n    bio,\n    photo { ..., asset-> },\n    socialMedia\n  }\n': AllPersonsQueryResult
@@ -2171,7 +2185,7 @@ declare module '@sanity/client' {
     '\n  *[_type == "post" && (!defined($excludeSlugs) || !(slug.current in $excludeSlugs))] | order(publishedAt desc) [0...$limit] {\n    _id,\n    title,\n    "slug": slug.current,\n    excerpt,\n    mainImage { ..., asset-> },\n    publishedAt,\n    "categories": categories[]-> { title, "slug": slug.current }\n  }\n': LatestPostsQueryResult
     '\n  {\n    "posts": *[_type == "post" && (!defined($category) || $category == "" || $category in categories[]->slug.current)] | order(publishedAt desc) [$from...$to] {\n      _id,\n      title,\n      "slug": slug.current,\n      excerpt,\n      mainImage { ..., asset-> },\n      publishedAt,\n      "categories": categories[]-> { title, "slug": slug.current }\n    },\n    "total": count(*[_type == "post" && (!defined($category) || $category == "" || $category in categories[]->slug.current)])\n  }\n': BlogListingQueryResult
     '\n  *[_type == "category"] | order(title asc) {\n    _id,\n    title,\n    "slug": slug.current\n  }\n': BlogCategoriesQueryResult
-    '\n  *[_type == "siteSettings"][0] {\n    businessName,\n    email,\n    phone,\n    address\n  }\n': ContactSiteSettingsQueryResult
+    '\n  *[_type == "siteSettings"][0] {\n    businessName,\n    email,\n    phone,\n    address,\n    openingHours[] { days, hours }\n  }\n': ContactSiteSettingsQueryResult
     '\n  *[_type == "page" && defined(slug.current) && slug.current != "home"] {\n    "slug": slug.current\n  }\n': AllPagesSlugsQueryResult
     '\n  *[_type == "page" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    seo,\n    pageBuilder[] {\n      _type,\n      _key,\n      _type == "sectionHero" => {\n        anchor,\n        colorVariant,\n        heading,\n        subheading,\n        primaryCta,\n        secondaryCta,\n        backgroundImage { ..., asset-> },\n        mediaType,\n        videoUrl,\n        videoPoster { asset, crop }\n      },\n      _type == "sectionTextImage" => {\n        anchor,\n        colorVariant,\n        heading,\n        body,\n        image { ..., asset-> },\n        mediaPosition\n      },\n      _type == "sectionServices" => {\n        anchor,\n        colorVariant,\n        heading,\n        subheading,\n        services[]-> {\n          _id, title, description, icon,\n          image { ..., asset-> }\n        }\n      },\n      _type == "sectionPricing" => {\n        anchor,\n        colorVariant,\n        heading,\n        subheading,\n        items[]-> {\n          _id,\n          name,\n          duration,\n          price,\n          description\n        }\n      },\n      _type == "sectionTestimonials" => {\n        anchor,\n        colorVariant,\n        heading,\n        testimonials[]-> {\n          _id, authorName, position, company, content, rating,\n          photo { ..., asset-> }\n        }\n      },\n      _type == "sectionStats" => {\n        anchor,\n        colorVariant,\n        heading,\n        items\n      },\n      _type == "sectionGallery" => {\n        anchor,\n        colorVariant,\n        heading,\n        images[] { ..., asset-> }\n      },\n      _type == "sectionBlogPreview" => {\n        _type,\n        anchor,\n        colorVariant,\n        heading,\n        subheading,\n        mode,\n        showViewAll,\n        "posts": select(\n          mode == "manual" => posts[]->{\n            _id, title, slug, excerpt, mainImage, publishedAt,\n            "categories": categories[]->{title}\n          },\n          *[_type == "post"] | order(publishedAt desc) [0..2] {\n            _id, title, slug, excerpt, mainImage, publishedAt,\n            "categories": categories[]->{title}\n          }\n        )\n      },\n      _type == "sectionCta" => {\n        anchor,\n        colorVariant,\n        heading,\n        subheading,\n        primaryCta,\n        secondaryCta,\n        variant\n      },\n      _type == "sectionContact" => {\n        anchor,\n        colorVariant,\n        heading,\n        subheading,\n        body\n      },\n      _type == "sectionTeam" => {\n        anchor,\n        colorVariant,\n        title,\n        subtitle,\n        members[]-> {\n          _id,\n          name,\n          role,\n          bio,\n          photo { asset->, hotspot, crop },\n          socialMedia\n        }\n      },\n      _type == "sectionFaq" => {\n        anchor,\n        colorVariant,\n        title,\n        subtitle,\n        items[] {\n          question,\n          answer\n        }\n      },\n      _type == "sectionProcess" => {\n        _type,\n        anchor,\n        colorVariant,\n        title,\n        subtitle,\n        layout,\n        steps[] {\n          icon,\n          title,\n          description\n        }\n      },\n      _type == "sectionBadges" => {\n        anchor,\n        colorVariant,\n        label,\n        badges[] {\n          logo { asset, crop },\n          alt,\n          url,\n          label\n        }\n      },\n      _type == "sectionTextVideo" => {\n        anchor,\n        colorVariant,\n        title,\n        body,\n        videoUrl,\n        mediaPosition,\n        caption\n      }\n    }\n  }\n': PageQueryResult
   }

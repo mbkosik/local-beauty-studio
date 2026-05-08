@@ -42,7 +42,8 @@ export const footerQuery = defineQuery(`
       facebook,
       instagram,
       tiktok
-    }
+    },
+    openingHours[] { days, hours }
   }
 `)
 
@@ -235,7 +236,8 @@ export const contactSiteSettingsQuery = defineQuery(`
     businessName,
     email,
     phone,
-    address
+    address,
+    openingHours[] { days, hours }
   }
 `)
 
