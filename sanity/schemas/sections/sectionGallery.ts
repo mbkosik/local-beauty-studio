@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity'
+import { colorVariantField } from '../fields/colorVariantField'
 
 export const sectionGallery = defineType({
   name: 'sectionGallery',
@@ -37,6 +38,19 @@ export const sectionGallery = defineType({
       },
     }),
     defineField({
+      name: 'layout',
+      title: 'Układ galerii',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Siatka (równe kafelki)', value: 'grid' },
+          { title: 'Mozaika (różne rozmiary)', value: 'masonry' },
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'grid',
+    }),
+    defineField({
       name: 'images',
       type: 'array',
       of: [
@@ -53,5 +67,6 @@ export const sectionGallery = defineType({
       ],
       validation: (Rule) => Rule.required(),
     }),
+    colorVariantField,
   ],
 })

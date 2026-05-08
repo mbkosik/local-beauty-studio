@@ -1,6 +1,5 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
-import { sanityFetch } from '@/sanity/live'
 import { client } from '@/sanity/client'
 import { pageQuery, allPagesSlugsQuery } from '@/sanity/queries'
 import { PageBuilder } from '@/components/sections/PageBuilder'
@@ -16,7 +15,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>
 }): Promise<Metadata> {
   const { slug } = await params
-  const { data: page } = await sanityFetch({ query: pageQuery, params: { slug } })
+  const page = await client.fetch(pageQuery, { slug }, { next: { tags: ['page'] } })
 
   if (!page) return {}
 
@@ -28,7 +27,7 @@ export async function generateMetadata({
 
 export default async function SlugPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  const { data: page } = await sanityFetch({ query: pageQuery, params: { slug } })
+  const page = await client.fetch(pageQuery, { slug }, { next: { tags: ['page'] } })
 
   if (!page) {
     notFound()

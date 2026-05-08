@@ -1,4 +1,5 @@
 import { TeamCard } from '@/components/blocks/TeamCard'
+import { getVariantProps } from '@/lib/color-variant'
 import type { TeamSectionData } from '@/sanity/custom-types'
 
 interface TeamSectionProps {
@@ -7,12 +8,12 @@ interface TeamSectionProps {
 }
 
 export function TeamSection({ id, data }: TeamSectionProps) {
-  const { title, subtitle, members } = data
+  const { title, subtitle, members, colorVariant } = data
 
   if (!members || members.length === 0) return null
 
   return (
-    <section id={id} className="py-16 md:py-24">
+    <section id={id} className="py-16 md:py-24" {...getVariantProps(colorVariant)}>
       <div className="container mx-auto px-4">
         <div className="mb-12 text-center">
           <h2 className="font-heading text-foreground text-3xl font-bold tracking-tight md:text-4xl">

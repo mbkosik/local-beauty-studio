@@ -75,6 +75,7 @@ export type SectionTextVideo = {
   videoUrl?: string
   mediaPosition?: 'right' | 'left'
   caption?: string
+  colorVariant?: 'light' | 'muted' | 'dark'
 }
 
 export type SectionBadges = {
@@ -88,6 +89,7 @@ export type SectionBadges = {
     label?: string
     _key: string
   }>
+  colorVariant?: 'light' | 'muted' | 'dark'
 }
 
 export type SectionProcess = {
@@ -102,6 +104,7 @@ export type SectionProcess = {
     description?: string
     _key: string
   }>
+  colorVariant?: 'light' | 'muted' | 'dark'
 }
 
 export type SectionFaq = {
@@ -131,6 +134,7 @@ export type SectionFaq = {
     }>
     _key: string
   }>
+  colorVariant?: 'light' | 'muted' | 'dark'
 }
 
 export type PersonReference = {
@@ -150,6 +154,7 @@ export type SectionTeam = {
       _key: string
     } & PersonReference
   >
+  colorVariant?: 'light' | 'muted' | 'dark'
 }
 
 export type SectionContact = {
@@ -176,6 +181,7 @@ export type SectionContact = {
     _type: 'block'
     _key: string
   }>
+  colorVariant?: 'light' | 'muted' | 'dark'
 }
 
 export type SectionCta = {
@@ -186,6 +192,7 @@ export type SectionCta = {
   primaryCta?: SectionCtaPrimaryCta
   secondaryCta?: SectionCtaSecondaryCta
   variant?: 'brand' | 'dark' | 'light'
+  colorVariant?: 'light' | 'muted' | 'dark'
 }
 
 export type PostReference = {
@@ -207,12 +214,14 @@ export type SectionBlogPreview = {
     } & PostReference
   >
   showViewAll?: boolean
+  colorVariant?: 'light' | 'muted' | 'dark'
 }
 
 export type SectionGallery = {
   _type: 'sectionGallery'
   heading?: string
   anchor?: Slug
+  layout?: 'grid' | 'masonry'
   images?: Array<{
     asset?: SanityImageAssetReference
     media?: unknown
@@ -222,6 +231,7 @@ export type SectionGallery = {
     _type: 'image'
     _key: string
   }>
+  colorVariant?: 'light' | 'muted' | 'dark'
 }
 
 export type SectionStats = {
@@ -234,6 +244,7 @@ export type SectionStats = {
     _type: 'statItem'
     _key: string
   }>
+  colorVariant?: 'light' | 'muted' | 'dark'
 }
 
 export type TestimonialReference = {
@@ -252,6 +263,7 @@ export type SectionTestimonials = {
       _key: string
     } & TestimonialReference
   >
+  colorVariant?: 'light' | 'muted' | 'dark'
 }
 
 export type PricingItemReference = {
@@ -271,6 +283,7 @@ export type SectionPricing = {
       _key: string
     } & PricingItemReference
   >
+  colorVariant?: 'light' | 'muted' | 'dark'
 }
 
 export type ServiceReference = {
@@ -290,6 +303,7 @@ export type SectionServices = {
       _key: string
     } & ServiceReference
   >
+  colorVariant?: 'light' | 'muted' | 'dark'
 }
 
 export type SectionTextImage = {
@@ -323,6 +337,7 @@ export type SectionTextImage = {
     _type: 'image'
   }
   mediaPosition?: 'right' | 'left'
+  colorVariant?: 'light' | 'muted' | 'dark'
 }
 
 export type SectionHero = {
@@ -349,6 +364,7 @@ export type SectionHero = {
     crop?: SanityImageCrop
     _type: 'image'
   }
+  colorVariant?: 'light' | 'muted' | 'dark'
 }
 
 export type NavLink = {
@@ -459,6 +475,12 @@ export type Post = {
       crop?: SanityImageCrop
       _type: 'image'
     }
+  }
+  cta?: {
+    heading?: string
+    text?: string
+    buttonLabel?: string
+    buttonUrl?: string
   }
 }
 
@@ -646,6 +668,12 @@ export type SiteSettings = {
     instagram?: string
     tiktok?: string
   }
+  openingHours?: Array<{
+    days?: string
+    hours?: string
+    _type: 'dayRange'
+    _key: string
+  }>
   navLinks?: Array<
     {
       _key: string
@@ -897,7 +925,7 @@ export type SiteSettingsQueryResult = {
 
 // Source: sanity/queries.ts
 // Variable: footerQuery
-// Query: *[_type == "siteSettings"][0] {    businessName,    tagline,    logoLight { alt, asset-> { _id, url, metadata { dimensions } } },    logoDark { alt, asset-> { _id, url, metadata { dimensions } } },    email,    phone,    address,    googleMapsUrl,    social {      facebook,      instagram,      tiktok    }  }
+// Query: *[_type == "siteSettings"][0] {    businessName,    tagline,    logoLight { alt, asset-> { _id, url, metadata { dimensions } } },    logoDark { alt, asset-> { _id, url, metadata { dimensions } } },    email,    phone,    address,    googleMapsUrl,    social {      facebook,      instagram,      tiktok    },    openingHours[] { days, hours }  }
 export type FooterQueryResult = {
   businessName: string | null
   tagline: string | null
@@ -930,6 +958,10 @@ export type FooterQueryResult = {
     instagram: string | null
     tiktok: string | null
   } | null
+  openingHours: Array<{
+    days: string | null
+    hours: string | null
+  }> | null
 } | null
 
 // Source: sanity/queries.ts
@@ -1254,7 +1286,7 @@ export type FeaturedPostsQueryResult = Array<{
 
 // Source: sanity/queries.ts
 // Variable: postBySlugQuery
-// Query: *[_type == "post" && slug.current == $slug][0] {    _id,    title,    slug,    excerpt,    mainImage { ..., asset-> },    body,    "author": author-> {      name,      role,      bio,      photo { ..., asset-> },      socialMedia    },    "categories": categories[]-> { _id, title, slug },    publishedAt,    featured,    seo {      metaTitle,      metaDescription,      ogImage { ..., asset-> }    }  }
+// Query: *[_type == "post" && slug.current == $slug][0] {    _id,    title,    slug,    excerpt,    mainImage { ..., asset-> },    body,    "author": author-> {      name,      role,      bio,      photo { ..., asset-> },      socialMedia    },    "categories": categories[]-> { _id, title, slug },    publishedAt,    featured,    seo {      metaTitle,      metaDescription,      ogImage { ..., asset-> }    },    cta { heading, text, buttonLabel, buttonUrl }  }
 export type PostBySlugQueryResult = {
   _id: string
   title: string | null
@@ -1395,6 +1427,12 @@ export type PostBySlugQueryResult = {
       crop?: SanityImageCrop
       _type: 'image'
     } | null
+  } | null
+  cta: {
+    heading: string | null
+    text: string | null
+    buttonLabel: string | null
+    buttonUrl: string | null
   } | null
 } | null
 
@@ -1637,12 +1675,16 @@ export type BlogCategoriesQueryResult = Array<{
 
 // Source: sanity/queries.ts
 // Variable: contactSiteSettingsQuery
-// Query: *[_type == "siteSettings"][0] {    businessName,    email,    phone,    address  }
+// Query: *[_type == "siteSettings"][0] {    businessName,    email,    phone,    address,    openingHours[] { days, hours }  }
 export type ContactSiteSettingsQueryResult = {
   businessName: string | null
   email: string | null
   phone: string | null
   address: string | null
+  openingHours: Array<{
+    days: string | null
+    hours: string | null
+  }> | null
 } | null
 
 // Source: sanity/queries.ts
@@ -1654,7 +1696,7 @@ export type AllPagesSlugsQueryResult = Array<{
 
 // Source: sanity/queries.ts
 // Variable: pageQuery
-// Query: *[_type == "page" && slug.current == $slug][0] {    _id,    title,    slug,    seo,    pageBuilder[] {      _type,      _key,      _type == "sectionHero" => {        anchor,        heading,        subheading,        primaryCta,        secondaryCta,        backgroundImage { ..., asset-> },        mediaType,        videoUrl,        videoPoster { asset, crop }      },      _type == "sectionTextImage" => {        anchor,        heading,        body,        image { ..., asset-> },        mediaPosition      },      _type == "sectionServices" => {        anchor,        heading,        subheading,        services[]-> {          _id, title, description, icon,          image { ..., asset-> }        }      },      _type == "sectionPricing" => {        anchor,        heading,        subheading,        items[]-> {          _id,          name,          duration,          price,          description        }      },      _type == "sectionTestimonials" => {        anchor,        heading,        testimonials[]-> {          _id, authorName, position, company, content, rating,          photo { ..., asset-> }        }      },      _type == "sectionStats" => {        anchor,        heading,        items      },      _type == "sectionGallery" => {        anchor,        heading,        images[] { ..., asset-> }      },      _type == "sectionBlogPreview" => {        _type,        anchor,        heading,        subheading,        mode,        showViewAll,        "posts": select(          mode == "manual" => posts[]->{            _id, title, slug, excerpt, mainImage, publishedAt,            "categories": categories[]->{title}          },          *[_type == "post"] | order(publishedAt desc) [0..2] {            _id, title, slug, excerpt, mainImage, publishedAt,            "categories": categories[]->{title}          }        )      },      _type == "sectionCta" => {        anchor,        heading,        subheading,        primaryCta,        secondaryCta,        variant      },      _type == "sectionContact" => {        anchor,        heading,        subheading,        body      },      _type == "sectionTeam" => {        anchor,        title,        subtitle,        members[]-> {          _id,          name,          role,          bio,          photo { asset->, hotspot, crop },          socialMedia        }      },      _type == "sectionFaq" => {        anchor,        title,        subtitle,        items[] {          question,          answer        }      },      _type == "sectionProcess" => {        _type,        anchor,        title,        subtitle,        layout,        steps[] {          icon,          title,          description        }      },      _type == "sectionBadges" => {        anchor,        label,        badges[] {          logo { asset, crop },          alt,          url,          label        }      },      _type == "sectionTextVideo" => {        anchor,        title,        body,        videoUrl,        mediaPosition,        caption      }    }  }
+// Query: *[_type == "page" && slug.current == $slug][0] {    _id,    title,    slug,    seo,    pageBuilder[] {      _type,      _key,      _type == "sectionHero" => {        anchor,        colorVariant,        heading,        subheading,        primaryCta,        secondaryCta,        backgroundImage { ..., asset-> },        mediaType,        videoUrl,        videoPoster { asset, crop }      },      _type == "sectionTextImage" => {        anchor,        colorVariant,        heading,        body,        image { ..., asset-> },        mediaPosition      },      _type == "sectionServices" => {        anchor,        colorVariant,        heading,        subheading,        services[]-> {          _id, title, description, icon,          image { ..., asset-> }        }      },      _type == "sectionPricing" => {        anchor,        colorVariant,        heading,        subheading,        items[]-> {          _id,          name,          duration,          price,          description        }      },      _type == "sectionTestimonials" => {        anchor,        colorVariant,        heading,        testimonials[]-> {          _id, authorName, position, company, content, rating,          photo { ..., asset-> }        }      },      _type == "sectionStats" => {        anchor,        colorVariant,        heading,        items      },      _type == "sectionGallery" => {        anchor,        colorVariant,        heading,        layout,        images[] { ..., asset-> }      },      _type == "sectionBlogPreview" => {        _type,        anchor,        colorVariant,        heading,        subheading,        mode,        showViewAll,        "posts": select(          mode == "manual" => posts[]->{            _id, title, slug, excerpt, mainImage, publishedAt,            "categories": categories[]->{title}          },          *[_type == "post"] | order(publishedAt desc) [0..2] {            _id, title, slug, excerpt, mainImage, publishedAt,            "categories": categories[]->{title}          }        )      },      _type == "sectionCta" => {        anchor,        colorVariant,        heading,        subheading,        primaryCta,        secondaryCta,        variant      },      _type == "sectionContact" => {        anchor,        colorVariant,        heading,        subheading,        body      },      _type == "sectionTeam" => {        anchor,        colorVariant,        title,        subtitle,        members[]-> {          _id,          name,          role,          bio,          photo { asset->, hotspot, crop },          socialMedia        }      },      _type == "sectionFaq" => {        anchor,        colorVariant,        title,        subtitle,        items[] {          question,          answer        }      },      _type == "sectionProcess" => {        _type,        anchor,        colorVariant,        title,        subtitle,        layout,        steps[] {          icon,          title,          description        }      },      _type == "sectionBadges" => {        anchor,        colorVariant,        label,        badges[] {          logo { asset, crop },          alt,          url,          label        }      },      _type == "sectionTextVideo" => {        anchor,        colorVariant,        title,        body,        videoUrl,        mediaPosition,        caption      }    }  }
 export type PageQueryResult = {
   _id: string
   title: string | null
@@ -1675,6 +1717,7 @@ export type PageQueryResult = {
         _type: 'sectionBadges'
         _key: string
         anchor: Slug | null
+        colorVariant: 'dark' | 'light' | 'muted' | null
         label: string | null
         badges: Array<{
           logo: {
@@ -1690,6 +1733,7 @@ export type PageQueryResult = {
         _type: 'sectionBlogPreview'
         _key: string
         anchor: Slug | null
+        colorVariant: 'dark' | 'light' | 'muted' | null
         heading: string | null
         subheading: string | null
         mode: 'latest' | 'manual' | null
@@ -1717,6 +1761,7 @@ export type PageQueryResult = {
         _type: 'sectionContact'
         _key: string
         anchor: Slug | null
+        colorVariant: 'dark' | 'light' | 'muted' | null
         heading: string | null
         subheading: string | null
         body: Array<{
@@ -1743,6 +1788,7 @@ export type PageQueryResult = {
         _type: 'sectionCta'
         _key: string
         anchor: Slug | null
+        colorVariant: 'dark' | 'light' | 'muted' | null
         heading: string | null
         subheading: string | null
         primaryCta: SectionCtaPrimaryCta | null
@@ -1753,6 +1799,7 @@ export type PageQueryResult = {
         _type: 'sectionFaq'
         _key: string
         anchor: Slug | null
+        colorVariant: 'dark' | 'light' | 'muted' | null
         title: string | null
         subtitle: string | null
         items: Array<{
@@ -1781,7 +1828,9 @@ export type PageQueryResult = {
         _type: 'sectionGallery'
         _key: string
         anchor: Slug | null
+        colorVariant: 'dark' | 'light' | 'muted' | null
         heading: string | null
+        layout: 'grid' | 'masonry' | null
         images: Array<{
           asset: {
             _id: string
@@ -1817,6 +1866,7 @@ export type PageQueryResult = {
         _type: 'sectionHero'
         _key: string
         anchor: Slug | null
+        colorVariant: 'dark' | 'light' | 'muted' | null
         heading: string | null
         subheading: string | null
         primaryCta: PrimaryCta | null
@@ -1861,6 +1911,7 @@ export type PageQueryResult = {
         _type: 'sectionPricing'
         _key: string
         anchor: Slug | null
+        colorVariant: 'dark' | 'light' | 'muted' | null
         heading: string | null
         subheading: string | null
         items: Array<{
@@ -1875,6 +1926,7 @@ export type PageQueryResult = {
         _type: 'sectionProcess'
         _key: string
         anchor: Slug | null
+        colorVariant: 'dark' | 'light' | 'muted' | null
         title: string | null
         subtitle: string | null
         layout: 'horizontal' | 'vertical' | null
@@ -1888,6 +1940,7 @@ export type PageQueryResult = {
         _type: 'sectionServices'
         _key: string
         anchor: Slug | null
+        colorVariant: 'dark' | 'light' | 'muted' | null
         heading: string | null
         subheading: string | null
         services: Array<{
@@ -1930,6 +1983,7 @@ export type PageQueryResult = {
         _type: 'sectionStats'
         _key: string
         anchor: Slug | null
+        colorVariant: 'dark' | 'light' | 'muted' | null
         heading: string | null
         items: Array<{
           value?: string
@@ -1942,6 +1996,7 @@ export type PageQueryResult = {
         _type: 'sectionTeam'
         _key: string
         anchor: Slug | null
+        colorVariant: 'dark' | 'light' | 'muted' | null
         title: string | null
         subtitle: string | null
         members: Array<{
@@ -1986,6 +2041,7 @@ export type PageQueryResult = {
         _type: 'sectionTestimonials'
         _key: string
         anchor: Slug | null
+        colorVariant: 'dark' | 'light' | 'muted' | null
         heading: string | null
         testimonials: Array<{
           _id: string
@@ -2029,6 +2085,7 @@ export type PageQueryResult = {
         _type: 'sectionTextImage'
         _key: string
         anchor: Slug | null
+        colorVariant: 'dark' | 'light' | 'muted' | null
         heading: string | null
         body: Array<{
           children?: Array<{
@@ -2083,6 +2140,7 @@ export type PageQueryResult = {
         _type: 'sectionTextVideo'
         _key: string
         anchor: Slug | null
+        colorVariant: 'dark' | 'light' | 'muted' | null
         title: string | null
         body: Array<{
           children?: Array<{
@@ -2114,14 +2172,14 @@ import '@sanity/client'
 declare module '@sanity/client' {
   interface SanityQueries {
     '\n  *[_type == "siteSettings"][0] {\n    businessName,\n    tagline,\n    logoLight { alt, asset-> { _id, url, metadata { dimensions } } },\n    logoDark { alt, asset-> { _id, url, metadata { dimensions } } },\n    email,\n    phone,\n    address,\n    googleMapsUrl,\n    social {\n      facebook,\n      instagram,\n      tiktok\n    },\n    "navLinks": navLinks[] {\n      label,\n      href,\n      openInNewTab\n    },\n    seo {\n      metaTitle,\n      metaDescription,\n      ogImage { ..., asset-> }\n    }\n  }\n': SiteSettingsQueryResult
-    '\n  *[_type == "siteSettings"][0] {\n    businessName,\n    tagline,\n    logoLight { alt, asset-> { _id, url, metadata { dimensions } } },\n    logoDark { alt, asset-> { _id, url, metadata { dimensions } } },\n    email,\n    phone,\n    address,\n    googleMapsUrl,\n    social {\n      facebook,\n      instagram,\n      tiktok\n    }\n  }\n': FooterQueryResult
+    '\n  *[_type == "siteSettings"][0] {\n    businessName,\n    tagline,\n    logoLight { alt, asset-> { _id, url, metadata { dimensions } } },\n    logoDark { alt, asset-> { _id, url, metadata { dimensions } } },\n    email,\n    phone,\n    address,\n    googleMapsUrl,\n    social {\n      facebook,\n      instagram,\n      tiktok\n    },\n    openingHours[] { days, hours }\n  }\n': FooterQueryResult
     '\n  *[_type == "service"] | order(_createdAt asc) {\n    _id,\n    title,\n    slug,\n    description,\n    icon,\n    image { ..., asset-> }\n  }\n': AllServicesQueryResult
     '\n  *[_type == "testimonial"] | order(_createdAt asc) {\n    _id,\n    authorName,\n    position,\n    company,\n    content,\n    rating,\n    photo { ..., asset-> },\n    publishedAt\n  }\n': AllTestimonialsQueryResult
     '\n  *[_type == "person"] | order(name asc) {\n    _id,\n    name,\n    role,\n    bio,\n    photo { ..., asset-> },\n    socialMedia\n  }\n': AllPersonsQueryResult
     '\n  *[_type == "person" && _id == $id][0] {\n    _id,\n    name,\n    role,\n    bio,\n    photo { ..., asset-> },\n    socialMedia\n  }\n': PersonQueryResult
     '\n  *[_type == "post"] | order(publishedAt desc) {\n    _id,\n    title,\n    slug,\n    excerpt,\n    mainImage { ..., asset-> },\n    "author": author-> {\n      name,\n      role,\n      photo { ..., asset-> }\n    },\n    "categories": categories[]-> { title, slug },\n    publishedAt\n  }\n': AllPostsQueryResult
     '\n  *[_type == "post" && featured == true] | order(publishedAt desc) [0...3] {\n    _id,\n    title,\n    slug,\n    excerpt,\n    mainImage { ..., asset-> },\n    "author": author-> {\n      name,\n      role,\n      photo { ..., asset-> }\n    },\n    "categories": categories[]-> { title, slug },\n    publishedAt\n  }\n': FeaturedPostsQueryResult
-    '\n  *[_type == "post" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    excerpt,\n    mainImage { ..., asset-> },\n    body,\n    "author": author-> {\n      name,\n      role,\n      bio,\n      photo { ..., asset-> },\n      socialMedia\n    },\n    "categories": categories[]-> { _id, title, slug },\n    publishedAt,\n    featured,\n    seo {\n      metaTitle,\n      metaDescription,\n      ogImage { ..., asset-> }\n    }\n  }\n': PostBySlugQueryResult
+    '\n  *[_type == "post" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    excerpt,\n    mainImage { ..., asset-> },\n    body,\n    "author": author-> {\n      name,\n      role,\n      bio,\n      photo { ..., asset-> },\n      socialMedia\n    },\n    "categories": categories[]-> { _id, title, slug },\n    publishedAt,\n    featured,\n    seo {\n      metaTitle,\n      metaDescription,\n      ogImage { ..., asset-> }\n    },\n    cta { heading, text, buttonLabel, buttonUrl }\n  }\n': PostBySlugQueryResult
     '\n  *[_type == "post"] { "slug": slug.current }\n': AllPostsSlugsQueryResult
     '\n  *[_type == "post" && $categorySlug in categories[]->slug.current] | order(publishedAt desc) {\n    _id,\n    title,\n    slug,\n    excerpt,\n    mainImage { ..., asset-> },\n    "author": author-> {\n      name,\n      role,\n      photo { ..., asset-> }\n    },\n    "categories": categories[]-> { title, slug },\n    publishedAt\n  }\n': PostsByCategoryQueryResult
     '\n  *[_type == "category"] | order(title asc) {\n    _id,\n    title,\n    slug,\n    description\n  }\n': AllCategoriesQueryResult
@@ -2129,8 +2187,8 @@ declare module '@sanity/client' {
     '\n  *[_type == "post" && (!defined($excludeSlugs) || !(slug.current in $excludeSlugs))] | order(publishedAt desc) [0...$limit] {\n    _id,\n    title,\n    "slug": slug.current,\n    excerpt,\n    mainImage { ..., asset-> },\n    publishedAt,\n    "categories": categories[]-> { title, "slug": slug.current }\n  }\n': LatestPostsQueryResult
     '\n  {\n    "posts": *[_type == "post" && (!defined($category) || $category == "" || $category in categories[]->slug.current)] | order(publishedAt desc) [$from...$to] {\n      _id,\n      title,\n      "slug": slug.current,\n      excerpt,\n      mainImage { ..., asset-> },\n      publishedAt,\n      "categories": categories[]-> { title, "slug": slug.current }\n    },\n    "total": count(*[_type == "post" && (!defined($category) || $category == "" || $category in categories[]->slug.current)])\n  }\n': BlogListingQueryResult
     '\n  *[_type == "category"] | order(title asc) {\n    _id,\n    title,\n    "slug": slug.current\n  }\n': BlogCategoriesQueryResult
-    '\n  *[_type == "siteSettings"][0] {\n    businessName,\n    email,\n    phone,\n    address\n  }\n': ContactSiteSettingsQueryResult
+    '\n  *[_type == "siteSettings"][0] {\n    businessName,\n    email,\n    phone,\n    address,\n    openingHours[] { days, hours }\n  }\n': ContactSiteSettingsQueryResult
     '\n  *[_type == "page" && defined(slug.current) && slug.current != "home"] {\n    "slug": slug.current\n  }\n': AllPagesSlugsQueryResult
-    '\n  *[_type == "page" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    seo,\n    pageBuilder[] {\n      _type,\n      _key,\n      _type == "sectionHero" => {\n        anchor,\n        heading,\n        subheading,\n        primaryCta,\n        secondaryCta,\n        backgroundImage { ..., asset-> },\n        mediaType,\n        videoUrl,\n        videoPoster { asset, crop }\n      },\n      _type == "sectionTextImage" => {\n        anchor,\n        heading,\n        body,\n        image { ..., asset-> },\n        mediaPosition\n      },\n      _type == "sectionServices" => {\n        anchor,\n        heading,\n        subheading,\n        services[]-> {\n          _id, title, description, icon,\n          image { ..., asset-> }\n        }\n      },\n      _type == "sectionPricing" => {\n        anchor,\n        heading,\n        subheading,\n        items[]-> {\n          _id,\n          name,\n          duration,\n          price,\n          description\n        }\n      },\n      _type == "sectionTestimonials" => {\n        anchor,\n        heading,\n        testimonials[]-> {\n          _id, authorName, position, company, content, rating,\n          photo { ..., asset-> }\n        }\n      },\n      _type == "sectionStats" => {\n        anchor,\n        heading,\n        items\n      },\n      _type == "sectionGallery" => {\n        anchor,\n        heading,\n        images[] { ..., asset-> }\n      },\n      _type == "sectionBlogPreview" => {\n        _type,\n        anchor,\n        heading,\n        subheading,\n        mode,\n        showViewAll,\n        "posts": select(\n          mode == "manual" => posts[]->{\n            _id, title, slug, excerpt, mainImage, publishedAt,\n            "categories": categories[]->{title}\n          },\n          *[_type == "post"] | order(publishedAt desc) [0..2] {\n            _id, title, slug, excerpt, mainImage, publishedAt,\n            "categories": categories[]->{title}\n          }\n        )\n      },\n      _type == "sectionCta" => {\n        anchor,\n        heading,\n        subheading,\n        primaryCta,\n        secondaryCta,\n        variant\n      },\n      _type == "sectionContact" => {\n        anchor,\n        heading,\n        subheading,\n        body\n      },\n      _type == "sectionTeam" => {\n        anchor,\n        title,\n        subtitle,\n        members[]-> {\n          _id,\n          name,\n          role,\n          bio,\n          photo { asset->, hotspot, crop },\n          socialMedia\n        }\n      },\n      _type == "sectionFaq" => {\n        anchor,\n        title,\n        subtitle,\n        items[] {\n          question,\n          answer\n        }\n      },\n      _type == "sectionProcess" => {\n        _type,\n        anchor,\n        title,\n        subtitle,\n        layout,\n        steps[] {\n          icon,\n          title,\n          description\n        }\n      },\n      _type == "sectionBadges" => {\n        anchor,\n        label,\n        badges[] {\n          logo { asset, crop },\n          alt,\n          url,\n          label\n        }\n      },\n      _type == "sectionTextVideo" => {\n        anchor,\n        title,\n        body,\n        videoUrl,\n        mediaPosition,\n        caption\n      }\n    }\n  }\n': PageQueryResult
+    '\n  *[_type == "page" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    seo,\n    pageBuilder[] {\n      _type,\n      _key,\n      _type == "sectionHero" => {\n        anchor,\n        colorVariant,\n        heading,\n        subheading,\n        primaryCta,\n        secondaryCta,\n        backgroundImage { ..., asset-> },\n        mediaType,\n        videoUrl,\n        videoPoster { asset, crop }\n      },\n      _type == "sectionTextImage" => {\n        anchor,\n        colorVariant,\n        heading,\n        body,\n        image { ..., asset-> },\n        mediaPosition\n      },\n      _type == "sectionServices" => {\n        anchor,\n        colorVariant,\n        heading,\n        subheading,\n        services[]-> {\n          _id, title, description, icon,\n          image { ..., asset-> }\n        }\n      },\n      _type == "sectionPricing" => {\n        anchor,\n        colorVariant,\n        heading,\n        subheading,\n        items[]-> {\n          _id,\n          name,\n          duration,\n          price,\n          description\n        }\n      },\n      _type == "sectionTestimonials" => {\n        anchor,\n        colorVariant,\n        heading,\n        testimonials[]-> {\n          _id, authorName, position, company, content, rating,\n          photo { ..., asset-> }\n        }\n      },\n      _type == "sectionStats" => {\n        anchor,\n        colorVariant,\n        heading,\n        items\n      },\n      _type == "sectionGallery" => {\n        anchor,\n        colorVariant,\n        heading,\n        layout,\n        images[] { ..., asset-> }\n      },\n      _type == "sectionBlogPreview" => {\n        _type,\n        anchor,\n        colorVariant,\n        heading,\n        subheading,\n        mode,\n        showViewAll,\n        "posts": select(\n          mode == "manual" => posts[]->{\n            _id, title, slug, excerpt, mainImage, publishedAt,\n            "categories": categories[]->{title}\n          },\n          *[_type == "post"] | order(publishedAt desc) [0..2] {\n            _id, title, slug, excerpt, mainImage, publishedAt,\n            "categories": categories[]->{title}\n          }\n        )\n      },\n      _type == "sectionCta" => {\n        anchor,\n        colorVariant,\n        heading,\n        subheading,\n        primaryCta,\n        secondaryCta,\n        variant\n      },\n      _type == "sectionContact" => {\n        anchor,\n        colorVariant,\n        heading,\n        subheading,\n        body\n      },\n      _type == "sectionTeam" => {\n        anchor,\n        colorVariant,\n        title,\n        subtitle,\n        members[]-> {\n          _id,\n          name,\n          role,\n          bio,\n          photo { asset->, hotspot, crop },\n          socialMedia\n        }\n      },\n      _type == "sectionFaq" => {\n        anchor,\n        colorVariant,\n        title,\n        subtitle,\n        items[] {\n          question,\n          answer\n        }\n      },\n      _type == "sectionProcess" => {\n        _type,\n        anchor,\n        colorVariant,\n        title,\n        subtitle,\n        layout,\n        steps[] {\n          icon,\n          title,\n          description\n        }\n      },\n      _type == "sectionBadges" => {\n        anchor,\n        colorVariant,\n        label,\n        badges[] {\n          logo { asset, crop },\n          alt,\n          url,\n          label\n        }\n      },\n      _type == "sectionTextVideo" => {\n        anchor,\n        colorVariant,\n        title,\n        body,\n        videoUrl,\n        mediaPosition,\n        caption\n      }\n    }\n  }\n': PageQueryResult
   }
 }

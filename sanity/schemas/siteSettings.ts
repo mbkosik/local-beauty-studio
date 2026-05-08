@@ -93,6 +93,35 @@ export const siteSettings = defineType({
       ],
     }),
     defineField({
+      name: 'openingHours',
+      title: 'Godziny otwarcia',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          name: 'dayRange',
+          title: 'Zakres dni',
+          fields: [
+            defineField({
+              name: 'days',
+              title: 'Dni',
+              type: 'string',
+              description: 'np. Poniedziałek – Piątek',
+            }),
+            defineField({
+              name: 'hours',
+              title: 'Godziny',
+              type: 'string',
+              description: 'np. 10:00 – 20:00 lub Nieczynne',
+            }),
+          ],
+          preview: {
+            select: { title: 'days', subtitle: 'hours' },
+          },
+        },
+      ],
+    }),
+    defineField({
       name: 'navLinks',
       title: 'Linki nawigacji',
       type: 'array',

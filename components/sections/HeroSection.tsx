@@ -43,6 +43,7 @@ export function HeroSection({ data, id }: HeroSectionProps) {
   })
 
   return (
+    // colorVariant not applied — hero uses media background
     <section
       id={id}
       aria-label="Baner główny"

@@ -1,10 +1,10 @@
 import { notFound } from 'next/navigation'
-import { sanityFetch } from '@/sanity/live'
+import { client } from '@/sanity/client'
 import { pageQuery } from '@/sanity/queries'
 import { PageBuilder } from '@/components/sections/PageBuilder'
 
 export default async function HomePage() {
-  const { data: page } = await sanityFetch({ query: pageQuery, params: { slug: 'home' } })
+  const page = await client.fetch(pageQuery, { slug: 'home' }, { next: { tags: ['page'] } })
 
   if (!page) {
     notFound()

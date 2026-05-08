@@ -2,6 +2,7 @@
 
 import { PortableText, type PortableTextBlock } from '@portabletext/react'
 import { motion, useReducedMotion } from 'motion/react'
+import { getVariantProps } from '@/lib/color-variant'
 
 interface TextMediaSectionProps {
   title?: string | null
@@ -9,6 +10,7 @@ interface TextMediaSectionProps {
   mediaPosition?: 'left' | 'right' | null
   mediaSlot: React.ReactNode
   id?: string
+  colorVariant?: string | null
 }
 
 const portableTextComponents = {
@@ -25,6 +27,7 @@ export function TextMediaSection({
   mediaPosition = 'right',
   mediaSlot,
   id,
+  colorVariant,
 }: TextMediaSectionProps) {
   const prefersReducedMotion = useReducedMotion()
 
@@ -32,7 +35,7 @@ export function TextMediaSection({
   const mediaX = prefersReducedMotion ? 0 : mediaPosition === 'right' ? 40 : -40
 
   return (
-    <section id={id} className="py-16 md:py-24">
+    <section id={id} className="py-16 md:py-24" {...getVariantProps(colorVariant)}>
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
           {/* Media — always on top on mobile (first in DOM), position swapped on desktop */}

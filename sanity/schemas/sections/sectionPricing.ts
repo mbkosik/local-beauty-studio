@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity'
+import { colorVariantField } from '../fields/colorVariantField'
 
 export const sectionPricing = defineType({
   name: 'sectionPricing',
@@ -46,5 +47,6 @@ export const sectionPricing = defineType({
       type: 'array',
       of: [{ type: 'reference', to: [{ type: 'pricingItem' }] }],
     }),
+    colorVariantField,
   ],
 })

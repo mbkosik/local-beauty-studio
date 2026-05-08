@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Playfair_Display, Lato } from 'next/font/google'
 import './globals.css'
 import { ThemeProvider } from '@/components/shared/ThemeProvider'
-import { sanityFetch } from '@/sanity/live'
+import { client } from '@/sanity/client'
 import { siteSettingsQuery } from '@/sanity/queries'
 import { Toaster } from '@/components/ui/sonner'
 
@@ -19,7 +19,7 @@ const lato = Lato({
 })
 
 export async function generateMetadata(): Promise<Metadata> {
-  const { data: settings } = await sanityFetch({ query: siteSettingsQuery })
+  const settings = await client.fetch(siteSettingsQuery, {}, { next: { tags: ['settings'] } })
 
   const siteName = settings?.businessName ?? 'Beauty Studio'
   const title = settings?.seo?.metaTitle ?? siteName

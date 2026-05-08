@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity'
+import { colorVariantField } from '../fields/colorVariantField'
 
 export const sectionTextVideo = defineType({
   name: 'sectionTextVideo',
@@ -93,5 +94,6 @@ export const sectionTextVideo = defineType({
       title: 'Podpis pod wideo',
       type: 'string',
     }),
+    colorVariantField,
   ],
 })

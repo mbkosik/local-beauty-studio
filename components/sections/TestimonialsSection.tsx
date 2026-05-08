@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/carousel'
 import { AnimatedSection } from '@/components/shared/AnimatedSection'
 import { TestimonialCard } from '@/components/blocks/TestimonialCard'
+import { getVariantProps } from '@/lib/color-variant'
 import type { TestimonialsSectionData } from '@/sanity/custom-types'
 
 interface TestimonialsSectionProps {
@@ -21,7 +22,7 @@ interface TestimonialsSectionProps {
 }
 
 export function TestimonialsSection({ data, id }: TestimonialsSectionProps) {
-  const { heading, testimonials } = data
+  const { heading, testimonials, colorVariant } = data
   const prefersReducedMotion = useReducedMotion()
 
   const [api, setApi] = useState<CarouselApi>()
@@ -74,46 +75,48 @@ export function TestimonialsSection({ data, id }: TestimonialsSectionProps) {
   const showDots = testimonials.length > 1 && visibleCount < testimonials.length
 
   return (
-    <AnimatedSection as="section" id={id} className="py-16 md:py-24">
-      <div className="container mx-auto px-4">
-        {heading && (
-          <div className="mb-12 text-center">
-            <h2 className="font-heading mb-3 text-3xl font-bold md:text-4xl">{heading}</h2>
-          </div>
-        )}
+    <section id={id} {...getVariantProps(colorVariant)}>
+      <AnimatedSection className="py-16 md:py-24">
+        <div className="container mx-auto px-4">
+          {heading && (
+            <div className="mb-12 text-center">
+              <h2 className="font-heading mb-3 text-3xl font-bold md:text-4xl">{heading}</h2>
+            </div>
+          )}
 
-        <div className="relative px-12">
-          <Carousel
-            opts={{ loop: true }}
-            plugins={prefersReducedMotion ? [] : [autoplayPlugin]}
-            setApi={setApi}
-          >
-            <CarouselContent>
-              {testimonials.map((testimonial) => (
-                <CarouselItem key={testimonial._id} className="md:basis-1/2 lg:basis-1/3">
-                  <TestimonialCard testimonial={testimonial} />
-                </CarouselItem>
+          <div className="relative px-12">
+            <Carousel
+              opts={{ loop: true }}
+              plugins={prefersReducedMotion ? [] : [autoplayPlugin]}
+              setApi={setApi}
+            >
+              <CarouselContent>
+                {testimonials.map((testimonial) => (
+                  <CarouselItem key={testimonial._id} className="md:basis-1/2 lg:basis-1/3">
+                    <TestimonialCard testimonial={testimonial} />
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious />
+              <CarouselNext />
+            </Carousel>
+          </div>
+
+          {showDots && (
+            <div className="mt-6 flex justify-center gap-2" aria-hidden="true">
+              {Array.from({ length: testimonials.length }, (_, i) => (
+                <button
+                  key={i}
+                  onClick={() => api?.scrollTo(i)}
+                  className={`h-2 w-2 rounded-full transition-colors ${
+                    i === current ? 'bg-primary' : 'bg-muted'
+                  }`}
+                />
               ))}
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-          </Carousel>
+            </div>
+          )}
         </div>
-
-        {showDots && (
-          <div className="mt-6 flex justify-center gap-2" aria-hidden="true">
-            {Array.from({ length: testimonials.length }, (_, i) => (
-              <button
-                key={i}
-                onClick={() => api?.scrollTo(i)}
-                className={`h-2 w-2 rounded-full transition-colors ${
-                  i === current ? 'bg-primary' : 'bg-muted'
-                }`}
-              />
-            ))}
-          </div>
-        )}
-      </div>
-    </AnimatedSection>
+      </AnimatedSection>
+    </section>
   )
 }

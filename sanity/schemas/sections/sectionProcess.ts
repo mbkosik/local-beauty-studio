@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity'
+import { colorVariantField } from '../fields/colorVariantField'
 
 export const sectionProcess = defineType({
   name: 'sectionProcess',
@@ -94,5 +95,6 @@ export const sectionProcess = defineType({
         },
       ],
     }),
+    colorVariantField,
   ],
 })

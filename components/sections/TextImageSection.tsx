@@ -9,24 +9,27 @@ interface TextImageSectionProps {
 }
 
 export function TextImageSection({ data, id }: TextImageSectionProps) {
-  const { heading, body, image, mediaPosition = 'right' } = data
+  const { heading, body, image, mediaPosition = 'right', colorVariant } = data
   if (!image?.asset || !body) return null
 
   return (
     <TextMediaSection
       id={id}
+      colorVariant={colorVariant}
       title={heading}
       body={body as PortableTextBlock[]}
       mediaPosition={mediaPosition as 'left' | 'right'}
       mediaSlot={
-        <div className="relative aspect-4/3 w-full overflow-hidden">
-          <SanityImage
-            image={image as SanityImageData}
-            fill
-            width={800}
-            height={600}
-            className="object-cover"
-          />
+        <div className="image-frame w-full">
+          <div className="relative aspect-4/3 w-full overflow-hidden">
+            <SanityImage
+              image={image as SanityImageData}
+              fill
+              width={800}
+              height={600}
+              className="object-cover"
+            />
+          </div>
         </div>
       }
     />

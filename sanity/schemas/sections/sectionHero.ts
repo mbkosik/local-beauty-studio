@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity'
+import { colorVariantField } from '../fields/colorVariantField'
 
 export const sectionHero = defineType({
   name: 'sectionHero',
@@ -116,5 +117,6 @@ export const sectionHero = defineType({
       options: { hotspot: true },
       hidden: ({ parent }) => parent?.mediaType !== 'video',
     }),
+    colorVariantField,
   ],
 })

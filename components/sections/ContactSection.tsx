@@ -1,5 +1,6 @@
-import { sanityFetch } from '@/sanity/live'
+import { client } from '@/sanity/client'
 import { contactSiteSettingsQuery } from '@/sanity/queries'
+import { getVariantProps } from '@/lib/color-variant'
 import type { SectionContact } from '@/sanity.types'
 import { ContactForm } from './ContactForm'
 
@@ -9,10 +10,14 @@ interface ContactSectionProps {
 }
 
 export async function ContactSection({ data, id }: ContactSectionProps) {
-  const { data: settings } = await sanityFetch({ query: contactSiteSettingsQuery })
+  const settings = await client.fetch(
+    contactSiteSettingsQuery,
+    {},
+    { next: { tags: ['settings'] } }
+  )
 
   return (
-    <section id={id} className="py-16 md:py-24">
+    <section id={id} className="py-16 md:py-24" {...getVariantProps(data.colorVariant)}>
       <div className="container mx-auto px-4">
         {(data.heading || data.subheading) && (
           <div className="mb-12 text-center">

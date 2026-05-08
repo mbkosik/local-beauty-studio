@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity'
+import { colorVariantField } from '../fields/colorVariantField'
 
 export const sectionBadges = defineType({
   name: 'sectionBadges',
@@ -79,5 +80,6 @@ export const sectionBadges = defineType({
         },
       ],
     }),
+    colorVariantField,
   ],
 })
