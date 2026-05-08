@@ -3,8 +3,6 @@ import { sanityFetch } from '@/sanity/live'
 import { pageQuery } from '@/sanity/queries'
 import { PageBuilder } from '@/components/sections/PageBuilder'
 
-export const revalidate = 3600
-
 export default async function HomePage() {
   const { data: page } = await sanityFetch({ query: pageQuery, params: { slug: 'home' } })
 

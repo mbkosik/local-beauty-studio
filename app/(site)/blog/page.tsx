@@ -5,8 +5,6 @@ import { PostCard } from '@/components/blog/PostCard'
 import { CategoryFilter } from '@/components/blog/CategoryFilter'
 import { BlogPagination } from '@/components/blog/BlogPagination'
 
-export const revalidate = 3600
-
 const POSTS_PER_PAGE = 9
 
 interface BlogPageProps {
