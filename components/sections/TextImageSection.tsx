@@ -9,12 +9,13 @@ interface TextImageSectionProps {
 }
 
 export function TextImageSection({ data, id }: TextImageSectionProps) {
-  const { heading, body, image, mediaPosition = 'right' } = data
+  const { heading, body, image, mediaPosition = 'right', colorVariant } = data
   if (!image?.asset || !body) return null
 
   return (
     <TextMediaSection
       id={id}
+      colorVariant={colorVariant}
       title={heading}
       body={body as PortableTextBlock[]}
       mediaPosition={mediaPosition as 'left' | 'right'}

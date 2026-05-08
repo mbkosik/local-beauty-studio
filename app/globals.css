@@ -182,4 +182,28 @@ section[id] {
   [role='button']:not(:disabled) {
     cursor: pointer;
   }
+
+  [data-variant='muted'] {
+    background-color: var(--muted);
+  }
+
+  [data-variant='dark'] {
+    background-color: #222222;
+    color: #f0ece9;
+    --background: #222222;
+    --foreground: #f0ece9;
+    --card: #2c2c2c;
+    --card-foreground: #f0ece9;
+    --popover: #2c2c2c;
+    --popover-foreground: #f0ece9;
+    --muted: #2c2c2c;
+    --muted-foreground: #9a9a9a;
+    --secondary: #2c2c2c;
+    --secondary-foreground: #f0ece9;
+    --accent: #2c2c2c;
+    --accent-foreground: #f0ece9;
+    --border: #3a3a3a;
+    --input: #3a3a3a;
+    --primary-foreground: #141414;
+  }
 }

@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity'
+import { colorVariantField } from '../fields/colorVariantField'
 
 export const sectionContact = defineType({
   name: 'sectionContact',
@@ -76,5 +77,6 @@ export const sectionContact = defineType({
         },
       ],
     }),
+    colorVariantField,
   ],
 })

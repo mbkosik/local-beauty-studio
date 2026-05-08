@@ -378,6 +378,27 @@
             "type": "string"
           },
           "optional": true
+        },
+        "colorVariant": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "light"
+              },
+              {
+                "type": "string",
+                "value": "muted"
+              },
+              {
+                "type": "string",
+                "value": "dark"
+              }
+            ]
+          },
+          "optional": true
         }
       }
     }
@@ -459,6 +480,27 @@
                 }
               }
             }
+          },
+          "optional": true
+        },
+        "colorVariant": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "light"
+              },
+              {
+                "type": "string",
+                "value": "muted"
+              },
+              {
+                "type": "string",
+                "value": "dark"
+              }
+            ]
           },
           "optional": true
         }
@@ -559,6 +601,27 @@
                 }
               }
             }
+          },
+          "optional": true
+        },
+        "colorVariant": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "light"
+              },
+              {
+                "type": "string",
+                "value": "muted"
+              },
+              {
+                "type": "string",
+                "value": "dark"
+              }
+            ]
           },
           "optional": true
         }
@@ -780,6 +843,27 @@
             }
           },
           "optional": true
+        },
+        "colorVariant": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "light"
+              },
+              {
+                "type": "string",
+                "value": "muted"
+              },
+              {
+                "type": "string",
+                "value": "dark"
+              }
+            ]
+          },
+          "optional": true
         }
       }
     }
@@ -868,6 +952,27 @@
                 "name": "person.reference"
               }
             }
+          },
+          "optional": true
+        },
+        "colorVariant": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "light"
+              },
+              {
+                "type": "string",
+                "value": "muted"
+              },
+              {
+                "type": "string",
+                "value": "dark"
+              }
+            ]
           },
           "optional": true
         }
@@ -1057,6 +1162,27 @@
             }
           },
           "optional": true
+        },
+        "colorVariant": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "light"
+              },
+              {
+                "type": "string",
+                "value": "muted"
+              },
+              {
+                "type": "string",
+                "value": "dark"
+              }
+            ]
+          },
+          "optional": true
         }
       }
     }
@@ -1128,6 +1254,27 @@
               {
                 "type": "string",
                 "value": "light"
+              }
+            ]
+          },
+          "optional": true
+        },
+        "colorVariant": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "light"
+              },
+              {
+                "type": "string",
+                "value": "muted"
+              },
+              {
+                "type": "string",
+                "value": "dark"
               }
             ]
           },
@@ -1246,6 +1393,27 @@
             "type": "boolean"
           },
           "optional": true
+        },
+        "colorVariant": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "light"
+              },
+              {
+                "type": "string",
+                "value": "muted"
+              },
+              {
+                "type": "string",
+                "value": "dark"
+              }
+            ]
+          },
+          "optional": true
         }
       }
     }
@@ -1345,6 +1513,27 @@
             }
           },
           "optional": true
+        },
+        "colorVariant": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "light"
+              },
+              {
+                "type": "string",
+                "value": "muted"
+              },
+              {
+                "type": "string",
+                "value": "dark"
+              }
+            ]
+          },
+          "optional": true
         }
       }
     }
@@ -1418,6 +1607,27 @@
                 }
               }
             }
+          },
+          "optional": true
+        },
+        "colorVariant": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "light"
+              },
+              {
+                "type": "string",
+                "value": "muted"
+              },
+              {
+                "type": "string",
+                "value": "dark"
+              }
+            ]
           },
           "optional": true
         }
@@ -1501,6 +1711,27 @@
                 "name": "testimonial.reference"
               }
             }
+          },
+          "optional": true
+        },
+        "colorVariant": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "light"
+              },
+              {
+                "type": "string",
+                "value": "muted"
+              },
+              {
+                "type": "string",
+                "value": "dark"
+              }
+            ]
           },
           "optional": true
         }
@@ -1593,6 +1824,27 @@
             }
           },
           "optional": true
+        },
+        "colorVariant": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "light"
+              },
+              {
+                "type": "string",
+                "value": "muted"
+              },
+              {
+                "type": "string",
+                "value": "dark"
+              }
+            ]
+          },
+          "optional": true
         }
       }
     }
@@ -1681,6 +1933,27 @@
                 "name": "service.reference"
               }
             }
+          },
+          "optional": true
+        },
+        "colorVariant": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "light"
+              },
+              {
+                "type": "string",
+                "value": "muted"
+              },
+              {
+                "type": "string",
+                "value": "dark"
+              }
+            ]
           },
           "optional": true
         }
@@ -1964,6 +2237,27 @@
             ]
           },
           "optional": true
+        },
+        "colorVariant": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "light"
+              },
+              {
+                "type": "string",
+                "value": "muted"
+              },
+              {
+                "type": "string",
+                "value": "dark"
+              }
+            ]
+          },
+          "optional": true
         }
       }
     }
@@ -2141,6 +2435,27 @@
                 }
               }
             }
+          },
+          "optional": true
+        },
+        "colorVariant": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "light"
+              },
+              {
+                "type": "string",
+                "value": "muted"
+              },
+              {
+                "type": "string",
+                "value": "dark"
+              }
+            ]
           },
           "optional": true
         }

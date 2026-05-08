@@ -48,7 +48,7 @@ export function StatCard({ value, label }: StatCardProps) {
   return (
     <div
       ref={ref}
-      className="bg-muted/50 flex flex-col items-center gap-2 rounded-2xl px-6 py-10 text-center"
+      className="bg-card flex flex-col items-center gap-2 rounded-2xl px-6 py-10 text-center shadow-sm"
     >
       <span className="font-heading text-primary text-4xl font-bold tabular-nums md:text-5xl">
         <motion.span>{rounded}</motion.span>

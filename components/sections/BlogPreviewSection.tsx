@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { AnimatedSection } from '@/components/shared/AnimatedSection'
 import { PostCard } from '@/components/blog/PostCard'
+import { getVariantProps } from '@/lib/color-variant'
 import type { BlogPreviewSectionData } from '@/sanity/custom-types'
 import type { BlogPost } from '@/sanity/custom-types'
 
@@ -11,7 +12,7 @@ interface BlogPreviewSectionProps {
 }
 
 export function BlogPreviewSection({ data, id }: BlogPreviewSectionProps) {
-  const { heading, subheading, posts, showViewAll } = data
+  const { heading, subheading, posts, showViewAll, colorVariant } = data
 
   if (!posts || posts.length === 0) return null
 
@@ -24,27 +25,29 @@ export function BlogPreviewSection({ data, id }: BlogPreviewSectionProps) {
   })) as unknown as BlogPost[]
 
   return (
-    <AnimatedSection as="section" id={id} className="py-16 md:py-24">
-      <div className="container mx-auto px-4">
-        <div className="mb-12 text-center">
-          <h2 className="text-3xl font-bold tracking-tight md:text-4xl">{heading}</h2>
-          {subheading && <p className="text-muted-foreground mt-4 text-lg">{subheading}</p>}
-        </div>
-
-        <div className="grid gap-6 md:grid-cols-3">
-          {normalizedPosts.map((post) => (
-            <PostCard key={post._id} post={post} />
-          ))}
-        </div>
-
-        {showViewAll && (
-          <div className="mt-12 flex justify-center">
-            <Button variant="outline" asChild>
-              <Link href="/blog">Zobacz wszystkie wpisy</Link>
-            </Button>
+    <section id={id} {...getVariantProps(colorVariant)}>
+      <AnimatedSection className="py-16 md:py-24">
+        <div className="container mx-auto px-4">
+          <div className="mb-12 text-center">
+            <h2 className="text-3xl font-bold tracking-tight md:text-4xl">{heading}</h2>
+            {subheading && <p className="text-muted-foreground mt-4 text-lg">{subheading}</p>}
           </div>
-        )}
-      </div>
-    </AnimatedSection>
+
+          <div className="grid gap-6 md:grid-cols-3">
+            {normalizedPosts.map((post) => (
+              <PostCard key={post._id} post={post} />
+            ))}
+          </div>
+
+          {showViewAll && (
+            <div className="mt-12 flex justify-center">
+              <Button variant="outline" asChild>
+                <Link href="/blog">Zobacz wszystkie wpisy</Link>
+              </Button>
+            </div>
+          )}
+        </div>
+      </AnimatedSection>
+    </section>
   )
 }

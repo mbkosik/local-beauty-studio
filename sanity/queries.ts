@@ -255,6 +255,7 @@ export const pageQuery = defineQuery(`
       _key,
       _type == "sectionHero" => {
         anchor,
+        colorVariant,
         heading,
         subheading,
         primaryCta,
@@ -266,6 +267,7 @@ export const pageQuery = defineQuery(`
       },
       _type == "sectionTextImage" => {
         anchor,
+        colorVariant,
         heading,
         body,
         image { ..., asset-> },
@@ -273,6 +275,7 @@ export const pageQuery = defineQuery(`
       },
       _type == "sectionServices" => {
         anchor,
+        colorVariant,
         heading,
         subheading,
         services[]-> {
@@ -282,6 +285,7 @@ export const pageQuery = defineQuery(`
       },
       _type == "sectionPricing" => {
         anchor,
+        colorVariant,
         heading,
         subheading,
         items[]-> {
@@ -294,6 +298,7 @@ export const pageQuery = defineQuery(`
       },
       _type == "sectionTestimonials" => {
         anchor,
+        colorVariant,
         heading,
         testimonials[]-> {
           _id, authorName, position, company, content, rating,
@@ -302,17 +307,20 @@ export const pageQuery = defineQuery(`
       },
       _type == "sectionStats" => {
         anchor,
+        colorVariant,
         heading,
         items
       },
       _type == "sectionGallery" => {
         anchor,
+        colorVariant,
         heading,
         images[] { ..., asset-> }
       },
       _type == "sectionBlogPreview" => {
         _type,
         anchor,
+        colorVariant,
         heading,
         subheading,
         mode,
@@ -330,6 +338,7 @@ export const pageQuery = defineQuery(`
       },
       _type == "sectionCta" => {
         anchor,
+        colorVariant,
         heading,
         subheading,
         primaryCta,
@@ -338,12 +347,14 @@ export const pageQuery = defineQuery(`
       },
       _type == "sectionContact" => {
         anchor,
+        colorVariant,
         heading,
         subheading,
         body
       },
       _type == "sectionTeam" => {
         anchor,
+        colorVariant,
         title,
         subtitle,
         members[]-> {
@@ -357,6 +368,7 @@ export const pageQuery = defineQuery(`
       },
       _type == "sectionFaq" => {
         anchor,
+        colorVariant,
         title,
         subtitle,
         items[] {
@@ -367,6 +379,7 @@ export const pageQuery = defineQuery(`
       _type == "sectionProcess" => {
         _type,
         anchor,
+        colorVariant,
         title,
         subtitle,
         layout,
@@ -378,6 +391,7 @@ export const pageQuery = defineQuery(`
       },
       _type == "sectionBadges" => {
         anchor,
+        colorVariant,
         label,
         badges[] {
           logo { asset, crop },
@@ -388,6 +402,7 @@ export const pageQuery = defineQuery(`
       },
       _type == "sectionTextVideo" => {
         anchor,
+        colorVariant,
         title,
         body,
         videoUrl,

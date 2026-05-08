@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity'
+import { colorVariantField } from '../fields/colorVariantField'
 
 export const sectionBlogPreview = defineType({
   name: 'sectionBlogPreview',
@@ -72,5 +73,6 @@ export const sectionBlogPreview = defineType({
       title: 'Pokaż link "Zobacz wszystkie"',
       initialValue: false,
     }),
+    colorVariantField,
   ],
 })

@@ -1,5 +1,6 @@
 import { SectionBadges } from '@/sanity.types'
 import { SanityImage, SanityImageData } from '@/components/shared/SanityImage'
+import { getVariantProps } from '@/lib/color-variant'
 
 interface BadgesSectionProps {
   id?: string
@@ -7,14 +8,14 @@ interface BadgesSectionProps {
 }
 
 export function BadgesSection({ id, data }: BadgesSectionProps) {
-  const { label, badges } = data
+  const { label, badges, colorVariant } = data
 
   if (!badges?.length) return null
 
   const visibleBadges = badges.slice(0, 6)
 
   return (
-    <section id={id} className="border-border/50 bg-muted/30 border-y py-8">
+    <section id={id} className="border-border/50 border-y py-8" {...getVariantProps(colorVariant)}>
       <div className="container mx-auto px-4">
         {label && (
           <p className="text-muted-foreground mb-6 text-center text-sm font-medium tracking-wider uppercase">

@@ -9,7 +9,7 @@ interface TextVideoSectionProps {
 }
 
 export function TextVideoSection({ data, id }: TextVideoSectionProps) {
-  const { title, body, videoUrl, mediaPosition = 'right', caption } = data
+  const { title, body, videoUrl, mediaPosition = 'right', caption, colorVariant } = data
   if (!videoUrl) return null
 
   const embedUrl = getEmbedUrl(videoUrl)
@@ -18,6 +18,7 @@ export function TextVideoSection({ data, id }: TextVideoSectionProps) {
   return (
     <TextMediaSection
       id={id}
+      colorVariant={colorVariant}
       title={title}
       body={body as PortableTextBlock[]}
       mediaPosition={mediaPosition as 'left' | 'right'}

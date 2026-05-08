@@ -7,6 +7,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion'
 import { AnimatedSection } from '@/components/shared/AnimatedSection'
+import { getVariantProps } from '@/lib/color-variant'
 import type { SectionFaq } from '@/sanity.types'
 
 interface FaqSectionProps {
@@ -53,12 +54,17 @@ const faqPortableTextComponents: PortableTextComponents = {
 }
 
 export function FaqSection({ id, data }: FaqSectionProps) {
-  const { title, subtitle, items } = data
+  const { title, subtitle, items, colorVariant } = data
 
   if (!items?.length) return null
 
   return (
-    <section id={id} aria-labelledby="faq-title" className="py-16 md:py-24">
+    <section
+      id={id}
+      aria-labelledby="faq-title"
+      className="py-16 md:py-24"
+      {...getVariantProps(colorVariant)}
+    >
       <div className="mx-auto max-w-3xl px-4">
         <AnimatedSection>
           <h2 id="faq-title" className="font-heading text-center text-3xl md:text-4xl">

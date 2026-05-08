@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity'
+import { colorVariantField } from '../fields/colorVariantField'
 
 export const sectionTeam = defineType({
   name: 'sectionTeam',
@@ -54,5 +55,6 @@ export const sectionTeam = defineType({
       of: [{ type: 'reference', to: [{ type: 'person' }] }],
       validation: (Rule) => Rule.required().min(1),
     }),
+    colorVariantField,
   ],
 })

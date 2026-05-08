@@ -4,6 +4,7 @@ import { createElement, Fragment } from 'react'
 import { ArrowRight, ArrowDown } from 'lucide-react'
 import { AnimatedSection } from '@/components/shared/AnimatedSection'
 import { getDynamicIcon } from '@/lib/icon-service'
+import { getVariantProps } from '@/lib/color-variant'
 import type { SectionProcess } from '@/sanity.types'
 
 type ProcessStep = {
@@ -91,12 +92,17 @@ function VerticalLayout({ steps }: { steps: ProcessStep[] }) {
 }
 
 export function ProcessSection({ data, id }: ProcessSectionProps) {
-  const { title, subtitle, layout, steps } = data
+  const { title, subtitle, layout, steps, colorVariant } = data
 
   if (!steps?.length) return null
 
   return (
-    <section id={id} aria-labelledby="process-title" className="py-16 md:py-24">
+    <section
+      id={id}
+      aria-labelledby="process-title"
+      className="py-16 md:py-24"
+      {...getVariantProps(colorVariant)}
+    >
       <AnimatedSection className="container mx-auto px-4">
         <div className="mb-12 text-center md:mb-16">
           <h2 id="process-title" className="font-heading text-3xl md:text-4xl">

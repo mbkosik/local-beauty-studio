@@ -5,6 +5,7 @@ import { motion, useReducedMotion, type Variants } from 'motion/react'
 import { Button } from '@/components/ui/button'
 import { AnimatedSection } from '@/components/shared/AnimatedSection'
 import { cn } from '@/lib/utils'
+import { getVariantProps } from '@/lib/color-variant'
 import type { SectionCta } from '@/sanity.types'
 
 interface CtaSectionProps {
@@ -63,7 +64,7 @@ function externalProps(href: string) {
 }
 
 export function CtaSection({ data, id }: CtaSectionProps) {
-  const { heading, subheading, primaryCta, secondaryCta, variant = 'brand' } = data
+  const { heading, subheading, primaryCta, secondaryCta, variant = 'brand', colorVariant } = data
   const prefersReducedMotion = useReducedMotion()
 
   const cfg = VARIANT_CONFIG[variant]
@@ -71,58 +72,60 @@ export function CtaSection({ data, id }: CtaSectionProps) {
   const hasSecondary = !!(secondaryCta?.label && secondaryCta?.href)
 
   return (
-    <AnimatedSection as="section" id={id} className={cn('py-20 lg:py-28', cfg.section)}>
-      <div className="container mx-auto px-4">
-        <div className="mx-auto max-w-3xl text-center">
-          {heading && (
-            <h2
-              className={cn(
-                'font-heading mb-4 text-3xl font-bold md:text-4xl lg:text-5xl',
-                cfg.heading
-              )}
-            >
-              {heading}
-            </h2>
-          )}
-          {subheading && <p className={cn('mb-8 text-lg', cfg.subheading)}>{subheading}</p>}
+    <section id={id} {...getVariantProps(colorVariant)}>
+      <AnimatedSection className={cn('py-20 lg:py-28', cfg.section)}>
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-3xl text-center">
+            {heading && (
+              <h2
+                className={cn(
+                  'font-heading mb-4 text-3xl font-bold md:text-4xl lg:text-5xl',
+                  cfg.heading
+                )}
+              >
+                {heading}
+              </h2>
+            )}
+            {subheading && <p className={cn('mb-8 text-lg', cfg.subheading)}>{subheading}</p>}
 
-          {(hasPrimary || hasSecondary) && (
-            <motion.div
-              className="flex flex-wrap justify-center gap-4"
-              variants={prefersReducedMotion ? {} : BTN_VARIANTS}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: '-80px' }}
-              transition={{ duration: 0.5, ease: 'easeOut', delay: 0.2 }}
-            >
-              {hasPrimary && (
-                <Button
-                  asChild
-                  size="lg"
-                  variant={cfg.primaryBtn.variant}
-                  className={cfg.primaryBtn.className}
-                >
-                  <Link href={primaryCta!.href!} {...externalProps(primaryCta!.href!)}>
-                    {primaryCta!.label}
-                  </Link>
-                </Button>
-              )}
-              {hasSecondary && (
-                <Button
-                  asChild
-                  size="lg"
-                  variant={cfg.secondaryBtn.variant}
-                  className={cfg.secondaryBtn.className}
-                >
-                  <Link href={secondaryCta!.href!} {...externalProps(secondaryCta!.href!)}>
-                    {secondaryCta!.label}
-                  </Link>
-                </Button>
-              )}
-            </motion.div>
-          )}
+            {(hasPrimary || hasSecondary) && (
+              <motion.div
+                className="flex flex-wrap justify-center gap-4"
+                variants={prefersReducedMotion ? {} : BTN_VARIANTS}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: '-80px' }}
+                transition={{ duration: 0.5, ease: 'easeOut', delay: 0.2 }}
+              >
+                {hasPrimary && (
+                  <Button
+                    asChild
+                    size="lg"
+                    variant={cfg.primaryBtn.variant}
+                    className={cfg.primaryBtn.className}
+                  >
+                    <Link href={primaryCta!.href!} {...externalProps(primaryCta!.href!)}>
+                      {primaryCta!.label}
+                    </Link>
+                  </Button>
+                )}
+                {hasSecondary && (
+                  <Button
+                    asChild
+                    size="lg"
+                    variant={cfg.secondaryBtn.variant}
+                    className={cfg.secondaryBtn.className}
+                  >
+                    <Link href={secondaryCta!.href!} {...externalProps(secondaryCta!.href!)}>
+                      {secondaryCta!.label}
+                    </Link>
+                  </Button>
+                )}
+              </motion.div>
+            )}
+          </div>
         </div>
-      </div>
-    </AnimatedSection>
+      </AnimatedSection>
+    </section>
   )
 }

@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity'
+import { colorVariantField } from '../fields/colorVariantField'
 
 export const sectionCta = defineType({
   name: 'sectionCta',
@@ -88,5 +89,6 @@ export const sectionCta = defineType({
       initialValue: 'brand',
       validation: (Rule) => Rule.required(),
     }),
+    colorVariantField,
   ],
 })
