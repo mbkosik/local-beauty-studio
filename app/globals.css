@@ -146,6 +146,15 @@ section[id] {
   scroll-margin-top: 80px; /* wysokość navbara */
 }
 
+@layer components {
+  .image-frame {
+    display: block;
+    margin-bottom: 14px;
+    margin-right: 14px;
+    box-shadow: 7px 7px 0 0 color-mix(in srgb, var(--brand) 20%, transparent);
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
