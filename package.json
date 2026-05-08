@@ -21,6 +21,7 @@
     "@react-email/components": "^1.0.12",
     "@sanity/image-url": "^2.1.1",
     "@sanity/vision": "^5.23.0",
+    "@sanity/webhook": "^4.0.4",
     "@standard-schema/spec": "^1.1.0",
     "@standard-schema/utils": "^0.3.0",
     "class-variance-authority": "^0.7.1",
