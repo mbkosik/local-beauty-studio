@@ -1,5 +1,5 @@
 import { Clock, Mail, MapPin, Phone } from 'lucide-react'
-import { sanityFetch } from '@/sanity/live'
+import { client } from '@/sanity/client'
 import { footerQuery } from '@/sanity/queries'
 import { SanityImage } from '@/components/shared/SanityImage'
 import { SectionDivider } from '@/components/shared/SectionDivider'
@@ -8,7 +8,7 @@ import { InstagramIcon } from '@/components/icons/InstagramIcon'
 import { TikTokIcon } from '@/components/icons/TikTokIcon'
 
 export async function Footer() {
-  const { data: settings } = await sanityFetch({ query: footerQuery })
+  const settings = await client.fetch(footerQuery, {}, { next: { tags: ['settings'] } })
 
   const year = new Date().getFullYear()
   const {

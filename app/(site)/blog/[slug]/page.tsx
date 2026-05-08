@@ -2,7 +2,6 @@ import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import { PortableText } from '@portabletext/react'
 import { client } from '@/sanity/client'
-import { sanityFetch } from '@/sanity/live'
 import {
   postBySlugQuery,
   allPostsSlugsQuery,
@@ -28,9 +27,9 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
   const { slug } = await params
-  const [{ data: post }, { data: settings }] = await Promise.all([
-    sanityFetch({ query: postBySlugQuery, params: { slug } }),
-    sanityFetch({ query: siteSettingsQuery }),
+  const [post, settings] = await Promise.all([
+    client.fetch(postBySlugQuery, { slug }, { next: { tags: ['post'] } }),
+    client.fetch(siteSettingsQuery, {}, { next: { tags: ['settings'] } }),
   ])
 
   if (!post) return {}
@@ -47,7 +46,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params
-  const { data: post } = await sanityFetch({ query: postBySlugQuery, params: { slug } })
+  const post = await client.fetch(postBySlugQuery, { slug }, { next: { tags: ['post'] } })
 
   if (!post) notFound()
 

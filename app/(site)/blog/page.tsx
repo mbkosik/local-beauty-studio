@@ -1,4 +1,4 @@
-import { sanityFetch } from '@/sanity/live'
+import { client } from '@/sanity/client'
 import { blogListingQuery, blogCategoriesQuery } from '@/sanity/queries'
 import { AnimatedSection } from '@/components/shared/AnimatedSection'
 import { PostCard } from '@/components/blog/PostCard'
@@ -19,12 +19,9 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
   const from = (page - 1) * POSTS_PER_PAGE
   const to = page * POSTS_PER_PAGE
 
-  const [{ data: listing }, { data: categories }] = await Promise.all([
-    sanityFetch({
-      query: blogListingQuery,
-      params: { from, to, category },
-    }),
-    sanityFetch({ query: blogCategoriesQuery }),
+  const [listing, categories] = await Promise.all([
+    client.fetch(blogListingQuery, { from, to, category }, { next: { tags: ['post'] } }),
+    client.fetch(blogCategoriesQuery, {}, { next: { tags: ['post'] } }),
   ])
 
   const posts = listing?.posts ?? []

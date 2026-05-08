@@ -1,7 +1,6 @@
-import { revalidatePath } from 'next/cache'
+import { revalidateTag } from 'next/cache'
 import { type NextRequest, NextResponse } from 'next/server'
 import { isValidSignature, SIGNATURE_HEADER_NAME } from '@sanity/webhook'
-import { client } from '@/sanity/client'
 
 const secret = process.env.SANITY_REVALIDATE_SECRET
 
@@ -20,41 +19,37 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const payload = JSON.parse(body) as { _type?: string; slug?: { current?: string } }
+    const payload = JSON.parse(body) as { _type?: string }
     const docType = payload._type ?? 'unknown'
-    const slug = payload.slug?.current ?? ''
-
-    const pageSlugs: string[] = await client.fetch(
-      `*[_type == "page" && defined(slug.current)].slug.current`
-    )
 
     switch (docType) {
       case 'post':
-        revalidatePath('/blog')
-        if (slug) revalidatePath(`/blog/${slug}`)
+        revalidateTag('post', {})
         break
 
       case 'page':
-        revalidatePath(slug === 'home' ? '/' : `/${slug}`)
+        revalidateTag('page', {})
         break
 
       case 'category':
-        revalidatePath('/blog')
+        revalidateTag('post', {})
         break
 
       case 'siteSettings':
-        revalidatePath('/', 'layout')
+        revalidateTag('settings', {})
         break
 
-      // Types embedded in page builder — revalidate all pages
       case 'service':
       case 'testimonial':
       case 'person':
       case 'pricingItem':
+        revalidateTag('page', {})
+        break
+
       default:
-        for (const pageSlug of pageSlugs) {
-          revalidatePath(pageSlug === 'home' ? '/' : `/${pageSlug}`)
-        }
+        revalidateTag('page', {})
+        revalidateTag('post', {})
+        revalidateTag('settings', {})
         break
     }
 
