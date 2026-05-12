@@ -94,6 +94,20 @@ export const sectionTextVideo = defineType({
       title: 'Podpis pod wideo',
       type: 'string',
     }),
+    defineField({
+      name: 'cta',
+      title: 'Przycisk CTA',
+      type: 'object',
+      fields: [
+        defineField({ name: 'label', title: 'Etykieta', type: 'string' }),
+        defineField({
+          name: 'href',
+          title: 'Link',
+          type: 'url',
+          validation: (Rule) => Rule.uri({ allowRelative: true }),
+        }),
+      ],
+    }),
     colorVariantField,
   ],
 })

@@ -108,10 +108,7 @@ export function TeamCard({ member }: TeamCardProps) {
           <p className="font-heading text-foreground text-lg font-semibold">{name}</p>
           <p className="text-brand mb-3 text-sm font-medium">{role}</p>
           {bio && (
-            <div
-              className="min-h-0 w-full flex-1 overflow-y-auto"
-              onClick={(e) => e.stopPropagation()}
-            >
+            <div className="min-h-0 w-full flex-1 overflow-y-auto">
               <p className="text-muted-foreground mb-4 text-sm">{bio}</p>
             </div>
           )}

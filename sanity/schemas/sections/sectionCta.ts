@@ -75,20 +75,6 @@ export const sectionCta = defineType({
         }),
       ],
     }),
-    defineField({
-      name: 'variant',
-      type: 'string',
-      options: {
-        list: [
-          { title: 'Brand', value: 'brand' },
-          { title: 'Dark', value: 'dark' },
-          { title: 'Light', value: 'light' },
-        ],
-        layout: 'radio',
-      },
-      initialValue: 'brand',
-      validation: (Rule) => Rule.required(),
-    }),
     colorVariantField,
   ],
 })

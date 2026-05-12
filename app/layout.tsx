@@ -5,6 +5,7 @@ import { ThemeProvider } from '@/components/shared/ThemeProvider'
 import { client } from '@/sanity/client'
 import { siteSettingsQuery } from '@/sanity/queries'
 import { Toaster } from '@/components/ui/sonner'
+import { ScrollToTop } from '@/components/shared/ScrollToTop'
 
 const playfairDisplay = Playfair_Display({
   variable: '--font-heading',
@@ -60,6 +61,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <ScrollToTop />
           {children}
           <Toaster richColors position="bottom-right" />
         </ThemeProvider>

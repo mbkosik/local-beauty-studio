@@ -47,6 +47,29 @@
   },
   {
     "type": "type",
+    "name": "cta",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "label": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "href": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "type": "type",
     "name": "sectionCta.primaryCta",
     "value": {
       "type": "object",
@@ -71,6 +94,29 @@
   {
     "type": "type",
     "name": "sectionCta.secondaryCta",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "label": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "href": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "type": "type",
+    "name": "sectionTextVideo.cta",
     "value": {
       "type": "object",
       "attributes": {
@@ -379,6 +425,14 @@
           },
           "optional": true
         },
+        "cta": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "sectionTextVideo.cta"
+          },
+          "optional": true
+        },
         "colorVariant": {
           "type": "objectAttribute",
           "value": {
@@ -395,6 +449,10 @@
               {
                 "type": "string",
                 "value": "dark"
+              },
+              {
+                "type": "string",
+                "value": "brand"
               }
             ]
           },
@@ -499,6 +557,10 @@
               {
                 "type": "string",
                 "value": "dark"
+              },
+              {
+                "type": "string",
+                "value": "brand"
               }
             ]
           },
@@ -620,6 +682,10 @@
               {
                 "type": "string",
                 "value": "dark"
+              },
+              {
+                "type": "string",
+                "value": "brand"
               }
             ]
           },
@@ -860,6 +926,10 @@
               {
                 "type": "string",
                 "value": "dark"
+              },
+              {
+                "type": "string",
+                "value": "brand"
               }
             ]
           },
@@ -971,6 +1041,10 @@
               {
                 "type": "string",
                 "value": "dark"
+              },
+              {
+                "type": "string",
+                "value": "brand"
               }
             ]
           },
@@ -1179,6 +1253,10 @@
               {
                 "type": "string",
                 "value": "dark"
+              },
+              {
+                "type": "string",
+                "value": "brand"
               }
             ]
           },
@@ -1238,27 +1316,6 @@
           },
           "optional": true
         },
-        "variant": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "union",
-            "of": [
-              {
-                "type": "string",
-                "value": "brand"
-              },
-              {
-                "type": "string",
-                "value": "dark"
-              },
-              {
-                "type": "string",
-                "value": "light"
-              }
-            ]
-          },
-          "optional": true
-        },
         "colorVariant": {
           "type": "objectAttribute",
           "value": {
@@ -1275,6 +1332,10 @@
               {
                 "type": "string",
                 "value": "dark"
+              },
+              {
+                "type": "string",
+                "value": "brand"
               }
             ]
           },
@@ -1410,6 +1471,10 @@
               {
                 "type": "string",
                 "value": "dark"
+              },
+              {
+                "type": "string",
+                "value": "brand"
               }
             ]
           },
@@ -1547,6 +1612,10 @@
               {
                 "type": "string",
                 "value": "dark"
+              },
+              {
+                "type": "string",
+                "value": "brand"
               }
             ]
           },
@@ -1643,6 +1712,10 @@
               {
                 "type": "string",
                 "value": "dark"
+              },
+              {
+                "type": "string",
+                "value": "brand"
               }
             ]
           },
@@ -1747,6 +1820,10 @@
               {
                 "type": "string",
                 "value": "dark"
+              },
+              {
+                "type": "string",
+                "value": "brand"
               }
             ]
           },
@@ -1858,6 +1935,10 @@
               {
                 "type": "string",
                 "value": "dark"
+              },
+              {
+                "type": "string",
+                "value": "brand"
               }
             ]
           },
@@ -1969,6 +2050,10 @@
               {
                 "type": "string",
                 "value": "dark"
+              },
+              {
+                "type": "string",
+                "value": "brand"
               }
             ]
           },
@@ -2255,6 +2340,14 @@
           },
           "optional": true
         },
+        "cta": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "cta"
+          },
+          "optional": true
+        },
         "colorVariant": {
           "type": "objectAttribute",
           "value": {
@@ -2271,6 +2364,10 @@
               {
                 "type": "string",
                 "value": "dark"
+              },
+              {
+                "type": "string",
+                "value": "brand"
               }
             ]
           },
@@ -2471,6 +2568,10 @@
               {
                 "type": "string",
                 "value": "dark"
+              },
+              {
+                "type": "string",
+                "value": "brand"
               }
             ]
           },

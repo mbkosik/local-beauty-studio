@@ -23,21 +23,6 @@ export function BlogPostLayout({ post, readingTime, children }: BlogPostLayoutPr
   return (
     <article>
       <header className="mb-4">
-        {mainImage && (
-          <div className="relative mb-8 aspect-video w-full overflow-hidden rounded-xl">
-            <SanityImage
-              image={mainImage as SanityImageData}
-              alt={title ?? ''}
-              width={1200}
-              height={675}
-              fill
-              preload
-              className="object-cover"
-              sizes="(max-width: 1280px) 100vw, 1280px"
-            />
-          </div>
-        )}
-
         {categories && categories.length > 0 && (
           <div className="mb-4 flex flex-wrap gap-2">
             {categories.map((cat) =>
@@ -54,9 +39,13 @@ export function BlogPostLayout({ post, readingTime, children }: BlogPostLayoutPr
           </div>
         )}
 
-        <h1 className="font-heading text-foreground mb-6 text-4xl font-bold tracking-tight md:text-5xl">
+        <h1 className="font-heading text-foreground mb-4 text-4xl font-bold tracking-tight md:text-5xl">
           {title}
         </h1>
+
+        {post.excerpt && (
+          <p className="text-muted-foreground mb-6 text-xl leading-relaxed">{post.excerpt}</p>
+        )}
 
         <div className="border-border flex items-center gap-3 border-b pb-8">
           {author?.photo && (
@@ -87,15 +76,30 @@ export function BlogPostLayout({ post, readingTime, children }: BlogPostLayoutPr
             </div>
           </div>
         </div>
-      </header>
 
-      <div className="mb-8">
-        <ShareButtons
-          title={post.title ?? ''}
-          slug={post.slug?.current ?? ''}
-          excerpt={post.excerpt ?? undefined}
-        />
-      </div>
+        <div className="my-4">
+          <ShareButtons
+            title={post.title ?? ''}
+            slug={post.slug?.current ?? ''}
+            excerpt={post.excerpt ?? undefined}
+          />
+        </div>
+
+        {mainImage && (
+          <div className="relative mb-8 aspect-video w-full overflow-hidden rounded-xl">
+            <SanityImage
+              image={mainImage as SanityImageData}
+              alt={title ?? ''}
+              width={1200}
+              height={675}
+              fill
+              preload
+              className="object-cover"
+              sizes="(max-width: 1280px) 100vw, 1280px"
+            />
+          </div>
+        )}
+      </header>
 
       {children}
     </article>

@@ -9,6 +9,7 @@ export const colorVariantField = defineField({
       { title: 'Jasny (domyślny)', value: 'light' },
       { title: 'Subtelny (szare tło)', value: 'muted' },
       { title: 'Ciemny (odwrócone kolory)', value: 'dark' },
+      { title: 'Brand (różowe tło)', value: 'brand' },
     ],
     layout: 'radio',
   },

@@ -9,6 +9,7 @@ interface TextMediaSectionProps {
   body?: PortableTextBlock[] | null
   mediaPosition?: 'left' | 'right' | null
   mediaSlot: React.ReactNode
+  ctaSlot?: React.ReactNode
   id?: string
   colorVariant?: string | null
 }
@@ -26,6 +27,7 @@ export function TextMediaSection({
   body,
   mediaPosition = 'right',
   mediaSlot,
+  ctaSlot,
   id,
   colorVariant,
 }: TextMediaSectionProps) {
@@ -63,6 +65,7 @@ export function TextMediaSection({
                 <PortableText value={body} components={portableTextComponents} />
               </div>
             )}
+            {ctaSlot}
           </motion.div>
         </div>
       </div>
