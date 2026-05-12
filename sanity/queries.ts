@@ -274,7 +274,8 @@ export const pageQuery = defineQuery(`
         heading,
         body,
         image { ..., asset-> },
-        mediaPosition
+        mediaPosition,
+        cta
       },
       _type == "sectionServices" => {
         anchor,
@@ -411,7 +412,8 @@ export const pageQuery = defineQuery(`
         body,
         videoUrl,
         mediaPosition,
-        caption
+        caption,
+        cta
       }
     }
   }
