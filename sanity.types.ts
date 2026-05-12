@@ -86,7 +86,7 @@ export type SectionTextVideo = {
   mediaPosition?: 'right' | 'left'
   caption?: string
   cta?: SectionTextVideoCta
-  colorVariant?: 'light' | 'muted' | 'dark'
+  colorVariant?: 'light' | 'muted' | 'dark' | 'brand'
 }
 
 export type SectionBadges = {
@@ -100,7 +100,7 @@ export type SectionBadges = {
     label?: string
     _key: string
   }>
-  colorVariant?: 'light' | 'muted' | 'dark'
+  colorVariant?: 'light' | 'muted' | 'dark' | 'brand'
 }
 
 export type SectionProcess = {
@@ -115,7 +115,7 @@ export type SectionProcess = {
     description?: string
     _key: string
   }>
-  colorVariant?: 'light' | 'muted' | 'dark'
+  colorVariant?: 'light' | 'muted' | 'dark' | 'brand'
 }
 
 export type SectionFaq = {
@@ -145,7 +145,7 @@ export type SectionFaq = {
     }>
     _key: string
   }>
-  colorVariant?: 'light' | 'muted' | 'dark'
+  colorVariant?: 'light' | 'muted' | 'dark' | 'brand'
 }
 
 export type PersonReference = {
@@ -165,7 +165,7 @@ export type SectionTeam = {
       _key: string
     } & PersonReference
   >
-  colorVariant?: 'light' | 'muted' | 'dark'
+  colorVariant?: 'light' | 'muted' | 'dark' | 'brand'
 }
 
 export type SectionContact = {
@@ -192,7 +192,7 @@ export type SectionContact = {
     _type: 'block'
     _key: string
   }>
-  colorVariant?: 'light' | 'muted' | 'dark'
+  colorVariant?: 'light' | 'muted' | 'dark' | 'brand'
 }
 
 export type SectionCta = {
@@ -202,8 +202,7 @@ export type SectionCta = {
   subheading?: string
   primaryCta?: SectionCtaPrimaryCta
   secondaryCta?: SectionCtaSecondaryCta
-  variant?: 'brand' | 'dark' | 'light'
-  colorVariant?: 'light' | 'muted' | 'dark'
+  colorVariant?: 'light' | 'muted' | 'dark' | 'brand'
 }
 
 export type PostReference = {
@@ -225,7 +224,7 @@ export type SectionBlogPreview = {
     } & PostReference
   >
   showViewAll?: boolean
-  colorVariant?: 'light' | 'muted' | 'dark'
+  colorVariant?: 'light' | 'muted' | 'dark' | 'brand'
 }
 
 export type SectionGallery = {
@@ -242,7 +241,7 @@ export type SectionGallery = {
     _type: 'image'
     _key: string
   }>
-  colorVariant?: 'light' | 'muted' | 'dark'
+  colorVariant?: 'light' | 'muted' | 'dark' | 'brand'
 }
 
 export type SectionStats = {
@@ -255,7 +254,7 @@ export type SectionStats = {
     _type: 'statItem'
     _key: string
   }>
-  colorVariant?: 'light' | 'muted' | 'dark'
+  colorVariant?: 'light' | 'muted' | 'dark' | 'brand'
 }
 
 export type TestimonialReference = {
@@ -274,7 +273,7 @@ export type SectionTestimonials = {
       _key: string
     } & TestimonialReference
   >
-  colorVariant?: 'light' | 'muted' | 'dark'
+  colorVariant?: 'light' | 'muted' | 'dark' | 'brand'
 }
 
 export type PricingItemReference = {
@@ -294,7 +293,7 @@ export type SectionPricing = {
       _key: string
     } & PricingItemReference
   >
-  colorVariant?: 'light' | 'muted' | 'dark'
+  colorVariant?: 'light' | 'muted' | 'dark' | 'brand'
 }
 
 export type ServiceReference = {
@@ -314,7 +313,7 @@ export type SectionServices = {
       _key: string
     } & ServiceReference
   >
-  colorVariant?: 'light' | 'muted' | 'dark'
+  colorVariant?: 'light' | 'muted' | 'dark' | 'brand'
 }
 
 export type SectionTextImage = {
@@ -349,7 +348,7 @@ export type SectionTextImage = {
   }
   mediaPosition?: 'right' | 'left'
   cta?: Cta
-  colorVariant?: 'light' | 'muted' | 'dark'
+  colorVariant?: 'light' | 'muted' | 'dark' | 'brand'
 }
 
 export type SectionHero = {
@@ -376,7 +375,7 @@ export type SectionHero = {
     crop?: SanityImageCrop
     _type: 'image'
   }
-  colorVariant?: 'light' | 'muted' | 'dark'
+  colorVariant?: 'light' | 'muted' | 'dark' | 'brand'
 }
 
 export type NavLink = {
@@ -1731,7 +1730,7 @@ export type PageQueryResult = {
         _type: 'sectionBadges'
         _key: string
         anchor: Slug | null
-        colorVariant: 'dark' | 'light' | 'muted' | null
+        colorVariant: 'brand' | 'dark' | 'light' | 'muted' | null
         label: string | null
         badges: Array<{
           logo: {
@@ -1747,7 +1746,7 @@ export type PageQueryResult = {
         _type: 'sectionBlogPreview'
         _key: string
         anchor: Slug | null
-        colorVariant: 'dark' | 'light' | 'muted' | null
+        colorVariant: 'brand' | 'dark' | 'light' | 'muted' | null
         heading: string | null
         subheading: string | null
         mode: 'latest' | 'manual' | null
@@ -1775,7 +1774,7 @@ export type PageQueryResult = {
         _type: 'sectionContact'
         _key: string
         anchor: Slug | null
-        colorVariant: 'dark' | 'light' | 'muted' | null
+        colorVariant: 'brand' | 'dark' | 'light' | 'muted' | null
         heading: string | null
         subheading: string | null
         body: Array<{
@@ -1802,18 +1801,18 @@ export type PageQueryResult = {
         _type: 'sectionCta'
         _key: string
         anchor: Slug | null
-        colorVariant: 'dark' | 'light' | 'muted' | null
+        colorVariant: 'brand' | 'dark' | 'light' | 'muted' | null
         heading: string | null
         subheading: string | null
         primaryCta: SectionCtaPrimaryCta | null
         secondaryCta: SectionCtaSecondaryCta | null
-        variant: 'brand' | 'dark' | 'light' | null
+        variant: null
       }
     | {
         _type: 'sectionFaq'
         _key: string
         anchor: Slug | null
-        colorVariant: 'dark' | 'light' | 'muted' | null
+        colorVariant: 'brand' | 'dark' | 'light' | 'muted' | null
         title: string | null
         subtitle: string | null
         items: Array<{
@@ -1842,7 +1841,7 @@ export type PageQueryResult = {
         _type: 'sectionGallery'
         _key: string
         anchor: Slug | null
-        colorVariant: 'dark' | 'light' | 'muted' | null
+        colorVariant: 'brand' | 'dark' | 'light' | 'muted' | null
         heading: string | null
         layout: 'grid' | 'masonry' | null
         images: Array<{
@@ -1880,7 +1879,7 @@ export type PageQueryResult = {
         _type: 'sectionHero'
         _key: string
         anchor: Slug | null
-        colorVariant: 'dark' | 'light' | 'muted' | null
+        colorVariant: 'brand' | 'dark' | 'light' | 'muted' | null
         heading: string | null
         subheading: string | null
         primaryCta: PrimaryCta | null
@@ -1925,7 +1924,7 @@ export type PageQueryResult = {
         _type: 'sectionPricing'
         _key: string
         anchor: Slug | null
-        colorVariant: 'dark' | 'light' | 'muted' | null
+        colorVariant: 'brand' | 'dark' | 'light' | 'muted' | null
         heading: string | null
         subheading: string | null
         items: Array<{
@@ -1940,7 +1939,7 @@ export type PageQueryResult = {
         _type: 'sectionProcess'
         _key: string
         anchor: Slug | null
-        colorVariant: 'dark' | 'light' | 'muted' | null
+        colorVariant: 'brand' | 'dark' | 'light' | 'muted' | null
         title: string | null
         subtitle: string | null
         layout: 'horizontal' | 'vertical' | null
@@ -1954,7 +1953,7 @@ export type PageQueryResult = {
         _type: 'sectionServices'
         _key: string
         anchor: Slug | null
-        colorVariant: 'dark' | 'light' | 'muted' | null
+        colorVariant: 'brand' | 'dark' | 'light' | 'muted' | null
         heading: string | null
         subheading: string | null
         services: Array<{
@@ -1997,7 +1996,7 @@ export type PageQueryResult = {
         _type: 'sectionStats'
         _key: string
         anchor: Slug | null
-        colorVariant: 'dark' | 'light' | 'muted' | null
+        colorVariant: 'brand' | 'dark' | 'light' | 'muted' | null
         heading: string | null
         items: Array<{
           value?: string
@@ -2010,7 +2009,7 @@ export type PageQueryResult = {
         _type: 'sectionTeam'
         _key: string
         anchor: Slug | null
-        colorVariant: 'dark' | 'light' | 'muted' | null
+        colorVariant: 'brand' | 'dark' | 'light' | 'muted' | null
         title: string | null
         subtitle: string | null
         members: Array<{
@@ -2055,7 +2054,7 @@ export type PageQueryResult = {
         _type: 'sectionTestimonials'
         _key: string
         anchor: Slug | null
-        colorVariant: 'dark' | 'light' | 'muted' | null
+        colorVariant: 'brand' | 'dark' | 'light' | 'muted' | null
         heading: string | null
         testimonials: Array<{
           _id: string
@@ -2099,7 +2098,7 @@ export type PageQueryResult = {
         _type: 'sectionTextImage'
         _key: string
         anchor: Slug | null
-        colorVariant: 'dark' | 'light' | 'muted' | null
+        colorVariant: 'brand' | 'dark' | 'light' | 'muted' | null
         heading: string | null
         body: Array<{
           children?: Array<{
@@ -2155,7 +2154,7 @@ export type PageQueryResult = {
         _type: 'sectionTextVideo'
         _key: string
         anchor: Slug | null
-        colorVariant: 'dark' | 'light' | 'muted' | null
+        colorVariant: 'brand' | 'dark' | 'light' | 'muted' | null
         title: string | null
         body: Array<{
           children?: Array<{

@@ -449,6 +449,10 @@
               {
                 "type": "string",
                 "value": "dark"
+              },
+              {
+                "type": "string",
+                "value": "brand"
               }
             ]
           },
@@ -553,6 +557,10 @@
               {
                 "type": "string",
                 "value": "dark"
+              },
+              {
+                "type": "string",
+                "value": "brand"
               }
             ]
           },
@@ -674,6 +682,10 @@
               {
                 "type": "string",
                 "value": "dark"
+              },
+              {
+                "type": "string",
+                "value": "brand"
               }
             ]
           },
@@ -914,6 +926,10 @@
               {
                 "type": "string",
                 "value": "dark"
+              },
+              {
+                "type": "string",
+                "value": "brand"
               }
             ]
           },
@@ -1025,6 +1041,10 @@
               {
                 "type": "string",
                 "value": "dark"
+              },
+              {
+                "type": "string",
+                "value": "brand"
               }
             ]
           },
@@ -1233,6 +1253,10 @@
               {
                 "type": "string",
                 "value": "dark"
+              },
+              {
+                "type": "string",
+                "value": "brand"
               }
             ]
           },
@@ -1292,27 +1316,6 @@
           },
           "optional": true
         },
-        "variant": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "union",
-            "of": [
-              {
-                "type": "string",
-                "value": "brand"
-              },
-              {
-                "type": "string",
-                "value": "dark"
-              },
-              {
-                "type": "string",
-                "value": "light"
-              }
-            ]
-          },
-          "optional": true
-        },
         "colorVariant": {
           "type": "objectAttribute",
           "value": {
@@ -1329,6 +1332,10 @@
               {
                 "type": "string",
                 "value": "dark"
+              },
+              {
+                "type": "string",
+                "value": "brand"
               }
             ]
           },
@@ -1464,6 +1471,10 @@
               {
                 "type": "string",
                 "value": "dark"
+              },
+              {
+                "type": "string",
+                "value": "brand"
               }
             ]
           },
@@ -1601,6 +1612,10 @@
               {
                 "type": "string",
                 "value": "dark"
+              },
+              {
+                "type": "string",
+                "value": "brand"
               }
             ]
           },
@@ -1697,6 +1712,10 @@
               {
                 "type": "string",
                 "value": "dark"
+              },
+              {
+                "type": "string",
+                "value": "brand"
               }
             ]
           },
@@ -1801,6 +1820,10 @@
               {
                 "type": "string",
                 "value": "dark"
+              },
+              {
+                "type": "string",
+                "value": "brand"
               }
             ]
           },
@@ -1912,6 +1935,10 @@
               {
                 "type": "string",
                 "value": "dark"
+              },
+              {
+                "type": "string",
+                "value": "brand"
               }
             ]
           },
@@ -2023,6 +2050,10 @@
               {
                 "type": "string",
                 "value": "dark"
+              },
+              {
+                "type": "string",
+                "value": "brand"
               }
             ]
           },
@@ -2333,6 +2364,10 @@
               {
                 "type": "string",
                 "value": "dark"
+              },
+              {
+                "type": "string",
+                "value": "brand"
               }
             ]
           },
@@ -2533,6 +2568,10 @@
               {
                 "type": "string",
                 "value": "dark"
+              },
+              {
+                "type": "string",
+                "value": "brand"
               }
             ]
           },

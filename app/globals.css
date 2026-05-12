@@ -206,4 +206,15 @@ section[id] {
     --input: #3a3a3a;
     --primary-foreground: #141414;
   }
+
+  [data-variant='brand'] {
+    background-color: var(--primary);
+    color: var(--primary-foreground);
+    --background: var(--primary);
+    --foreground: var(--primary-foreground);
+    --muted-foreground: color-mix(in srgb, var(--primary-foreground) 75%, transparent);
+    --border: color-mix(in srgb, var(--primary-foreground) 25%, transparent);
+    --secondary: color-mix(in srgb, var(--primary-foreground) 15%, transparent);
+    --secondary-foreground: var(--primary-foreground);
+  }
 }
