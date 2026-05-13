@@ -39,7 +39,7 @@ export function TextMediaSection({
   return (
     <section id={id} className="py-16 md:py-24" {...getVariantProps(colorVariant)}>
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[42%_58%]">
+        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
           {/* Media — always on top on mobile (first in DOM), position swapped on desktop */}
           <motion.div
             className={mediaPosition === 'right' ? 'lg:order-2' : undefined}
