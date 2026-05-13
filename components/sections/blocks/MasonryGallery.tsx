@@ -19,7 +19,8 @@ function getMasonryColumns(count: number): string {
   if (count === 2) return 'columns-2'
   if (count === 3) return 'columns-2 sm:columns-3'
   if (count === 4) return 'columns-2'
-  return 'columns-2 md:columns-3'
+  if (count % 3 === 0) return 'columns-2 md:columns-3'
+  return 'columns-2'
 }
 
 interface MasonryGalleryProps {

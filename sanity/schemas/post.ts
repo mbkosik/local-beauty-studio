@@ -118,13 +118,6 @@ export const post = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'featured',
-      title: 'Wyróżniony',
-      type: 'boolean',
-      description: 'Wyróżnione posty pojawiają się w sekcji na stronie głównej',
-      initialValue: false,
-    }),
-    defineField({
       name: 'seo',
       title: 'SEO',
       type: 'object',
