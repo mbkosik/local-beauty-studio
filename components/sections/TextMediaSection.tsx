@@ -37,7 +37,7 @@ export function TextMediaSection({
   const mediaX = prefersReducedMotion ? 0 : mediaPosition === 'right' ? 40 : -40
 
   return (
-    <section id={id} className="py-16 md:py-24" {...getVariantProps(colorVariant)}>
+    <section id={id} className="overflow-hidden py-16 md:py-24" {...getVariantProps(colorVariant)}>
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
           {/* Media — always on top on mobile (first in DOM), position swapped on desktop */}
