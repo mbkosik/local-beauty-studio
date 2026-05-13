@@ -30,7 +30,7 @@ export function TextImageSection({ data, id }: TextImageSectionProps) {
         ) : undefined
       }
       mediaSlot={
-        <div className="image-frame w-full">
+        <div className="image-frame mx-auto w-full max-w-md lg:max-w-full">
           <div className="relative aspect-4/3 w-full overflow-hidden">
             <SanityImage
               image={image as SanityImageData}
