@@ -110,23 +110,6 @@ export const allPostsQuery = defineQuery(`
   }
 `)
 
-export const featuredPostsQuery = defineQuery(`
-  *[_type == "post" && featured == true] | order(publishedAt desc) [0...3] {
-    _id,
-    title,
-    slug,
-    excerpt,
-    mainImage { ..., asset-> },
-    "author": author-> {
-      name,
-      role,
-      photo { ..., asset-> }
-    },
-    "categories": categories[]-> { title, slug },
-    publishedAt
-  }
-`)
-
 export const postBySlugQuery = defineQuery(`
   *[_type == "post" && slug.current == $slug][0] {
     _id,
@@ -144,7 +127,6 @@ export const postBySlugQuery = defineQuery(`
     },
     "categories": categories[]-> { _id, title, slug },
     publishedAt,
-    featured,
     seo {
       metaTitle,
       metaDescription,
@@ -347,8 +329,7 @@ export const pageQuery = defineQuery(`
         heading,
         subheading,
         primaryCta,
-        secondaryCta,
-        variant
+        secondaryCta
       },
       _type == "sectionContact" => {
         anchor,
