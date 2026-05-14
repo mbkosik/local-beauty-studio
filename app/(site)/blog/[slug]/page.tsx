@@ -9,6 +9,7 @@ import {
   relatedPostsQuery,
   latestPostsQuery,
 } from '@/sanity/queries'
+import { buildOgImageUrl } from '@/lib/metadata'
 import { BlogPostLayout } from '@/components/blog/BlogPostLayout'
 import { portableTextComponents } from '@/components/blog/PortableTextComponents'
 import { PostCard } from '@/components/blog/PostCard'
@@ -34,13 +35,27 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 
   if (!post) return {}
 
-  const title = post.seo?.metaTitle ?? post.title ?? 'Blog'
   const description = post.seo?.metaDescription ?? post.excerpt ?? undefined
-  const siteName = settings?.businessName ?? undefined
+  const ogImageUrl = buildOgImageUrl(post.seo?.ogImage) ?? buildOgImageUrl(settings?.seo?.ogImage)
 
   return {
-    title: siteName ? `${title} | ${siteName}` : title,
+    title: post.seo?.metaTitle ?? post.title ?? 'Blog',
     description,
+    openGraph: {
+      title: post.seo?.metaTitle ?? post.title ?? undefined,
+      description,
+      type: 'article',
+      publishedTime: post.publishedAt ?? undefined,
+      ...(ogImageUrl && {
+        images: [{ url: ogImageUrl, width: 1200, height: 630, alt: post.title ?? '' }],
+      }),
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.seo?.metaTitle ?? post.title ?? undefined,
+      description,
+      ...(ogImageUrl && { images: [ogImageUrl] }),
+    },
   }
 }
 
