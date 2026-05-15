@@ -39,6 +39,8 @@ export function HeaderWrapper({ businessName, logoLight, logoDark, navLinks }: H
                 alt={businessName ?? 'Logo'}
                 width={160}
                 height={40}
+                loading="eager"
+                fetchPriority="high"
                 className="block dark:hidden"
               />
               <SanityImage
@@ -46,6 +48,8 @@ export function HeaderWrapper({ businessName, logoLight, logoDark, navLinks }: H
                 alt={businessName ?? 'Logo'}
                 width={160}
                 height={40}
+                loading="eager"
+                fetchPriority="high"
                 className="hidden dark:block"
               />
             </>
