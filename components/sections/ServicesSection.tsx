@@ -70,6 +70,7 @@ export function ServicesSection({ data, id }: ServicesSectionProps) {
                             fill
                             width={600}
                             height={450}
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                             className="object-cover"
                           />
                         </div>
