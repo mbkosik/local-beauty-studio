@@ -89,6 +89,7 @@ export function TestimonialsSection({ data, id }: TestimonialsSectionProps) {
               opts={{ loop: true }}
               plugins={prefersReducedMotion ? [] : [autoplayPlugin]}
               setApi={setApi}
+              aria-label="Opinie klientów"
             >
               <CarouselContent>
                 {testimonials.map((testimonial) => (

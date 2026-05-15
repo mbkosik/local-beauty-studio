@@ -38,6 +38,7 @@ export const portableTextComponents: PortableTextComponents = {
           {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
         >
           {children}
+          {isExternal && <span className="sr-only"> (otwiera nową kartę)</span>}
         </Link>
       )
     },

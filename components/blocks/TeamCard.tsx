@@ -120,8 +120,8 @@ export function TeamCard({ member }: TeamCardProps) {
                   href={socialMedia.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                  aria-label={`${name} na Instagramie`}
+                  className="text-muted-foreground hover:text-foreground p-1.5 transition-colors"
+                  aria-label={`${name} na Instagramie (otwiera nową kartę)`}
                   onClick={(e) => e.stopPropagation()}
                 >
                   <InstagramIcon size={18} />
@@ -132,8 +132,8 @@ export function TeamCard({ member }: TeamCardProps) {
                   href={socialMedia.facebook}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                  aria-label={`${name} na Facebooku`}
+                  className="text-muted-foreground hover:text-foreground p-1.5 transition-colors"
+                  aria-label={`${name} na Facebooku (otwiera nową kartę)`}
                   onClick={(e) => e.stopPropagation()}
                 >
                   <FacebookIcon size={18} />
@@ -144,8 +144,8 @@ export function TeamCard({ member }: TeamCardProps) {
                   href={socialMedia.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                  aria-label={`${name} na LinkedIn`}
+                  className="text-muted-foreground hover:text-foreground p-1.5 transition-colors"
+                  aria-label={`${name} na LinkedIn (otwiera nową kartę)`}
                   onClick={(e) => e.stopPropagation()}
                 >
                   <LinkedInIcon size={18} />
