@@ -82,6 +82,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
           </AnimatedSection>
         ) : (
           <>
+            <h2 className="sr-only">Lista wpisów</h2>
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:gap-8 lg:grid-cols-3">
               {posts.map((post, index) => (
                 <AnimatedSection key={post._id} delay={0.1 + index * 0.05}>

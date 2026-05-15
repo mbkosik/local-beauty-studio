@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -19,12 +19,34 @@ export function MobileMenu({ navLinks }: MobileMenuProps) {
   const [isOpen, setIsOpen] = useState(false)
   const mounted = useMounted()
   const pathname = usePathname()
+  const triggerRef = useRef<HTMLButtonElement>(null)
+  const focusGuard = useRef(false)
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : ''
     return () => {
       document.body.style.overflow = ''
     }
+  }, [isOpen])
+
+  useEffect(() => {
+    if (!isOpen) return
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsOpen(false)
+        triggerRef.current?.focus()
+      }
+    }
+    document.addEventListener('keydown', handleEsc)
+    return () => document.removeEventListener('keydown', handleEsc)
+  }, [isOpen])
+
+  useEffect(() => {
+    if (!focusGuard.current) {
+      focusGuard.current = true
+      return
+    }
+    if (!isOpen) triggerRef.current?.focus()
   }, [isOpen])
 
   const close = () => setIsOpen(false)
@@ -57,6 +79,7 @@ export function MobileMenu({ navLinks }: MobileMenuProps) {
                       onClick={close}
                       target={link.openInNewTab ? '_blank' : undefined}
                       rel={link.openInNewTab ? 'noopener noreferrer' : undefined}
+                      aria-current={pathname === link.href ? 'page' : undefined}
                       className={cn(
                         'hover:bg-accent hover:text-accent-foreground rounded-md px-3 py-2 text-sm font-medium transition-colors',
                         pathname === link.href
@@ -79,6 +102,7 @@ export function MobileMenu({ navLinks }: MobileMenuProps) {
   return (
     <>
       <Button
+        ref={triggerRef}
         variant="ghost"
         size="icon"
         onClick={() => setIsOpen(!isOpen)}

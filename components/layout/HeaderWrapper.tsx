@@ -63,6 +63,7 @@ export function HeaderWrapper({ businessName, logoLight, logoDark, navLinks }: H
               href={link.href ?? '#'}
               target={link.openInNewTab ? '_blank' : undefined}
               rel={link.openInNewTab ? 'noopener noreferrer' : undefined}
+              aria-current={pathname === link.href ? 'page' : undefined}
               className={cn(
                 'hover:text-foreground text-sm transition-colors',
                 pathname === link.href ? 'text-foreground font-semibold' : 'text-muted-foreground'

@@ -103,15 +103,21 @@ export function TestimonialsSection({ data, id }: TestimonialsSectionProps) {
           </div>
 
           {showDots && (
-            <div className="mt-6 flex justify-center gap-2" aria-hidden="true">
+            <div className="mt-6 flex justify-center gap-2">
               {Array.from({ length: testimonials.length }, (_, i) => (
                 <button
                   key={i}
                   onClick={() => api?.scrollTo(i)}
-                  className={`h-2 w-2 rounded-full transition-colors ${
-                    i === current ? 'bg-primary' : 'bg-muted'
-                  }`}
-                />
+                  aria-label={`Przejdź do opinii ${i + 1}`}
+                  aria-current={i === current ? 'true' : undefined}
+                  className="p-2"
+                >
+                  <div
+                    className={`h-2 w-2 rounded-full transition-colors ${
+                      i === current ? 'bg-primary' : 'bg-muted-foreground/40'
+                    }`}
+                  />
+                </button>
               ))}
             </div>
           )}
