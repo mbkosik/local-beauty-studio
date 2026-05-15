@@ -863,12 +863,11 @@ export type AllSanitySchemaTypes =
 
 // Source: sanity/queries.ts
 // Variable: siteSettingsQuery
-// Query: *[_type == "siteSettings"][0] {    businessName,    tagline,    logoLight { alt, asset-> { _id, url, metadata { dimensions } } },    logoDark { alt, asset-> { _id, url, metadata { dimensions } } },    email,    phone,    address,    googleMapsUrl,    social {      facebook,      instagram,      tiktok    },    "navLinks": navLinks[] {      label,      href,      openInNewTab    },    seo {      metaTitle,      metaDescription,      ogImage { ..., asset-> }    }  }
+// Query: *[_type == "siteSettings"][0] {    businessName,    tagline,    logoLight { asset-> { _id, url, metadata { dimensions } } },    logoDark { asset-> { _id, url, metadata { dimensions } } },    email,    phone,    address,    googleMapsUrl,    social {      facebook,      instagram,      tiktok    },    "navLinks": navLinks[] {      label,      href,      openInNewTab    },    seo {      metaTitle,      metaDescription,      ogImage { ..., asset-> }    }  }
 export type SiteSettingsQueryResult = {
   businessName: string | null
   tagline: string | null
   logoLight: {
-    alt: string | null
     asset: {
       _id: string
       url: string | null
@@ -878,7 +877,6 @@ export type SiteSettingsQueryResult = {
     } | null
   } | null
   logoDark: {
-    alt: string | null
     asset: {
       _id: string
       url: string | null
@@ -937,12 +935,11 @@ export type SiteSettingsQueryResult = {
 
 // Source: sanity/queries.ts
 // Variable: footerQuery
-// Query: *[_type == "siteSettings"][0] {    businessName,    tagline,    logoLight { alt, asset-> { _id, url, metadata { dimensions } } },    logoDark { alt, asset-> { _id, url, metadata { dimensions } } },    email,    phone,    address,    googleMapsUrl,    social {      facebook,      instagram,      tiktok    },    openingHours[] { days, hours }  }
+// Query: *[_type == "siteSettings"][0] {    businessName,    tagline,    logoLight { asset-> { _id, url, metadata { dimensions } } },    logoDark { asset-> { _id, url, metadata { dimensions } } },    email,    phone,    address,    googleMapsUrl,    social {      facebook,      instagram,      tiktok    },    openingHours[] { days, hours }  }
 export type FooterQueryResult = {
   businessName: string | null
   tagline: string | null
   logoLight: {
-    alt: string | null
     asset: {
       _id: string
       url: string | null
@@ -952,7 +949,6 @@ export type FooterQueryResult = {
     } | null
   } | null
   logoDark: {
-    alt: string | null
     asset: {
       _id: string
       url: string | null
@@ -978,7 +974,7 @@ export type FooterQueryResult = {
 
 // Source: sanity/queries.ts
 // Variable: allServicesQuery
-// Query: *[_type == "service"] | order(_createdAt asc) {    _id,    title,    slug,    description,    icon,    image { ..., asset-> }  }
+// Query: *[_type == "service"] | order(_createdAt asc) {    _id,    title,    slug,    description,    icon,    image { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } }  }
 export type AllServicesQueryResult = Array<{
   _id: string
   title: string | null
@@ -986,39 +982,27 @@ export type AllServicesQueryResult = Array<{
   description: string | null
   icon: LucideIcon | null
   image: {
+    alt: string | null
+    hotspot: SanityImageHotspot | null
+    crop: SanityImageCrop | null
     asset: {
       _id: string
-      _type: 'sanity.imageAsset'
-      _createdAt: string
-      _updatedAt: string
-      _rev: string
-      originalFilename?: string
-      label?: string
-      title?: string
-      description?: string
-      altText?: string
-      sha1hash?: string
-      extension?: string
-      mimeType?: string
-      size?: number
-      assetId?: string
-      uploadId?: string
-      path?: string
-      url?: string
-      metadata?: SanityImageMetadata
-      source?: SanityAssetSourceData
+      url: string | null
+      metadata: {
+        lqip: string | null
+        dimensions: {
+          width: number | null
+          height: number | null
+          aspectRatio: number | null
+        } | null
+      } | null
     } | null
-    media?: unknown
-    hotspot?: SanityImageHotspot
-    crop?: SanityImageCrop
-    alt?: string
-    _type: 'image'
   } | null
 }>
 
 // Source: sanity/queries.ts
 // Variable: allTestimonialsQuery
-// Query: *[_type == "testimonial"] | order(_createdAt asc) {    _id,    authorName,    position,    company,    content,    rating,    photo { ..., asset-> },    publishedAt  }
+// Query: *[_type == "testimonial"] | order(_createdAt asc) {    _id,    authorName,    position,    company,    content,    rating,    photo { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },    publishedAt  }
 export type AllTestimonialsQueryResult = Array<{
   _id: string
   authorName: string | null
@@ -1027,72 +1011,49 @@ export type AllTestimonialsQueryResult = Array<{
   content: string | null
   rating: number | null
   photo: {
+    alt: string | null
+    hotspot: SanityImageHotspot | null
+    crop: SanityImageCrop | null
     asset: {
       _id: string
-      _type: 'sanity.imageAsset'
-      _createdAt: string
-      _updatedAt: string
-      _rev: string
-      originalFilename?: string
-      label?: string
-      title?: string
-      description?: string
-      altText?: string
-      sha1hash?: string
-      extension?: string
-      mimeType?: string
-      size?: number
-      assetId?: string
-      uploadId?: string
-      path?: string
-      url?: string
-      metadata?: SanityImageMetadata
-      source?: SanityAssetSourceData
+      url: string | null
+      metadata: {
+        lqip: string | null
+        dimensions: {
+          width: number | null
+          height: number | null
+          aspectRatio: number | null
+        } | null
+      } | null
     } | null
-    media?: unknown
-    hotspot?: SanityImageHotspot
-    crop?: SanityImageCrop
-    alt?: string
-    _type: 'image'
   } | null
   publishedAt: string | null
 }>
 
 // Source: sanity/queries.ts
 // Variable: allPersonsQuery
-// Query: *[_type == "person"] | order(name asc) {    _id,    name,    role,    bio,    photo { ..., asset-> },    socialMedia  }
+// Query: *[_type == "person"] | order(name asc) {    _id,    name,    role,    bio,    photo { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },    socialMedia  }
 export type AllPersonsQueryResult = Array<{
   _id: string
   name: string | null
   role: string | null
   bio: string | null
   photo: {
+    alt: null
+    hotspot: SanityImageHotspot | null
+    crop: SanityImageCrop | null
     asset: {
       _id: string
-      _type: 'sanity.imageAsset'
-      _createdAt: string
-      _updatedAt: string
-      _rev: string
-      originalFilename?: string
-      label?: string
-      title?: string
-      description?: string
-      altText?: string
-      sha1hash?: string
-      extension?: string
-      mimeType?: string
-      size?: number
-      assetId?: string
-      uploadId?: string
-      path?: string
-      url?: string
-      metadata?: SanityImageMetadata
-      source?: SanityAssetSourceData
+      url: string | null
+      metadata: {
+        lqip: string | null
+        dimensions: {
+          width: number | null
+          height: number | null
+          aspectRatio: number | null
+        } | null
+      } | null
     } | null
-    media?: unknown
-    hotspot?: SanityImageHotspot
-    crop?: SanityImageCrop
-    _type: 'image'
   } | null
   socialMedia: {
     instagram?: string
@@ -1103,39 +1064,28 @@ export type AllPersonsQueryResult = Array<{
 
 // Source: sanity/queries.ts
 // Variable: personQuery
-// Query: *[_type == "person" && _id == $id][0] {    _id,    name,    role,    bio,    photo { ..., asset-> },    socialMedia  }
+// Query: *[_type == "person" && _id == $id][0] {    _id,    name,    role,    bio,    photo { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },    socialMedia  }
 export type PersonQueryResult = {
   _id: string
   name: string | null
   role: string | null
   bio: string | null
   photo: {
+    alt: null
+    hotspot: SanityImageHotspot | null
+    crop: SanityImageCrop | null
     asset: {
       _id: string
-      _type: 'sanity.imageAsset'
-      _createdAt: string
-      _updatedAt: string
-      _rev: string
-      originalFilename?: string
-      label?: string
-      title?: string
-      description?: string
-      altText?: string
-      sha1hash?: string
-      extension?: string
-      mimeType?: string
-      size?: number
-      assetId?: string
-      uploadId?: string
-      path?: string
-      url?: string
-      metadata?: SanityImageMetadata
-      source?: SanityAssetSourceData
+      url: string | null
+      metadata: {
+        lqip: string | null
+        dimensions: {
+          width: number | null
+          height: number | null
+          aspectRatio: number | null
+        } | null
+      } | null
     } | null
-    media?: unknown
-    hotspot?: SanityImageHotspot
-    crop?: SanityImageCrop
-    _type: 'image'
   } | null
   socialMedia: {
     instagram?: string
@@ -1146,71 +1096,48 @@ export type PersonQueryResult = {
 
 // Source: sanity/queries.ts
 // Variable: allPostsQuery
-// Query: *[_type == "post"] | order(publishedAt desc) {    _id,    title,    slug,    excerpt,    mainImage { ..., asset-> },    "author": author-> {      name,      role,      photo { ..., asset-> }    },    "categories": categories[]-> { title, slug },    publishedAt  }
+// Query: *[_type == "post"] | order(publishedAt desc) {    _id,    title,    slug,    excerpt,    mainImage { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },    "author": author-> {      name,      role,      photo { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } }    },    "categories": categories[]-> { title, slug },    publishedAt  }
 export type AllPostsQueryResult = Array<{
   _id: string
   title: string | null
   slug: Slug | null
   excerpt: string | null
   mainImage: {
+    alt: string | null
+    hotspot: SanityImageHotspot | null
+    crop: SanityImageCrop | null
     asset: {
       _id: string
-      _type: 'sanity.imageAsset'
-      _createdAt: string
-      _updatedAt: string
-      _rev: string
-      originalFilename?: string
-      label?: string
-      title?: string
-      description?: string
-      altText?: string
-      sha1hash?: string
-      extension?: string
-      mimeType?: string
-      size?: number
-      assetId?: string
-      uploadId?: string
-      path?: string
-      url?: string
-      metadata?: SanityImageMetadata
-      source?: SanityAssetSourceData
+      url: string | null
+      metadata: {
+        lqip: string | null
+        dimensions: {
+          width: number | null
+          height: number | null
+          aspectRatio: number | null
+        } | null
+      } | null
     } | null
-    media?: unknown
-    hotspot?: SanityImageHotspot
-    crop?: SanityImageCrop
-    alt?: string
-    _type: 'image'
   } | null
   author: {
     name: string | null
     role: string | null
     photo: {
+      alt: null
+      hotspot: SanityImageHotspot | null
+      crop: SanityImageCrop | null
       asset: {
         _id: string
-        _type: 'sanity.imageAsset'
-        _createdAt: string
-        _updatedAt: string
-        _rev: string
-        originalFilename?: string
-        label?: string
-        title?: string
-        description?: string
-        altText?: string
-        sha1hash?: string
-        extension?: string
-        mimeType?: string
-        size?: number
-        assetId?: string
-        uploadId?: string
-        path?: string
-        url?: string
-        metadata?: SanityImageMetadata
-        source?: SanityAssetSourceData
+        url: string | null
+        metadata: {
+          lqip: string | null
+          dimensions: {
+            width: number | null
+            height: number | null
+            aspectRatio: number | null
+          } | null
+        } | null
       } | null
-      media?: unknown
-      hotspot?: SanityImageHotspot
-      crop?: SanityImageCrop
-      _type: 'image'
     } | null
   } | null
   categories: Array<{
@@ -1222,40 +1149,28 @@ export type AllPostsQueryResult = Array<{
 
 // Source: sanity/queries.ts
 // Variable: postBySlugQuery
-// Query: *[_type == "post" && slug.current == $slug][0] {    _id,    title,    slug,    excerpt,    mainImage { ..., asset-> },    body,    "author": author-> {      name,      role,      bio,      photo { ..., asset-> },      socialMedia    },    "categories": categories[]-> { _id, title, slug },    publishedAt,    seo {      metaTitle,      metaDescription,      ogImage { ..., asset-> }    },    cta { heading, text, buttonLabel, buttonUrl }  }
+// Query: *[_type == "post" && slug.current == $slug][0] {    _id,    title,    slug,    excerpt,    mainImage { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },    body,    "author": author-> {      name,      role,      bio,      photo { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },      socialMedia    },    "categories": categories[]-> { _id, title, slug },    publishedAt,    seo {      metaTitle,      metaDescription,      ogImage { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } }    },    cta { heading, text, buttonLabel, buttonUrl }  }
 export type PostBySlugQueryResult = {
   _id: string
   title: string | null
   slug: Slug | null
   excerpt: string | null
   mainImage: {
+    alt: string | null
+    hotspot: SanityImageHotspot | null
+    crop: SanityImageCrop | null
     asset: {
       _id: string
-      _type: 'sanity.imageAsset'
-      _createdAt: string
-      _updatedAt: string
-      _rev: string
-      originalFilename?: string
-      label?: string
-      title?: string
-      description?: string
-      altText?: string
-      sha1hash?: string
-      extension?: string
-      mimeType?: string
-      size?: number
-      assetId?: string
-      uploadId?: string
-      path?: string
-      url?: string
-      metadata?: SanityImageMetadata
-      source?: SanityAssetSourceData
+      url: string | null
+      metadata: {
+        lqip: string | null
+        dimensions: {
+          width: number | null
+          height: number | null
+          aspectRatio: number | null
+        } | null
+      } | null
     } | null
-    media?: unknown
-    hotspot?: SanityImageHotspot
-    crop?: SanityImageCrop
-    alt?: string
-    _type: 'image'
   } | null
   body: Array<
     | {
@@ -1292,32 +1207,21 @@ export type PostBySlugQueryResult = {
     role: string | null
     bio: string | null
     photo: {
+      alt: null
+      hotspot: SanityImageHotspot | null
+      crop: SanityImageCrop | null
       asset: {
         _id: string
-        _type: 'sanity.imageAsset'
-        _createdAt: string
-        _updatedAt: string
-        _rev: string
-        originalFilename?: string
-        label?: string
-        title?: string
-        description?: string
-        altText?: string
-        sha1hash?: string
-        extension?: string
-        mimeType?: string
-        size?: number
-        assetId?: string
-        uploadId?: string
-        path?: string
-        url?: string
-        metadata?: SanityImageMetadata
-        source?: SanityAssetSourceData
+        url: string | null
+        metadata: {
+          lqip: string | null
+          dimensions: {
+            width: number | null
+            height: number | null
+            aspectRatio: number | null
+          } | null
+        } | null
       } | null
-      media?: unknown
-      hotspot?: SanityImageHotspot
-      crop?: SanityImageCrop
-      _type: 'image'
     } | null
     socialMedia: {
       instagram?: string
@@ -1335,32 +1239,21 @@ export type PostBySlugQueryResult = {
     metaTitle: string | null
     metaDescription: string | null
     ogImage: {
+      alt: null
+      hotspot: SanityImageHotspot | null
+      crop: SanityImageCrop | null
       asset: {
         _id: string
-        _type: 'sanity.imageAsset'
-        _createdAt: string
-        _updatedAt: string
-        _rev: string
-        originalFilename?: string
-        label?: string
-        title?: string
-        description?: string
-        altText?: string
-        sha1hash?: string
-        extension?: string
-        mimeType?: string
-        size?: number
-        assetId?: string
-        uploadId?: string
-        path?: string
-        url?: string
-        metadata?: SanityImageMetadata
-        source?: SanityAssetSourceData
+        url: string | null
+        metadata: {
+          lqip: string | null
+          dimensions: {
+            width: number | null
+            height: number | null
+            aspectRatio: number | null
+          } | null
+        } | null
       } | null
-      media?: unknown
-      hotspot?: SanityImageHotspot
-      crop?: SanityImageCrop
-      _type: 'image'
     } | null
   } | null
   cta: {
@@ -1380,71 +1273,48 @@ export type AllPostsSlugsQueryResult = Array<{
 
 // Source: sanity/queries.ts
 // Variable: postsByCategoryQuery
-// Query: *[_type == "post" && $categorySlug in categories[]->slug.current] | order(publishedAt desc) {    _id,    title,    slug,    excerpt,    mainImage { ..., asset-> },    "author": author-> {      name,      role,      photo { ..., asset-> }    },    "categories": categories[]-> { title, slug },    publishedAt  }
+// Query: *[_type == "post" && $categorySlug in categories[]->slug.current] | order(publishedAt desc) {    _id,    title,    slug,    excerpt,    mainImage { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },    "author": author-> {      name,      role,      photo { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } }    },    "categories": categories[]-> { title, slug },    publishedAt  }
 export type PostsByCategoryQueryResult = Array<{
   _id: string
   title: string | null
   slug: Slug | null
   excerpt: string | null
   mainImage: {
+    alt: string | null
+    hotspot: SanityImageHotspot | null
+    crop: SanityImageCrop | null
     asset: {
       _id: string
-      _type: 'sanity.imageAsset'
-      _createdAt: string
-      _updatedAt: string
-      _rev: string
-      originalFilename?: string
-      label?: string
-      title?: string
-      description?: string
-      altText?: string
-      sha1hash?: string
-      extension?: string
-      mimeType?: string
-      size?: number
-      assetId?: string
-      uploadId?: string
-      path?: string
-      url?: string
-      metadata?: SanityImageMetadata
-      source?: SanityAssetSourceData
+      url: string | null
+      metadata: {
+        lqip: string | null
+        dimensions: {
+          width: number | null
+          height: number | null
+          aspectRatio: number | null
+        } | null
+      } | null
     } | null
-    media?: unknown
-    hotspot?: SanityImageHotspot
-    crop?: SanityImageCrop
-    alt?: string
-    _type: 'image'
   } | null
   author: {
     name: string | null
     role: string | null
     photo: {
+      alt: null
+      hotspot: SanityImageHotspot | null
+      crop: SanityImageCrop | null
       asset: {
         _id: string
-        _type: 'sanity.imageAsset'
-        _createdAt: string
-        _updatedAt: string
-        _rev: string
-        originalFilename?: string
-        label?: string
-        title?: string
-        description?: string
-        altText?: string
-        sha1hash?: string
-        extension?: string
-        mimeType?: string
-        size?: number
-        assetId?: string
-        uploadId?: string
-        path?: string
-        url?: string
-        metadata?: SanityImageMetadata
-        source?: SanityAssetSourceData
+        url: string | null
+        metadata: {
+          lqip: string | null
+          dimensions: {
+            width: number | null
+            height: number | null
+            aspectRatio: number | null
+          } | null
+        } | null
       } | null
-      media?: unknown
-      hotspot?: SanityImageHotspot
-      crop?: SanityImageCrop
-      _type: 'image'
     } | null
   } | null
   categories: Array<{
@@ -1466,40 +1336,28 @@ export type AllCategoriesQueryResult = Array<{
 
 // Source: sanity/queries.ts
 // Variable: relatedPostsQuery
-// Query: *[_type == "post" && slug.current != $slug && count((categories[]._ref)[@ in $categoryIds]) > 0] | order(publishedAt desc) [0...2] {    _id,    title,    "slug": slug.current,    excerpt,    mainImage { ..., asset-> },    publishedAt,    "categories": categories[]-> { title, "slug": slug.current }  }
+// Query: *[_type == "post" && slug.current != $slug && count((categories[]._ref)[@ in $categoryIds]) > 0] | order(publishedAt desc) [0...2] {    _id,    title,    "slug": slug.current,    excerpt,    mainImage { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },    publishedAt,    "categories": categories[]-> { title, "slug": slug.current }  }
 export type RelatedPostsQueryResult = Array<{
   _id: string
   title: string | null
   slug: string | null
   excerpt: string | null
   mainImage: {
+    alt: string | null
+    hotspot: SanityImageHotspot | null
+    crop: SanityImageCrop | null
     asset: {
       _id: string
-      _type: 'sanity.imageAsset'
-      _createdAt: string
-      _updatedAt: string
-      _rev: string
-      originalFilename?: string
-      label?: string
-      title?: string
-      description?: string
-      altText?: string
-      sha1hash?: string
-      extension?: string
-      mimeType?: string
-      size?: number
-      assetId?: string
-      uploadId?: string
-      path?: string
-      url?: string
-      metadata?: SanityImageMetadata
-      source?: SanityAssetSourceData
+      url: string | null
+      metadata: {
+        lqip: string | null
+        dimensions: {
+          width: number | null
+          height: number | null
+          aspectRatio: number | null
+        } | null
+      } | null
     } | null
-    media?: unknown
-    hotspot?: SanityImageHotspot
-    crop?: SanityImageCrop
-    alt?: string
-    _type: 'image'
   } | null
   publishedAt: string | null
   categories: Array<{
@@ -1510,40 +1368,28 @@ export type RelatedPostsQueryResult = Array<{
 
 // Source: sanity/queries.ts
 // Variable: latestPostsQuery
-// Query: *[_type == "post" && (!defined($excludeSlugs) || !(slug.current in $excludeSlugs))] | order(publishedAt desc) [0...$limit] {    _id,    title,    "slug": slug.current,    excerpt,    mainImage { ..., asset-> },    publishedAt,    "categories": categories[]-> { title, "slug": slug.current }  }
+// Query: *[_type == "post" && (!defined($excludeSlugs) || !(slug.current in $excludeSlugs))] | order(publishedAt desc) [0...$limit] {    _id,    title,    "slug": slug.current,    excerpt,    mainImage { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },    publishedAt,    "categories": categories[]-> { title, "slug": slug.current }  }
 export type LatestPostsQueryResult = Array<{
   _id: string
   title: string | null
   slug: string | null
   excerpt: string | null
   mainImage: {
+    alt: string | null
+    hotspot: SanityImageHotspot | null
+    crop: SanityImageCrop | null
     asset: {
       _id: string
-      _type: 'sanity.imageAsset'
-      _createdAt: string
-      _updatedAt: string
-      _rev: string
-      originalFilename?: string
-      label?: string
-      title?: string
-      description?: string
-      altText?: string
-      sha1hash?: string
-      extension?: string
-      mimeType?: string
-      size?: number
-      assetId?: string
-      uploadId?: string
-      path?: string
-      url?: string
-      metadata?: SanityImageMetadata
-      source?: SanityAssetSourceData
+      url: string | null
+      metadata: {
+        lqip: string | null
+        dimensions: {
+          width: number | null
+          height: number | null
+          aspectRatio: number | null
+        } | null
+      } | null
     } | null
-    media?: unknown
-    hotspot?: SanityImageHotspot
-    crop?: SanityImageCrop
-    alt?: string
-    _type: 'image'
   } | null
   publishedAt: string | null
   categories: Array<{
@@ -1554,7 +1400,7 @@ export type LatestPostsQueryResult = Array<{
 
 // Source: sanity/queries.ts
 // Variable: blogListingQuery
-// Query: {    "posts": *[_type == "post" && (!defined($category) || $category == "" || $category in categories[]->slug.current)] | order(publishedAt desc) [$from...$to] {      _id,      title,      "slug": slug.current,      excerpt,      mainImage { ..., asset-> },      publishedAt,      "categories": categories[]-> { title, "slug": slug.current }    },    "total": count(*[_type == "post" && (!defined($category) || $category == "" || $category in categories[]->slug.current)])  }
+// Query: {    "posts": *[_type == "post" && (!defined($category) || $category == "" || $category in categories[]->slug.current)] | order(publishedAt desc) [$from...$to] {      _id,      title,      "slug": slug.current,      excerpt,      mainImage { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },      publishedAt,      "categories": categories[]-> { title, "slug": slug.current }    },    "total": count(*[_type == "post" && (!defined($category) || $category == "" || $category in categories[]->slug.current)])  }
 export type BlogListingQueryResult = {
   posts: Array<{
     _id: string
@@ -1562,33 +1408,21 @@ export type BlogListingQueryResult = {
     slug: string | null
     excerpt: string | null
     mainImage: {
+      alt: string | null
+      hotspot: SanityImageHotspot | null
+      crop: SanityImageCrop | null
       asset: {
         _id: string
-        _type: 'sanity.imageAsset'
-        _createdAt: string
-        _updatedAt: string
-        _rev: string
-        originalFilename?: string
-        label?: string
-        title?: string
-        description?: string
-        altText?: string
-        sha1hash?: string
-        extension?: string
-        mimeType?: string
-        size?: number
-        assetId?: string
-        uploadId?: string
-        path?: string
-        url?: string
-        metadata?: SanityImageMetadata
-        source?: SanityAssetSourceData
+        url: string | null
+        metadata: {
+          lqip: string | null
+          dimensions: {
+            width: number | null
+            height: number | null
+            aspectRatio: number | null
+          } | null
+        } | null
       } | null
-      media?: unknown
-      hotspot?: SanityImageHotspot
-      crop?: SanityImageCrop
-      alt?: string
-      _type: 'image'
     } | null
     publishedAt: string | null
     categories: Array<{
@@ -1631,7 +1465,7 @@ export type AllPagesSlugsQueryResult = Array<{
 
 // Source: sanity/queries.ts
 // Variable: pageQuery
-// Query: *[_type == "page" && slug.current == $slug][0] {    _id,    title,    slug,    seo,    pageBuilder[] {      _type,      _key,      _type == "sectionHero" => {        anchor,        colorVariant,        heading,        subheading,        primaryCta,        secondaryCta,        backgroundImage { ..., asset-> },        mediaType,        videoUrl,        videoPoster { asset, crop }      },      _type == "sectionTextImage" => {        anchor,        colorVariant,        heading,        body,        image { ..., asset-> },        mediaPosition,        cta      },      _type == "sectionServices" => {        anchor,        colorVariant,        heading,        subheading,        services[]-> {          _id, title, description, icon,          image { ..., asset-> }        }      },      _type == "sectionPricing" => {        anchor,        colorVariant,        heading,        subheading,        items[]-> {          _id,          name,          duration,          price,          description        }      },      _type == "sectionTestimonials" => {        anchor,        colorVariant,        heading,        testimonials[]-> {          _id, authorName, position, company, content, rating,          photo { ..., asset-> }        }      },      _type == "sectionStats" => {        anchor,        colorVariant,        heading,        items      },      _type == "sectionGallery" => {        anchor,        colorVariant,        heading,        layout,        images[] { ..., asset-> }      },      _type == "sectionBlogPreview" => {        _type,        anchor,        colorVariant,        heading,        subheading,        mode,        showViewAll,        "posts": select(          mode == "manual" => posts[]->{            _id, title, slug, excerpt, mainImage, publishedAt,            "categories": categories[]->{title}          },          *[_type == "post"] | order(publishedAt desc) [0..2] {            _id, title, slug, excerpt, mainImage, publishedAt,            "categories": categories[]->{title}          }        )      },      _type == "sectionCta" => {        anchor,        colorVariant,        heading,        subheading,        primaryCta,        secondaryCta      },      _type == "sectionContact" => {        anchor,        colorVariant,        heading,        subheading,        body      },      _type == "sectionTeam" => {        anchor,        colorVariant,        title,        subtitle,        members[]-> {          _id,          name,          role,          bio,          photo { asset->, hotspot, crop },          socialMedia        }      },      _type == "sectionFaq" => {        anchor,        colorVariant,        title,        subtitle,        items[] {          question,          answer        }      },      _type == "sectionProcess" => {        _type,        anchor,        colorVariant,        title,        subtitle,        layout,        steps[] {          icon,          title,          description        }      },      _type == "sectionBadges" => {        anchor,        colorVariant,        label,        badges[] {          logo { asset, crop },          alt,          url,          label        }      },      _type == "sectionTextVideo" => {        anchor,        colorVariant,        title,        body,        videoUrl,        mediaPosition,        caption,        cta      }    }  }
+// Query: *[_type == "page" && slug.current == $slug][0] {    _id,    title,    slug,    seo,    pageBuilder[] {      _type,      _key,      _type == "sectionHero" => {        anchor,        colorVariant,        heading,        subheading,        primaryCta,        secondaryCta,        backgroundImage { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },        mediaType,        videoUrl,        videoPoster { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } }      },      _type == "sectionTextImage" => {        anchor,        colorVariant,        heading,        body,        image { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },        mediaPosition,        cta      },      _type == "sectionServices" => {        anchor,        colorVariant,        heading,        subheading,        services[]-> {          _id, title, description, icon,          image { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } }        }      },      _type == "sectionPricing" => {        anchor,        colorVariant,        heading,        subheading,        items[]-> {          _id,          name,          duration,          price,          description        }      },      _type == "sectionTestimonials" => {        anchor,        colorVariant,        heading,        testimonials[]-> {          _id, authorName, position, company, content, rating,          photo { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } }        }      },      _type == "sectionStats" => {        anchor,        colorVariant,        heading,        items      },      _type == "sectionGallery" => {        anchor,        colorVariant,        heading,        layout,        images[] { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } }      },      _type == "sectionBlogPreview" => {        _type,        anchor,        colorVariant,        heading,        subheading,        mode,        showViewAll,        "posts": select(          mode == "manual" => posts[]->{            _id, title, slug, excerpt,            mainImage { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },            publishedAt,            "categories": categories[]->{title}          },          *[_type == "post"] | order(publishedAt desc) [0..2] {            _id, title, slug, excerpt,            mainImage { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },            publishedAt,            "categories": categories[]->{title}          }        )      },      _type == "sectionCta" => {        anchor,        colorVariant,        heading,        subheading,        primaryCta,        secondaryCta      },      _type == "sectionContact" => {        anchor,        colorVariant,        heading,        subheading,        body      },      _type == "sectionTeam" => {        anchor,        colorVariant,        title,        subtitle,        members[]-> {          _id,          name,          role,          bio,          photo { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },          socialMedia        }      },      _type == "sectionFaq" => {        anchor,        colorVariant,        title,        subtitle,        items[] {          question,          answer        }      },      _type == "sectionProcess" => {        _type,        anchor,        colorVariant,        title,        subtitle,        layout,        steps[] {          icon,          title,          description        }      },      _type == "sectionBadges" => {        anchor,        colorVariant,        label,        badges[] {          logo { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },          alt,          url,          label        }      },      _type == "sectionTextVideo" => {        anchor,        colorVariant,        title,        body,        videoUrl,        mediaPosition,        caption,        cta      }    }  }
 export type PageQueryResult = {
   _id: string
   title: string | null
@@ -1656,8 +1490,21 @@ export type PageQueryResult = {
         label: string | null
         badges: Array<{
           logo: {
-            asset: SanityImageAssetReference | null
+            alt: null
+            hotspot: SanityImageHotspot | null
             crop: SanityImageCrop | null
+            asset: {
+              _id: string
+              url: string | null
+              metadata: {
+                lqip: string | null
+                dimensions: {
+                  width: number | null
+                  height: number | null
+                  aspectRatio: number | null
+                } | null
+              } | null
+            } | null
           } | null
           alt: string | null
           url: string | null
@@ -1679,12 +1526,21 @@ export type PageQueryResult = {
           slug: Slug | null
           excerpt: string | null
           mainImage: {
-            asset?: SanityImageAssetReference
-            media?: unknown
-            hotspot?: SanityImageHotspot
-            crop?: SanityImageCrop
-            alt?: string
-            _type: 'image'
+            alt: string | null
+            hotspot: SanityImageHotspot | null
+            crop: SanityImageCrop | null
+            asset: {
+              _id: string
+              url: string | null
+              metadata: {
+                lqip: string | null
+                dimensions: {
+                  width: number | null
+                  height: number | null
+                  aspectRatio: number | null
+                } | null
+              } | null
+            } | null
           } | null
           publishedAt: string | null
           categories: Array<{
@@ -1766,34 +1622,21 @@ export type PageQueryResult = {
         heading: string | null
         layout: 'grid' | 'masonry' | null
         images: Array<{
+          alt: string | null
+          hotspot: SanityImageHotspot | null
+          crop: SanityImageCrop | null
           asset: {
             _id: string
-            _type: 'sanity.imageAsset'
-            _createdAt: string
-            _updatedAt: string
-            _rev: string
-            originalFilename?: string
-            label?: string
-            title?: string
-            description?: string
-            altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
-            uploadId?: string
-            path?: string
-            url?: string
-            metadata?: SanityImageMetadata
-            source?: SanityAssetSourceData
+            url: string | null
+            metadata: {
+              lqip: string | null
+              dimensions: {
+                width: number | null
+                height: number | null
+                aspectRatio: number | null
+              } | null
+            } | null
           } | null
-          media?: unknown
-          hotspot?: SanityImageHotspot
-          crop?: SanityImageCrop
-          alt?: string
-          _type: 'image'
-          _key: string
         }> | null
       }
     | {
@@ -1806,39 +1649,40 @@ export type PageQueryResult = {
         primaryCta: PrimaryCta | null
         secondaryCta: SecondaryCta | null
         backgroundImage: {
+          alt: string | null
+          hotspot: SanityImageHotspot | null
+          crop: SanityImageCrop | null
           asset: {
             _id: string
-            _type: 'sanity.imageAsset'
-            _createdAt: string
-            _updatedAt: string
-            _rev: string
-            originalFilename?: string
-            label?: string
-            title?: string
-            description?: string
-            altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
-            uploadId?: string
-            path?: string
-            url?: string
-            metadata?: SanityImageMetadata
-            source?: SanityAssetSourceData
+            url: string | null
+            metadata: {
+              lqip: string | null
+              dimensions: {
+                width: number | null
+                height: number | null
+                aspectRatio: number | null
+              } | null
+            } | null
           } | null
-          media?: unknown
-          hotspot?: SanityImageHotspot
-          crop?: SanityImageCrop
-          alt?: string
-          _type: 'image'
         } | null
         mediaType: 'image' | 'video' | null
         videoUrl: string | null
         videoPoster: {
-          asset: SanityImageAssetReference | null
+          alt: null
+          hotspot: SanityImageHotspot | null
           crop: SanityImageCrop | null
+          asset: {
+            _id: string
+            url: string | null
+            metadata: {
+              lqip: string | null
+              dimensions: {
+                width: number | null
+                height: number | null
+                aspectRatio: number | null
+              } | null
+            } | null
+          } | null
         } | null
       }
     | {
@@ -1883,33 +1727,21 @@ export type PageQueryResult = {
           description: string | null
           icon: LucideIcon | null
           image: {
+            alt: string | null
+            hotspot: SanityImageHotspot | null
+            crop: SanityImageCrop | null
             asset: {
               _id: string
-              _type: 'sanity.imageAsset'
-              _createdAt: string
-              _updatedAt: string
-              _rev: string
-              originalFilename?: string
-              label?: string
-              title?: string
-              description?: string
-              altText?: string
-              sha1hash?: string
-              extension?: string
-              mimeType?: string
-              size?: number
-              assetId?: string
-              uploadId?: string
-              path?: string
-              url?: string
-              metadata?: SanityImageMetadata
-              source?: SanityAssetSourceData
+              url: string | null
+              metadata: {
+                lqip: string | null
+                dimensions: {
+                  width: number | null
+                  height: number | null
+                  aspectRatio: number | null
+                } | null
+              } | null
             } | null
-            media?: unknown
-            hotspot?: SanityImageHotspot
-            crop?: SanityImageCrop
-            alt?: string
-            _type: 'image'
           } | null
         }> | null
       }
@@ -1939,30 +1771,21 @@ export type PageQueryResult = {
           role: string | null
           bio: string | null
           photo: {
-            asset: {
-              _id: string
-              _type: 'sanity.imageAsset'
-              _createdAt: string
-              _updatedAt: string
-              _rev: string
-              originalFilename?: string
-              label?: string
-              title?: string
-              description?: string
-              altText?: string
-              sha1hash?: string
-              extension?: string
-              mimeType?: string
-              size?: number
-              assetId?: string
-              uploadId?: string
-              path?: string
-              url?: string
-              metadata?: SanityImageMetadata
-              source?: SanityAssetSourceData
-            } | null
+            alt: null
             hotspot: SanityImageHotspot | null
             crop: SanityImageCrop | null
+            asset: {
+              _id: string
+              url: string | null
+              metadata: {
+                lqip: string | null
+                dimensions: {
+                  width: number | null
+                  height: number | null
+                  aspectRatio: number | null
+                } | null
+              } | null
+            } | null
           } | null
           socialMedia: {
             instagram?: string
@@ -1985,33 +1808,21 @@ export type PageQueryResult = {
           content: string | null
           rating: number | null
           photo: {
+            alt: string | null
+            hotspot: SanityImageHotspot | null
+            crop: SanityImageCrop | null
             asset: {
               _id: string
-              _type: 'sanity.imageAsset'
-              _createdAt: string
-              _updatedAt: string
-              _rev: string
-              originalFilename?: string
-              label?: string
-              title?: string
-              description?: string
-              altText?: string
-              sha1hash?: string
-              extension?: string
-              mimeType?: string
-              size?: number
-              assetId?: string
-              uploadId?: string
-              path?: string
-              url?: string
-              metadata?: SanityImageMetadata
-              source?: SanityAssetSourceData
+              url: string | null
+              metadata: {
+                lqip: string | null
+                dimensions: {
+                  width: number | null
+                  height: number | null
+                  aspectRatio: number | null
+                } | null
+              } | null
             } | null
-            media?: unknown
-            hotspot?: SanityImageHotspot
-            crop?: SanityImageCrop
-            alt?: string
-            _type: 'image'
           } | null
         }> | null
       }
@@ -2040,33 +1851,21 @@ export type PageQueryResult = {
           _key: string
         }> | null
         image: {
+          alt: string | null
+          hotspot: SanityImageHotspot | null
+          crop: SanityImageCrop | null
           asset: {
             _id: string
-            _type: 'sanity.imageAsset'
-            _createdAt: string
-            _updatedAt: string
-            _rev: string
-            originalFilename?: string
-            label?: string
-            title?: string
-            description?: string
-            altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
-            uploadId?: string
-            path?: string
-            url?: string
-            metadata?: SanityImageMetadata
-            source?: SanityAssetSourceData
+            url: string | null
+            metadata: {
+              lqip: string | null
+              dimensions: {
+                width: number | null
+                height: number | null
+                aspectRatio: number | null
+              } | null
+            } | null
           } | null
-          media?: unknown
-          hotspot?: SanityImageHotspot
-          crop?: SanityImageCrop
-          alt?: string
-          _type: 'image'
         } | null
         mediaPosition: 'left' | 'right' | null
         cta: Cta | null
@@ -2107,23 +1906,23 @@ export type PageQueryResult = {
 import '@sanity/client'
 declare module '@sanity/client' {
   interface SanityQueries {
-    '\n  *[_type == "siteSettings"][0] {\n    businessName,\n    tagline,\n    logoLight { alt, asset-> { _id, url, metadata { dimensions } } },\n    logoDark { alt, asset-> { _id, url, metadata { dimensions } } },\n    email,\n    phone,\n    address,\n    googleMapsUrl,\n    social {\n      facebook,\n      instagram,\n      tiktok\n    },\n    "navLinks": navLinks[] {\n      label,\n      href,\n      openInNewTab\n    },\n    seo {\n      metaTitle,\n      metaDescription,\n      ogImage { ..., asset-> }\n    }\n  }\n': SiteSettingsQueryResult
-    '\n  *[_type == "siteSettings"][0] {\n    businessName,\n    tagline,\n    logoLight { alt, asset-> { _id, url, metadata { dimensions } } },\n    logoDark { alt, asset-> { _id, url, metadata { dimensions } } },\n    email,\n    phone,\n    address,\n    googleMapsUrl,\n    social {\n      facebook,\n      instagram,\n      tiktok\n    },\n    openingHours[] { days, hours }\n  }\n': FooterQueryResult
-    '\n  *[_type == "service"] | order(_createdAt asc) {\n    _id,\n    title,\n    slug,\n    description,\n    icon,\n    image { ..., asset-> }\n  }\n': AllServicesQueryResult
-    '\n  *[_type == "testimonial"] | order(_createdAt asc) {\n    _id,\n    authorName,\n    position,\n    company,\n    content,\n    rating,\n    photo { ..., asset-> },\n    publishedAt\n  }\n': AllTestimonialsQueryResult
-    '\n  *[_type == "person"] | order(name asc) {\n    _id,\n    name,\n    role,\n    bio,\n    photo { ..., asset-> },\n    socialMedia\n  }\n': AllPersonsQueryResult
-    '\n  *[_type == "person" && _id == $id][0] {\n    _id,\n    name,\n    role,\n    bio,\n    photo { ..., asset-> },\n    socialMedia\n  }\n': PersonQueryResult
-    '\n  *[_type == "post"] | order(publishedAt desc) {\n    _id,\n    title,\n    slug,\n    excerpt,\n    mainImage { ..., asset-> },\n    "author": author-> {\n      name,\n      role,\n      photo { ..., asset-> }\n    },\n    "categories": categories[]-> { title, slug },\n    publishedAt\n  }\n': AllPostsQueryResult
-    '\n  *[_type == "post" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    excerpt,\n    mainImage { ..., asset-> },\n    body,\n    "author": author-> {\n      name,\n      role,\n      bio,\n      photo { ..., asset-> },\n      socialMedia\n    },\n    "categories": categories[]-> { _id, title, slug },\n    publishedAt,\n    seo {\n      metaTitle,\n      metaDescription,\n      ogImage { ..., asset-> }\n    },\n    cta { heading, text, buttonLabel, buttonUrl }\n  }\n': PostBySlugQueryResult
+    '\n  *[_type == "siteSettings"][0] {\n    businessName,\n    tagline,\n    logoLight { asset-> { _id, url, metadata { dimensions } } },\n    logoDark { asset-> { _id, url, metadata { dimensions } } },\n    email,\n    phone,\n    address,\n    googleMapsUrl,\n    social {\n      facebook,\n      instagram,\n      tiktok\n    },\n    "navLinks": navLinks[] {\n      label,\n      href,\n      openInNewTab\n    },\n    seo {\n      metaTitle,\n      metaDescription,\n      ogImage { ..., asset-> }\n    }\n  }\n': SiteSettingsQueryResult
+    '\n  *[_type == "siteSettings"][0] {\n    businessName,\n    tagline,\n    logoLight { asset-> { _id, url, metadata { dimensions } } },\n    logoDark { asset-> { _id, url, metadata { dimensions } } },\n    email,\n    phone,\n    address,\n    googleMapsUrl,\n    social {\n      facebook,\n      instagram,\n      tiktok\n    },\n    openingHours[] { days, hours }\n  }\n': FooterQueryResult
+    '\n  *[_type == "service"] | order(_createdAt asc) {\n    _id,\n    title,\n    slug,\n    description,\n    icon,\n    image { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } }\n  }\n': AllServicesQueryResult
+    '\n  *[_type == "testimonial"] | order(_createdAt asc) {\n    _id,\n    authorName,\n    position,\n    company,\n    content,\n    rating,\n    photo { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },\n    publishedAt\n  }\n': AllTestimonialsQueryResult
+    '\n  *[_type == "person"] | order(name asc) {\n    _id,\n    name,\n    role,\n    bio,\n    photo { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },\n    socialMedia\n  }\n': AllPersonsQueryResult
+    '\n  *[_type == "person" && _id == $id][0] {\n    _id,\n    name,\n    role,\n    bio,\n    photo { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },\n    socialMedia\n  }\n': PersonQueryResult
+    '\n  *[_type == "post"] | order(publishedAt desc) {\n    _id,\n    title,\n    slug,\n    excerpt,\n    mainImage { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },\n    "author": author-> {\n      name,\n      role,\n      photo { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } }\n    },\n    "categories": categories[]-> { title, slug },\n    publishedAt\n  }\n': AllPostsQueryResult
+    '\n  *[_type == "post" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    excerpt,\n    mainImage { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },\n    body,\n    "author": author-> {\n      name,\n      role,\n      bio,\n      photo { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },\n      socialMedia\n    },\n    "categories": categories[]-> { _id, title, slug },\n    publishedAt,\n    seo {\n      metaTitle,\n      metaDescription,\n      ogImage { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } }\n    },\n    cta { heading, text, buttonLabel, buttonUrl }\n  }\n': PostBySlugQueryResult
     '\n  *[_type == "post"] { "slug": slug.current }\n': AllPostsSlugsQueryResult
-    '\n  *[_type == "post" && $categorySlug in categories[]->slug.current] | order(publishedAt desc) {\n    _id,\n    title,\n    slug,\n    excerpt,\n    mainImage { ..., asset-> },\n    "author": author-> {\n      name,\n      role,\n      photo { ..., asset-> }\n    },\n    "categories": categories[]-> { title, slug },\n    publishedAt\n  }\n': PostsByCategoryQueryResult
+    '\n  *[_type == "post" && $categorySlug in categories[]->slug.current] | order(publishedAt desc) {\n    _id,\n    title,\n    slug,\n    excerpt,\n    mainImage { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },\n    "author": author-> {\n      name,\n      role,\n      photo { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } }\n    },\n    "categories": categories[]-> { title, slug },\n    publishedAt\n  }\n': PostsByCategoryQueryResult
     '\n  *[_type == "category"] | order(title asc) {\n    _id,\n    title,\n    slug,\n    description\n  }\n': AllCategoriesQueryResult
-    '\n  *[_type == "post" && slug.current != $slug && count((categories[]._ref)[@ in $categoryIds]) > 0] | order(publishedAt desc) [0...2] {\n    _id,\n    title,\n    "slug": slug.current,\n    excerpt,\n    mainImage { ..., asset-> },\n    publishedAt,\n    "categories": categories[]-> { title, "slug": slug.current }\n  }\n': RelatedPostsQueryResult
-    '\n  *[_type == "post" && (!defined($excludeSlugs) || !(slug.current in $excludeSlugs))] | order(publishedAt desc) [0...$limit] {\n    _id,\n    title,\n    "slug": slug.current,\n    excerpt,\n    mainImage { ..., asset-> },\n    publishedAt,\n    "categories": categories[]-> { title, "slug": slug.current }\n  }\n': LatestPostsQueryResult
-    '\n  {\n    "posts": *[_type == "post" && (!defined($category) || $category == "" || $category in categories[]->slug.current)] | order(publishedAt desc) [$from...$to] {\n      _id,\n      title,\n      "slug": slug.current,\n      excerpt,\n      mainImage { ..., asset-> },\n      publishedAt,\n      "categories": categories[]-> { title, "slug": slug.current }\n    },\n    "total": count(*[_type == "post" && (!defined($category) || $category == "" || $category in categories[]->slug.current)])\n  }\n': BlogListingQueryResult
+    '\n  *[_type == "post" && slug.current != $slug && count((categories[]._ref)[@ in $categoryIds]) > 0] | order(publishedAt desc) [0...2] {\n    _id,\n    title,\n    "slug": slug.current,\n    excerpt,\n    mainImage { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },\n    publishedAt,\n    "categories": categories[]-> { title, "slug": slug.current }\n  }\n': RelatedPostsQueryResult
+    '\n  *[_type == "post" && (!defined($excludeSlugs) || !(slug.current in $excludeSlugs))] | order(publishedAt desc) [0...$limit] {\n    _id,\n    title,\n    "slug": slug.current,\n    excerpt,\n    mainImage { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },\n    publishedAt,\n    "categories": categories[]-> { title, "slug": slug.current }\n  }\n': LatestPostsQueryResult
+    '\n  {\n    "posts": *[_type == "post" && (!defined($category) || $category == "" || $category in categories[]->slug.current)] | order(publishedAt desc) [$from...$to] {\n      _id,\n      title,\n      "slug": slug.current,\n      excerpt,\n      mainImage { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },\n      publishedAt,\n      "categories": categories[]-> { title, "slug": slug.current }\n    },\n    "total": count(*[_type == "post" && (!defined($category) || $category == "" || $category in categories[]->slug.current)])\n  }\n': BlogListingQueryResult
     '\n  *[_type == "category"] | order(title asc) {\n    _id,\n    title,\n    "slug": slug.current\n  }\n': BlogCategoriesQueryResult
     '\n  *[_type == "siteSettings"][0] {\n    businessName,\n    email,\n    phone,\n    address,\n    openingHours[] { days, hours }\n  }\n': ContactSiteSettingsQueryResult
     '\n  *[_type == "page" && defined(slug.current) && slug.current != "home"] {\n    "slug": slug.current\n  }\n': AllPagesSlugsQueryResult
-    '\n  *[_type == "page" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    seo,\n    pageBuilder[] {\n      _type,\n      _key,\n      _type == "sectionHero" => {\n        anchor,\n        colorVariant,\n        heading,\n        subheading,\n        primaryCta,\n        secondaryCta,\n        backgroundImage { ..., asset-> },\n        mediaType,\n        videoUrl,\n        videoPoster { asset, crop }\n      },\n      _type == "sectionTextImage" => {\n        anchor,\n        colorVariant,\n        heading,\n        body,\n        image { ..., asset-> },\n        mediaPosition,\n        cta\n      },\n      _type == "sectionServices" => {\n        anchor,\n        colorVariant,\n        heading,\n        subheading,\n        services[]-> {\n          _id, title, description, icon,\n          image { ..., asset-> }\n        }\n      },\n      _type == "sectionPricing" => {\n        anchor,\n        colorVariant,\n        heading,\n        subheading,\n        items[]-> {\n          _id,\n          name,\n          duration,\n          price,\n          description\n        }\n      },\n      _type == "sectionTestimonials" => {\n        anchor,\n        colorVariant,\n        heading,\n        testimonials[]-> {\n          _id, authorName, position, company, content, rating,\n          photo { ..., asset-> }\n        }\n      },\n      _type == "sectionStats" => {\n        anchor,\n        colorVariant,\n        heading,\n        items\n      },\n      _type == "sectionGallery" => {\n        anchor,\n        colorVariant,\n        heading,\n        layout,\n        images[] { ..., asset-> }\n      },\n      _type == "sectionBlogPreview" => {\n        _type,\n        anchor,\n        colorVariant,\n        heading,\n        subheading,\n        mode,\n        showViewAll,\n        "posts": select(\n          mode == "manual" => posts[]->{\n            _id, title, slug, excerpt, mainImage, publishedAt,\n            "categories": categories[]->{title}\n          },\n          *[_type == "post"] | order(publishedAt desc) [0..2] {\n            _id, title, slug, excerpt, mainImage, publishedAt,\n            "categories": categories[]->{title}\n          }\n        )\n      },\n      _type == "sectionCta" => {\n        anchor,\n        colorVariant,\n        heading,\n        subheading,\n        primaryCta,\n        secondaryCta\n      },\n      _type == "sectionContact" => {\n        anchor,\n        colorVariant,\n        heading,\n        subheading,\n        body\n      },\n      _type == "sectionTeam" => {\n        anchor,\n        colorVariant,\n        title,\n        subtitle,\n        members[]-> {\n          _id,\n          name,\n          role,\n          bio,\n          photo { asset->, hotspot, crop },\n          socialMedia\n        }\n      },\n      _type == "sectionFaq" => {\n        anchor,\n        colorVariant,\n        title,\n        subtitle,\n        items[] {\n          question,\n          answer\n        }\n      },\n      _type == "sectionProcess" => {\n        _type,\n        anchor,\n        colorVariant,\n        title,\n        subtitle,\n        layout,\n        steps[] {\n          icon,\n          title,\n          description\n        }\n      },\n      _type == "sectionBadges" => {\n        anchor,\n        colorVariant,\n        label,\n        badges[] {\n          logo { asset, crop },\n          alt,\n          url,\n          label\n        }\n      },\n      _type == "sectionTextVideo" => {\n        anchor,\n        colorVariant,\n        title,\n        body,\n        videoUrl,\n        mediaPosition,\n        caption,\n        cta\n      }\n    }\n  }\n': PageQueryResult
+    '\n  *[_type == "page" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    seo,\n    pageBuilder[] {\n      _type,\n      _key,\n      _type == "sectionHero" => {\n        anchor,\n        colorVariant,\n        heading,\n        subheading,\n        primaryCta,\n        secondaryCta,\n        backgroundImage { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },\n        mediaType,\n        videoUrl,\n        videoPoster { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } }\n      },\n      _type == "sectionTextImage" => {\n        anchor,\n        colorVariant,\n        heading,\n        body,\n        image { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },\n        mediaPosition,\n        cta\n      },\n      _type == "sectionServices" => {\n        anchor,\n        colorVariant,\n        heading,\n        subheading,\n        services[]-> {\n          _id, title, description, icon,\n          image { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } }\n        }\n      },\n      _type == "sectionPricing" => {\n        anchor,\n        colorVariant,\n        heading,\n        subheading,\n        items[]-> {\n          _id,\n          name,\n          duration,\n          price,\n          description\n        }\n      },\n      _type == "sectionTestimonials" => {\n        anchor,\n        colorVariant,\n        heading,\n        testimonials[]-> {\n          _id, authorName, position, company, content, rating,\n          photo { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } }\n        }\n      },\n      _type == "sectionStats" => {\n        anchor,\n        colorVariant,\n        heading,\n        items\n      },\n      _type == "sectionGallery" => {\n        anchor,\n        colorVariant,\n        heading,\n        layout,\n        images[] { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } }\n      },\n      _type == "sectionBlogPreview" => {\n        _type,\n        anchor,\n        colorVariant,\n        heading,\n        subheading,\n        mode,\n        showViewAll,\n        "posts": select(\n          mode == "manual" => posts[]->{\n            _id, title, slug, excerpt,\n            mainImage { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },\n            publishedAt,\n            "categories": categories[]->{title}\n          },\n          *[_type == "post"] | order(publishedAt desc) [0..2] {\n            _id, title, slug, excerpt,\n            mainImage { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },\n            publishedAt,\n            "categories": categories[]->{title}\n          }\n        )\n      },\n      _type == "sectionCta" => {\n        anchor,\n        colorVariant,\n        heading,\n        subheading,\n        primaryCta,\n        secondaryCta\n      },\n      _type == "sectionContact" => {\n        anchor,\n        colorVariant,\n        heading,\n        subheading,\n        body\n      },\n      _type == "sectionTeam" => {\n        anchor,\n        colorVariant,\n        title,\n        subtitle,\n        members[]-> {\n          _id,\n          name,\n          role,\n          bio,\n          photo { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },\n          socialMedia\n        }\n      },\n      _type == "sectionFaq" => {\n        anchor,\n        colorVariant,\n        title,\n        subtitle,\n        items[] {\n          question,\n          answer\n        }\n      },\n      _type == "sectionProcess" => {\n        _type,\n        anchor,\n        colorVariant,\n        title,\n        subtitle,\n        layout,\n        steps[] {\n          icon,\n          title,\n          description\n        }\n      },\n      _type == "sectionBadges" => {\n        anchor,\n        colorVariant,\n        label,\n        badges[] {\n          logo { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },\n          alt,\n          url,\n          label\n        }\n      },\n      _type == "sectionTextVideo" => {\n        anchor,\n        colorVariant,\n        title,\n        body,\n        videoUrl,\n        mediaPosition,\n        caption,\n        cta\n      }\n    }\n  }\n': PageQueryResult
   }
 }

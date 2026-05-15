@@ -1,11 +1,14 @@
 import { defineQuery } from 'next-sanity'
 
+const imageProjection = `{ alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } }`
+const logoProjection = `{ asset-> { _id, url, metadata { dimensions } } }`
+
 export const siteSettingsQuery = defineQuery(`
   *[_type == "siteSettings"][0] {
     businessName,
     tagline,
-    logoLight { alt, asset-> { _id, url, metadata { dimensions } } },
-    logoDark { alt, asset-> { _id, url, metadata { dimensions } } },
+    logoLight ${logoProjection},
+    logoDark ${logoProjection},
     email,
     phone,
     address,
@@ -32,8 +35,8 @@ export const footerQuery = defineQuery(`
   *[_type == "siteSettings"][0] {
     businessName,
     tagline,
-    logoLight { alt, asset-> { _id, url, metadata { dimensions } } },
-    logoDark { alt, asset-> { _id, url, metadata { dimensions } } },
+    logoLight ${logoProjection},
+    logoDark ${logoProjection},
     email,
     phone,
     address,
@@ -54,7 +57,7 @@ export const allServicesQuery = defineQuery(`
     slug,
     description,
     icon,
-    image { ..., asset-> }
+    image ${imageProjection}
   }
 `)
 
@@ -66,7 +69,7 @@ export const allTestimonialsQuery = defineQuery(`
     company,
     content,
     rating,
-    photo { ..., asset-> },
+    photo ${imageProjection},
     publishedAt
   }
 `)
@@ -77,7 +80,7 @@ export const allPersonsQuery = defineQuery(`
     name,
     role,
     bio,
-    photo { ..., asset-> },
+    photo ${imageProjection},
     socialMedia
   }
 `)
@@ -88,7 +91,7 @@ export const personQuery = defineQuery(`
     name,
     role,
     bio,
-    photo { ..., asset-> },
+    photo ${imageProjection},
     socialMedia
   }
 `)
@@ -99,11 +102,11 @@ export const allPostsQuery = defineQuery(`
     title,
     slug,
     excerpt,
-    mainImage { ..., asset-> },
+    mainImage ${imageProjection},
     "author": author-> {
       name,
       role,
-      photo { ..., asset-> }
+      photo ${imageProjection}
     },
     "categories": categories[]-> { title, slug },
     publishedAt
@@ -116,13 +119,13 @@ export const postBySlugQuery = defineQuery(`
     title,
     slug,
     excerpt,
-    mainImage { ..., asset-> },
+    mainImage ${imageProjection},
     body,
     "author": author-> {
       name,
       role,
       bio,
-      photo { ..., asset-> },
+      photo ${imageProjection},
       socialMedia
     },
     "categories": categories[]-> { _id, title, slug },
@@ -130,7 +133,7 @@ export const postBySlugQuery = defineQuery(`
     seo {
       metaTitle,
       metaDescription,
-      ogImage { ..., asset-> }
+      ogImage ${imageProjection}
     },
     cta { heading, text, buttonLabel, buttonUrl }
   }
@@ -146,11 +149,11 @@ export const postsByCategoryQuery = defineQuery(`
     title,
     slug,
     excerpt,
-    mainImage { ..., asset-> },
+    mainImage ${imageProjection},
     "author": author-> {
       name,
       role,
-      photo { ..., asset-> }
+      photo ${imageProjection}
     },
     "categories": categories[]-> { title, slug },
     publishedAt
@@ -172,7 +175,7 @@ export const relatedPostsQuery = defineQuery(`
     title,
     "slug": slug.current,
     excerpt,
-    mainImage { ..., asset-> },
+    mainImage ${imageProjection},
     publishedAt,
     "categories": categories[]-> { title, "slug": slug.current }
   }
@@ -184,7 +187,7 @@ export const latestPostsQuery = defineQuery(`
     title,
     "slug": slug.current,
     excerpt,
-    mainImage { ..., asset-> },
+    mainImage ${imageProjection},
     publishedAt,
     "categories": categories[]-> { title, "slug": slug.current }
   }
@@ -197,7 +200,7 @@ export const blogListingQuery = defineQuery(`
       title,
       "slug": slug.current,
       excerpt,
-      mainImage { ..., asset-> },
+      mainImage ${imageProjection},
       publishedAt,
       "categories": categories[]-> { title, "slug": slug.current }
     },
@@ -245,17 +248,17 @@ export const pageQuery = defineQuery(`
         subheading,
         primaryCta,
         secondaryCta,
-        backgroundImage { ..., asset-> },
+        backgroundImage ${imageProjection},
         mediaType,
         videoUrl,
-        videoPoster { asset, crop }
+        videoPoster ${imageProjection}
       },
       _type == "sectionTextImage" => {
         anchor,
         colorVariant,
         heading,
         body,
-        image { ..., asset-> },
+        image ${imageProjection},
         mediaPosition,
         cta
       },
@@ -266,7 +269,7 @@ export const pageQuery = defineQuery(`
         subheading,
         services[]-> {
           _id, title, description, icon,
-          image { ..., asset-> }
+          image ${imageProjection}
         }
       },
       _type == "sectionPricing" => {
@@ -288,7 +291,7 @@ export const pageQuery = defineQuery(`
         heading,
         testimonials[]-> {
           _id, authorName, position, company, content, rating,
-          photo { ..., asset-> }
+          photo ${imageProjection}
         }
       },
       _type == "sectionStats" => {
@@ -302,7 +305,7 @@ export const pageQuery = defineQuery(`
         colorVariant,
         heading,
         layout,
-        images[] { ..., asset-> }
+        images[] ${imageProjection}
       },
       _type == "sectionBlogPreview" => {
         _type,
@@ -314,11 +317,15 @@ export const pageQuery = defineQuery(`
         showViewAll,
         "posts": select(
           mode == "manual" => posts[]->{
-            _id, title, slug, excerpt, mainImage, publishedAt,
+            _id, title, slug, excerpt,
+            mainImage ${imageProjection},
+            publishedAt,
             "categories": categories[]->{title}
           },
           *[_type == "post"] | order(publishedAt desc) [0..2] {
-            _id, title, slug, excerpt, mainImage, publishedAt,
+            _id, title, slug, excerpt,
+            mainImage ${imageProjection},
+            publishedAt,
             "categories": categories[]->{title}
           }
         )
@@ -348,7 +355,7 @@ export const pageQuery = defineQuery(`
           name,
           role,
           bio,
-          photo { asset->, hotspot, crop },
+          photo ${imageProjection},
           socialMedia
         }
       },
@@ -380,7 +387,7 @@ export const pageQuery = defineQuery(`
         colorVariant,
         label,
         badges[] {
-          logo { asset, crop },
+          logo ${imageProjection},
           alt,
           url,
           label
