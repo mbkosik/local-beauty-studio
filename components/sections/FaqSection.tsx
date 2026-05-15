@@ -48,6 +48,7 @@ const faqPortableTextComponents: PortableTextComponents = {
         className="text-primary hover:text-primary/80 underline underline-offset-4 transition-colors"
       >
         {children}
+        <span className="sr-only"> (otwiera nową kartę)</span>
       </a>
     ),
   },

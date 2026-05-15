@@ -36,6 +36,7 @@ export function GridGallery({ images, prefersReducedMotion }: GridGalleryProps) 
         >
           <SanityImage
             image={image as SanityImageData}
+            alt={image.alt ?? ''}
             fill
             width={600}
             height={600}

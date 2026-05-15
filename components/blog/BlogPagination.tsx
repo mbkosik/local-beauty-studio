@@ -57,6 +57,7 @@ export function BlogPagination({ currentPage, totalPages, category }: BlogPagina
           <PaginationPrevious
             href={buildHref(currentPage - 1, category)}
             aria-disabled={currentPage === 1}
+            aria-label="Przejdź do poprzedniej strony"
             className={currentPage === 1 ? 'pointer-events-none opacity-50' : ''}
             text="Poprzednia"
           />
@@ -80,6 +81,7 @@ export function BlogPagination({ currentPage, totalPages, category }: BlogPagina
           <PaginationNext
             href={buildHref(currentPage + 1, category)}
             aria-disabled={currentPage === totalPages}
+            aria-label="Przejdź do następnej strony"
             className={currentPage === totalPages ? 'pointer-events-none opacity-50' : ''}
             text="Następna"
           />

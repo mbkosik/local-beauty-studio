@@ -1,4 +1,5 @@
 import Image, { type ImageProps } from 'next/image'
+import { type SanityImageSource } from '@sanity/image-url'
 import { urlFor } from '@/sanity/image'
 
 export type SanityImageData = {
@@ -35,23 +36,30 @@ interface SanityImageProps extends Omit<ImageProps, 'src' | 'alt'> {
 export function SanityImage({ image, alt, width, height, ...props }: SanityImageProps) {
   if (!image?.asset) return null
 
-  // urlFor handles both _ref (reference) and _id (dereferenced) asset formats
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const src = urlFor(image as any)
+  // Pass full image object so the builder reads hotspot + crop automatically
+  const src = urlFor(image as SanityImageSource)
     .width(width)
     .height(height)
     .fit('crop')
     .auto('format')
     .url()
+  const lqip = image.asset.metadata?.lqip
+  const blurProps = lqip ? { placeholder: 'blur' as const, blurDataURL: lqip } : {}
 
   const { fill, ...restProps } = props
 
-  // fill mode: width/height are used only for the CDN URL, not passed to <Image>
   if (fill) {
-    return <Image src={src} alt={alt ?? image.alt ?? ''} fill {...restProps} />
+    return <Image src={src} alt={alt ?? image.alt ?? ''} fill {...blurProps} {...restProps} />
   }
 
   return (
-    <Image src={src} alt={alt ?? image.alt ?? ''} width={width} height={height} {...restProps} />
+    <Image
+      src={src}
+      alt={alt ?? image.alt ?? ''}
+      width={width}
+      height={height}
+      {...blurProps}
+      {...restProps}
+    />
   )
 }

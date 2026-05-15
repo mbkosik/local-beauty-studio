@@ -6,6 +6,7 @@ import { client } from '@/sanity/client'
 import { siteSettingsQuery } from '@/sanity/queries'
 import { Toaster } from '@/components/ui/sonner'
 import { ScrollToTop } from '@/components/shared/ScrollToTop'
+import { buildOgImageUrl } from '@/lib/metadata'
 
 const playfairDisplay = Playfair_Display({
   variable: '--font-heading',
@@ -26,6 +27,8 @@ export async function generateMetadata(): Promise<Metadata> {
   const title = settings?.seo?.metaTitle ?? siteName
   const description = settings?.seo?.metaDescription ?? ''
 
+  const ogImageUrl = buildOgImageUrl(settings?.seo?.ogImage)
+
   return {
     title: {
       default: title,
@@ -37,6 +40,17 @@ export async function generateMetadata(): Promise<Metadata> {
       type: 'website',
       locale: 'pl_PL',
       siteName,
+      title,
+      description,
+      ...(ogImageUrl && {
+        images: [{ url: ogImageUrl, width: 1200, height: 630, alt: siteName }],
+      }),
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      ...(ogImageUrl && { images: [ogImageUrl] }),
     },
     robots: { index: true, follow: true },
   }
@@ -52,6 +66,7 @@ export default function RootLayout({
     <html
       lang="pl"
       className={`${playfairDisplay.variable} ${lato.variable} h-full antialiased`}
+      data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
       <body className="flex min-h-full flex-col">

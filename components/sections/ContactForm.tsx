@@ -154,7 +154,7 @@ export function ContactForm({ businessName, email, phone, address, body }: Conta
                 <FormItem>
                   <FormLabel>Imię i nazwisko</FormLabel>
                   <FormControl>
-                    <Input placeholder="Anna Kowalska" autoComplete="name" {...field} />
+                    <Input placeholder="Anna Kowalska" autoComplete="name" required {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -172,6 +172,7 @@ export function ContactForm({ businessName, email, phone, address, body }: Conta
                       type="email"
                       placeholder="anna@example.pl"
                       autoComplete="email"
+                      required
                       {...field}
                     />
                   </FormControl>
@@ -203,7 +204,7 @@ export function ContactForm({ businessName, email, phone, address, body }: Conta
                 <FormItem>
                   <FormLabel>Wiadomość</FormLabel>
                   <FormControl>
-                    <Textarea placeholder="W czym możemy Ci pomóc?" rows={5} {...field} />
+                    <Textarea placeholder="W czym możemy Ci pomóc?" rows={5} required {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

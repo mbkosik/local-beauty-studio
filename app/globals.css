@@ -138,8 +138,10 @@
   --sidebar-ring: #c9a0a0;
 }
 
-html {
-  scroll-behavior: smooth;
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 section[id] {

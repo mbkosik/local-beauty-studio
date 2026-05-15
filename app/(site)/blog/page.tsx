@@ -1,9 +1,38 @@
+import type { Metadata } from 'next'
 import { client } from '@/sanity/client'
-import { blogListingQuery, blogCategoriesQuery } from '@/sanity/queries'
+import { blogListingQuery, blogCategoriesQuery, siteSettingsQuery } from '@/sanity/queries'
+import { buildOgImageUrl } from '@/lib/metadata'
 import { AnimatedSection } from '@/components/shared/AnimatedSection'
 import { PostCard } from '@/components/blog/PostCard'
 import { CategoryFilter } from '@/components/blog/CategoryFilter'
 import { BlogPagination } from '@/components/blog/BlogPagination'
+
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await client.fetch(siteSettingsQuery, {}, { next: { tags: ['settings'] } })
+  const ogImageUrl = buildOgImageUrl(settings?.seo?.ogImage)
+  const siteName = settings?.businessName ?? 'Beauty Studio'
+  const title = 'Blog'
+  const description = `Porady, inspiracje i aktualności ze świata urody — ${siteName}`
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: 'website',
+      ...(ogImageUrl && {
+        images: [{ url: ogImageUrl, width: 1200, height: 630, alt: title }],
+      }),
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      ...(ogImageUrl && { images: [ogImageUrl] }),
+    },
+  }
+}
 
 const POSTS_PER_PAGE = 9
 
@@ -53,6 +82,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
           </AnimatedSection>
         ) : (
           <>
+            <h2 className="sr-only">Lista wpisów</h2>
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:gap-8 lg:grid-cols-3">
               {posts.map((post, index) => (
                 <AnimatedSection key={post._id} delay={0.1 + index * 0.05}>

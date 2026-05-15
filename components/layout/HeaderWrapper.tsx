@@ -39,6 +39,8 @@ export function HeaderWrapper({ businessName, logoLight, logoDark, navLinks }: H
                 alt={businessName ?? 'Logo'}
                 width={160}
                 height={40}
+                loading="eager"
+                fetchPriority="high"
                 className="block dark:hidden"
               />
               <SanityImage
@@ -46,6 +48,8 @@ export function HeaderWrapper({ businessName, logoLight, logoDark, navLinks }: H
                 alt={businessName ?? 'Logo'}
                 width={160}
                 height={40}
+                loading="eager"
+                fetchPriority="high"
                 className="hidden dark:block"
               />
             </>
@@ -63,6 +67,7 @@ export function HeaderWrapper({ businessName, logoLight, logoDark, navLinks }: H
               href={link.href ?? '#'}
               target={link.openInNewTab ? '_blank' : undefined}
               rel={link.openInNewTab ? 'noopener noreferrer' : undefined}
+              aria-current={pathname === link.href ? 'page' : undefined}
               className={cn(
                 'hover:text-foreground text-sm transition-colors',
                 pathname === link.href ? 'text-foreground font-semibold' : 'text-muted-foreground'

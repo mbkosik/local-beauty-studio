@@ -1,10 +1,10 @@
 'use client'
 
+import { useState } from 'react'
 import Link from 'next/link'
 import { motion, useReducedMotion } from 'motion/react'
 import { Button } from '@/components/ui/button'
 import { SanityImage, type SanityImageData } from '@/components/shared/SanityImage'
-import { urlFor } from '@/sanity/image'
 import { cn } from '@/lib/utils'
 import type { SectionHero } from '@/sanity.types'
 
@@ -28,13 +28,7 @@ export function HeroSection({ data, id }: HeroSectionProps) {
   const isVideo = mediaType === 'video' && !!videoUrl
   const hasImage = !isVideo && !!backgroundImage?.asset
   const hasMedia = isVideo || hasImage
-
-  const posterUrl = videoPoster?.asset
-    ? urlFor(videoPoster as Parameters<typeof urlFor>[0])
-        .width(1920)
-        .fit('crop')
-        .url()
-    : undefined
+  const [posterVisible, setPosterVisible] = useState(true)
 
   const fadeUp = (delay = 0) => ({
     initial: reducedMotion ? (false as const) : { opacity: 0, y: 32 },
@@ -53,24 +47,42 @@ export function HeroSection({ data, id }: HeroSectionProps) {
         <>
           <div aria-hidden="true" className="absolute inset-0">
             {isVideo ? (
-              <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                poster={posterUrl}
-                className="absolute inset-0 h-full w-full object-cover"
-              >
-                <source src={videoUrl} type="video/mp4" />
-              </video>
+              <>
+                {videoPoster?.asset && posterVisible && (
+                  <SanityImage
+                    image={videoPoster as unknown as SanityImageData}
+                    alt=""
+                    fill
+                    sizes="100vw"
+                    className="object-cover"
+                    loading="eager"
+                    fetchPriority="high"
+                    width={1920}
+                    height={1080}
+                  />
+                )}
+                <video
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  onCanPlay={() => setPosterVisible(false)}
+                  className="absolute inset-0 h-full w-full object-cover"
+                >
+                  <source src={videoUrl} type="video/mp4" />
+                </video>
+              </>
             ) : (
               <SanityImage
                 image={backgroundImage as unknown as SanityImageData}
                 alt=""
+                fill
+                sizes="100vw"
+                className="object-cover"
+                loading="eager"
+                fetchPriority="high"
                 width={1920}
                 height={1080}
-                fill
-                className="object-cover"
               />
             )}
           </div>

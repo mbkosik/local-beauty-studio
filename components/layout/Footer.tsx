@@ -83,6 +83,7 @@ export async function Footer() {
                 href={googleMapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label={`Otwórz adres w Google Maps (otwiera nową kartę)`}
                 className="text-muted-foreground hover:text-foreground flex items-start gap-2 text-sm transition-colors"
               >
                 <MapPin size={15} className="mt-0.5 shrink-0" aria-hidden="true" />
@@ -126,8 +127,8 @@ export async function Footer() {
                   href={social.facebook}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label="Facebook"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
+                  aria-label="Facebook (otwiera nową kartę)"
+                  className="text-muted-foreground hover:text-foreground p-1.5 transition-colors"
                 >
                   <FacebookIcon size={20} />
                 </a>
@@ -137,8 +138,8 @@ export async function Footer() {
                   href={social.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label="Instagram"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
+                  aria-label="Instagram (otwiera nową kartę)"
+                  className="text-muted-foreground hover:text-foreground p-1.5 transition-colors"
                 >
                   <InstagramIcon size={20} />
                 </a>
@@ -148,8 +149,8 @@ export async function Footer() {
                   href={social.tiktok}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label="TikTok"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
+                  aria-label="TikTok (otwiera nową kartę)"
+                  className="text-muted-foreground hover:text-foreground p-1.5 transition-colors"
                 >
                   <TikTokIcon size={20} />
                 </a>
