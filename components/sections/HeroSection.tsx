@@ -55,7 +55,8 @@ export function HeroSection({ data, id }: HeroSectionProps) {
                     fill
                     sizes="100vw"
                     className="object-cover"
-                    priority
+                    loading="eager"
+                    fetchPriority="high"
                     width={1920}
                     height={1080}
                   />
@@ -78,7 +79,8 @@ export function HeroSection({ data, id }: HeroSectionProps) {
                 fill
                 sizes="100vw"
                 className="object-cover"
-                priority
+                loading="eager"
+                fetchPriority="high"
                 width={1920}
                 height={1080}
               />
