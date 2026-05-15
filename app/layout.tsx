@@ -66,6 +66,7 @@ export default function RootLayout({
     <html
       lang="pl"
       className={`${playfairDisplay.variable} ${lato.variable} h-full antialiased`}
+      data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
       <body className="flex min-h-full flex-col">
