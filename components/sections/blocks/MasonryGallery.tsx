@@ -33,7 +33,7 @@ export function MasonryGallery({ images, prefersReducedMotion }: MasonryGalleryP
     <div className={`gap-3 md:gap-4 ${getMasonryColumns(images.length)}`}>
       {images.map((image, index) => (
         <motion.div
-          key={image._key}
+          key={image._key ?? index}
           variants={prefersReducedMotion ? {} : TILE_VARIANTS}
           initial="hidden"
           whileInView="visible"
