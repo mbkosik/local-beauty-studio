@@ -34,6 +34,7 @@ export function TextImageSection({ data, id }: TextImageSectionProps) {
           <div className="relative aspect-4/3 w-full overflow-hidden">
             <SanityImage
               image={image as SanityImageData}
+              alt={heading ?? ''}
               fill
               width={800}
               height={600}

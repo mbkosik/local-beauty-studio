@@ -42,6 +42,7 @@ export function MasonryGallery({ images, prefersReducedMotion }: MasonryGalleryP
         >
           <SanityImage
             image={image as SanityImageData}
+            alt={image.alt ?? ''}
             fill
             width={600}
             height={750}

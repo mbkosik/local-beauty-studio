@@ -66,6 +66,7 @@ export function ServicesSection({ data, id }: ServicesSectionProps) {
                         <div className="relative aspect-4/3">
                           <SanityImage
                             image={service.image as SanityImageData}
+                            alt={service.title ?? ''}
                             fill
                             width={600}
                             height={450}
