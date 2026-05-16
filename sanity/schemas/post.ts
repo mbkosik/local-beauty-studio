@@ -1,4 +1,5 @@
 import { defineArrayMember, defineField, defineType } from 'sanity'
+import { isValidLinkHref } from './validations/linkValidation'
 
 export const post = defineType({
   name: 'post',
@@ -70,7 +71,7 @@ export const post = defineType({
                     name: 'href',
                     title: 'URL',
                     type: 'url',
-                    validation: (Rule) => Rule.uri({ scheme: ['http', 'https', 'mailto', 'tel'] }),
+                    validation: (Rule) => Rule.custom(isValidLinkHref),
                   }),
                   defineField({
                     name: 'blank',
