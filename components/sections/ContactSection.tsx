@@ -36,6 +36,7 @@ export async function ContactSection({ data }: ContactSectionProps) {
           phone={settings?.phone ?? undefined}
           address={settings?.address ?? undefined}
           body={data.body ?? undefined}
+          privacyNotice={data.privacyNotice ?? undefined}
         />
       </div>
     </section>

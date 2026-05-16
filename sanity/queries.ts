@@ -344,7 +344,8 @@ export const pageQuery = defineQuery(`
         colorVariant,
         heading,
         subheading,
-        body
+        body,
+        privacyNotice
       },
       _type == "sectionTeam" => {
         anchor,

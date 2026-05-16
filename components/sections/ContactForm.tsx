@@ -27,6 +27,27 @@ import {
 } from '@/components/ui/form'
 
 type BodyBlock = NonNullable<SectionContact['body']>[number]
+type PrivacyNoticeBlock = NonNullable<SectionContact['privacyNotice']>[number]
+
+const privacyNoticeComponents: PortableTextComponents = {
+  block: {
+    normal: ({ children }) => <p className="mb-1 last:mb-0">{children}</p>,
+  },
+  marks: {
+    strong: ({ children }) => <strong className="font-semibold">{children}</strong>,
+    em: ({ children }) => <em className="italic">{children}</em>,
+    link: ({ value, children }) => (
+      <a
+        href={(value?.href as string) ?? '#'}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="hover:text-foreground underline underline-offset-4"
+      >
+        {children}
+      </a>
+    ),
+  },
+}
 
 const sidebarComponents: PortableTextComponents = {
   block: {
@@ -59,9 +80,17 @@ interface ContactFormProps {
   phone?: string
   address?: string
   body?: BodyBlock[]
+  privacyNotice?: PrivacyNoticeBlock[]
 }
 
-export function ContactForm({ businessName, email, phone, address, body }: ContactFormProps) {
+export function ContactForm({
+  businessName,
+  email,
+  phone,
+  address,
+  body,
+  privacyNotice,
+}: ContactFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [resetCount, setResetCount] = useState(0)
 
@@ -210,6 +239,12 @@ export function ContactForm({ businessName, email, phone, address, body }: Conta
                 </FormItem>
               )}
             />
+
+            {privacyNotice && privacyNotice.length > 0 && (
+              <div className="text-muted-foreground text-sm">
+                <PortableText value={privacyNotice} components={privacyNoticeComponents} />
+              </div>
+            )}
 
             <Button type="submit" className="w-full" disabled={isSubmitting}>
               {isSubmitting ? 'Wysyłanie...' : 'Wyślij wiadomość'}
