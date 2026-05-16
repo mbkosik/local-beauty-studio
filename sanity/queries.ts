@@ -46,7 +46,8 @@ export const footerQuery = defineQuery(`
       instagram,
       tiktok
     },
-    openingHours[] { days, hours }
+    openingHours[] { days, hours },
+    footerLinks[] { label, url }
   }
 `)
 

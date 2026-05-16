@@ -31,7 +31,7 @@ export function BadgesSection({ data }: BadgesSectionProps) {
                   href={badge.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={badge.alt || badge.label || 'Odznaka'}
+                  aria-label={`${badge.alt || badge.label || 'Odznaka'} (otwiera nową kartę)`}
                   className="opacity-60 grayscale transition-opacity duration-300 hover:opacity-100 hover:grayscale-0"
                 >
                   <SanityImage

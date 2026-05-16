@@ -88,6 +88,7 @@ export function MobileMenu({ navLinks }: MobileMenuProps) {
                       )}
                     >
                       {link.label}
+                      {link.openInNewTab && <span className="sr-only"> (otwiera nową kartę)</span>}
                     </Link>
                   ))}
                 </nav>

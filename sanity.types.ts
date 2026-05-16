@@ -718,6 +718,12 @@ export type SiteSettings = {
       _key: string
     } & NavLink
   >
+  footerLinks?: Array<{
+    label?: string
+    url?: string
+    _type: 'footerLink'
+    _key: string
+  }>
   seo?: {
     metaTitle?: string
     metaDescription?: string
@@ -965,7 +971,7 @@ export type SiteSettingsQueryResult = {
 
 // Source: sanity/queries.ts
 // Variable: footerQuery
-// Query: *[_type == "siteSettings"][0] {    businessName,    tagline,    logoLight { asset-> { _id, url, metadata { dimensions } } },    logoDark { asset-> { _id, url, metadata { dimensions } } },    email,    phone,    address,    googleMapsUrl,    social {      facebook,      instagram,      tiktok    },    openingHours[] { days, hours }  }
+// Query: *[_type == "siteSettings"][0] {    businessName,    tagline,    logoLight { asset-> { _id, url, metadata { dimensions } } },    logoDark { asset-> { _id, url, metadata { dimensions } } },    email,    phone,    address,    googleMapsUrl,    social {      facebook,      instagram,      tiktok    },    openingHours[] { days, hours },    footerLinks[] { label, url }  }
 export type FooterQueryResult = {
   businessName: string | null
   tagline: string | null
@@ -999,6 +1005,10 @@ export type FooterQueryResult = {
   openingHours: Array<{
     days: string | null
     hours: string | null
+  }> | null
+  footerLinks: Array<{
+    label: string | null
+    url: string | null
   }> | null
 } | null
 
@@ -1962,7 +1972,7 @@ import '@sanity/client'
 declare module '@sanity/client' {
   interface SanityQueries {
     '\n  *[_type == "siteSettings"][0] {\n    businessName,\n    tagline,\n    logoLight { asset-> { _id, url, metadata { dimensions } } },\n    logoDark { asset-> { _id, url, metadata { dimensions } } },\n    email,\n    phone,\n    address,\n    googleMapsUrl,\n    social {\n      facebook,\n      instagram,\n      tiktok\n    },\n    "navLinks": navLinks[] {\n      label,\n      href,\n      openInNewTab\n    },\n    seo {\n      metaTitle,\n      metaDescription,\n      ogImage { ..., asset-> }\n    }\n  }\n': SiteSettingsQueryResult
-    '\n  *[_type == "siteSettings"][0] {\n    businessName,\n    tagline,\n    logoLight { asset-> { _id, url, metadata { dimensions } } },\n    logoDark { asset-> { _id, url, metadata { dimensions } } },\n    email,\n    phone,\n    address,\n    googleMapsUrl,\n    social {\n      facebook,\n      instagram,\n      tiktok\n    },\n    openingHours[] { days, hours }\n  }\n': FooterQueryResult
+    '\n  *[_type == "siteSettings"][0] {\n    businessName,\n    tagline,\n    logoLight { asset-> { _id, url, metadata { dimensions } } },\n    logoDark { asset-> { _id, url, metadata { dimensions } } },\n    email,\n    phone,\n    address,\n    googleMapsUrl,\n    social {\n      facebook,\n      instagram,\n      tiktok\n    },\n    openingHours[] { days, hours },\n    footerLinks[] { label, url }\n  }\n': FooterQueryResult
     '\n  *[_type == "service"] | order(_createdAt asc) {\n    _id,\n    title,\n    slug,\n    description,\n    icon,\n    image { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } }\n  }\n': AllServicesQueryResult
     '\n  *[_type == "testimonial"] | order(_createdAt asc) {\n    _id,\n    authorName,\n    position,\n    company,\n    content,\n    rating,\n    photo { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },\n    publishedAt\n  }\n': AllTestimonialsQueryResult
     '\n  *[_type == "person"] | order(name asc) {\n    _id,\n    name,\n    role,\n    bio,\n    photo { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },\n    socialMedia\n  }\n': AllPersonsQueryResult
