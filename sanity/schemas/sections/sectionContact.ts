@@ -58,20 +58,26 @@ export const sectionContact = defineType({
               { title: 'Kursywa', value: 'em' },
             ],
             annotations: [
-              {
+              defineField({
                 name: 'link',
                 type: 'object',
                 title: 'Link',
                 fields: [
-                  { name: 'href', type: 'url', title: 'URL' },
-                  {
+                  defineField({
+                    name: 'href',
+                    type: 'url',
+                    title: 'URL',
+                    validation: (Rule) =>
+                      Rule.uri({ scheme: ['http', 'https', 'mailto', 'tel'], allowRelative: true }),
+                  }),
+                  defineField({
                     name: 'blank',
                     type: 'boolean',
                     title: 'Otwórz w nowej karcie',
                     initialValue: false,
-                  },
+                  }),
                 ],
-              },
+              }),
             ],
           },
         },
@@ -104,16 +110,22 @@ export const sectionContact = defineType({
                     type: 'string',
                     title: 'URL',
                     description:
-                      'Pełny URL (https://...) lub ścieżka względna (/polityka-prywatnosci)',
+                      'Pełny URL (https://...), ścieżka względna (/polityka-prywatnosci), tel:+48123456789 lub mailto:info@salon.pl',
                     validation: (Rule) =>
                       Rule.custom((value: string | undefined) => {
                         if (!value) return 'URL jest wymagany'
-                        if (value.startsWith('/') || value.startsWith('#')) return true
+                        if (
+                          value.startsWith('/') ||
+                          value.startsWith('#') ||
+                          value.startsWith('tel:') ||
+                          value.startsWith('mailto:')
+                        )
+                          return true
                         try {
                           new URL(value)
                           return true
                         } catch {
-                          return 'Wpisz pełny URL (https://...) lub ścieżkę względną (/strona)'
+                          return 'Wpisz pełny URL (https://...), ścieżkę względną (/strona), tel:... lub mailto:...'
                         }
                       }),
                   },

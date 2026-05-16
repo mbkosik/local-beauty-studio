@@ -39,17 +39,21 @@ const faqPortableTextComponents: PortableTextComponents = {
   marks: {
     strong: ({ children }) => <strong className="text-foreground font-semibold">{children}</strong>,
     em: ({ children }) => <em className="italic">{children}</em>,
-    link: ({ children, value }) => (
-      <a
-        href={value?.href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="text-primary hover:text-primary/80 underline underline-offset-4 transition-colors"
-      >
-        {children}
-        <span className="sr-only"> (otwiera nową kartę)</span>
-      </a>
-    ),
+    link: ({ children, value }) => {
+      const href = value?.href ?? '#'
+      const isTelOrMailto = href.startsWith('tel:') || href.startsWith('mailto:')
+      const isExternal = !isTelOrMailto && (value?.blank === true || href.startsWith('http'))
+      return (
+        <a
+          href={href}
+          className="text-primary hover:text-primary/80 underline underline-offset-4 transition-colors"
+          {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+        >
+          {children}
+          {isExternal && <span className="sr-only"> (otwiera nową kartę)</span>}
+        </a>
+      )
+    },
   },
 }
 

@@ -349,6 +349,13 @@
                           },
                           "optional": true
                         },
+                        "blank": {
+                          "type": "objectAttribute",
+                          "value": {
+                            "type": "boolean"
+                          },
+                          "optional": true
+                        },
                         "_type": {
                           "type": "objectAttribute",
                           "value": {
@@ -574,6 +581,13 @@
                           "type": "objectAttribute",
                           "value": {
                             "type": "string"
+                          },
+                          "optional": true
+                        },
+                        "blank": {
+                          "type": "objectAttribute",
+                          "value": {
+                            "type": "boolean"
                           },
                           "optional": true
                         },
@@ -1074,6 +1088,13 @@
                                   "type": "objectAttribute",
                                   "value": {
                                     "type": "string"
+                                  },
+                                  "optional": true
+                                },
+                                "blank": {
+                                  "type": "objectAttribute",
+                                  "value": {
+                                    "type": "boolean"
                                   },
                                   "optional": true
                                 },

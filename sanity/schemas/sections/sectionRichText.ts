@@ -61,19 +61,26 @@ export const sectionRichText = defineType({
               { title: 'Italic', value: 'em' },
             ],
             annotations: [
-              {
+              defineField({
                 name: 'link',
                 type: 'object',
                 title: 'Link',
                 fields: [
-                  {
+                  defineField({
                     name: 'href',
                     type: 'url',
                     title: 'URL',
-                    validation: (Rule) => Rule.uri({ allowRelative: true }),
-                  },
+                    validation: (Rule) =>
+                      Rule.uri({ scheme: ['http', 'https', 'mailto', 'tel'], allowRelative: true }),
+                  }),
+                  defineField({
+                    name: 'blank',
+                    type: 'boolean',
+                    title: 'Otwórz w nowej karcie',
+                    initialValue: false,
+                  }),
                 ],
-              },
+              }),
             ],
           },
         },

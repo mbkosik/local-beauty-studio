@@ -75,6 +75,7 @@ export type SectionRichText = {
     listItem?: 'bullet' | 'number'
     markDefs?: Array<{
       href?: string
+      blank?: boolean
       _type: 'link'
       _key: string
     }>
@@ -101,6 +102,7 @@ export type SectionTextVideo = {
     listItem?: 'bullet' | 'number'
     markDefs?: Array<{
       href?: string
+      blank?: boolean
       _type: 'link'
       _key: string
     }>
@@ -162,6 +164,7 @@ export type SectionFaq = {
       listItem?: 'bullet' | 'number'
       markDefs?: Array<{
         href?: string
+        blank?: boolean
         _type: 'link'
         _key: string
       }>
@@ -1681,6 +1684,7 @@ export type PageQueryResult = {
             listItem?: 'bullet' | 'number'
             markDefs?: Array<{
               href?: string
+              blank?: boolean
               _type: 'link'
               _key: string
             }>
@@ -1806,6 +1810,7 @@ export type PageQueryResult = {
           listItem?: 'bullet' | 'number'
           markDefs?: Array<{
             href?: string
+            blank?: boolean
             _type: 'link'
             _key: string
           }>
@@ -1988,6 +1993,7 @@ export type PageQueryResult = {
           listItem?: 'bullet' | 'number'
           markDefs?: Array<{
             href?: string
+            blank?: boolean
             _type: 'link'
             _key: string
           }>
