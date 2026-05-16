@@ -98,7 +98,26 @@ export const sectionContact = defineType({
                 name: 'link',
                 type: 'object',
                 title: 'Link',
-                fields: [{ name: 'href', type: 'url', title: 'URL' }],
+                fields: [
+                  {
+                    name: 'href',
+                    type: 'string',
+                    title: 'URL',
+                    description:
+                      'Pełny URL (https://...) lub ścieżka względna (/polityka-prywatnosci)',
+                    validation: (Rule) =>
+                      Rule.custom((value: string | undefined) => {
+                        if (!value) return 'URL jest wymagany'
+                        if (value.startsWith('/') || value.startsWith('#')) return true
+                        try {
+                          new URL(value)
+                          return true
+                        } catch {
+                          return 'Wpisz pełny URL (https://...) lub ścieżkę względną (/strona)'
+                        }
+                      }),
+                  },
+                ],
               },
             ],
           },
