@@ -1,5 +1,6 @@
 import { defineField, defineType } from 'sanity'
 import { colorVariantField } from '../fields/colorVariantField'
+import { isValidLinkHref } from '../validations/linkValidation'
 
 export const sectionTextVideo = defineType({
   name: 'sectionTextVideo',
@@ -58,12 +59,25 @@ export const sectionTextVideo = defineType({
               { title: 'Italic', value: 'em' },
             ],
             annotations: [
-              {
+              defineField({
                 name: 'link',
                 type: 'object',
                 title: 'Link',
-                fields: [{ name: 'href', type: 'url', title: 'URL' }],
-              },
+                fields: [
+                  defineField({
+                    name: 'href',
+                    type: 'string',
+                    title: 'URL',
+                    validation: (Rule) => Rule.custom(isValidLinkHref),
+                  }),
+                  defineField({
+                    name: 'blank',
+                    type: 'boolean',
+                    title: 'Otwórz w nowej karcie',
+                    initialValue: false,
+                  }),
+                ],
+              }),
             ],
           },
         },
@@ -103,8 +117,8 @@ export const sectionTextVideo = defineType({
         defineField({
           name: 'href',
           title: 'Link',
-          type: 'url',
-          validation: (Rule) => Rule.uri({ allowRelative: true }),
+          type: 'string',
+          validation: (Rule) => Rule.custom(isValidLinkHref),
         }),
       ],
     }),

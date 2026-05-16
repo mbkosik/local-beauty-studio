@@ -1,5 +1,6 @@
 import { defineField, defineType } from 'sanity'
 import { colorVariantField } from '../fields/colorVariantField'
+import { isValidLinkHref } from '../validations/linkValidation'
 
 export const sectionContact = defineType({
   name: 'sectionContact',
@@ -58,20 +59,25 @@ export const sectionContact = defineType({
               { title: 'Kursywa', value: 'em' },
             ],
             annotations: [
-              {
+              defineField({
                 name: 'link',
                 type: 'object',
                 title: 'Link',
                 fields: [
-                  { name: 'href', type: 'url', title: 'URL' },
-                  {
+                  defineField({
+                    name: 'href',
+                    type: 'string',
+                    title: 'URL',
+                    validation: (Rule) => Rule.custom(isValidLinkHref),
+                  }),
+                  defineField({
                     name: 'blank',
                     type: 'boolean',
                     title: 'Otwórz w nowej karcie',
                     initialValue: false,
-                  },
+                  }),
                 ],
-              },
+              }),
             ],
           },
         },
@@ -104,18 +110,8 @@ export const sectionContact = defineType({
                     type: 'string',
                     title: 'URL',
                     description:
-                      'Pełny URL (https://...) lub ścieżka względna (/polityka-prywatnosci)',
-                    validation: (Rule) =>
-                      Rule.custom((value: string | undefined) => {
-                        if (!value) return 'URL jest wymagany'
-                        if (value.startsWith('/') || value.startsWith('#')) return true
-                        try {
-                          new URL(value)
-                          return true
-                        } catch {
-                          return 'Wpisz pełny URL (https://...) lub ścieżkę względną (/strona)'
-                        }
-                      }),
+                      'Pełny URL (https://...), ścieżka względna (/polityka-prywatnosci), tel:+48123456789 lub mailto:info@salon.pl',
+                    validation: (Rule) => Rule.custom(isValidLinkHref),
                   },
                 ],
               },

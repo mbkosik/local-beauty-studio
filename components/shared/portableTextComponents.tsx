@@ -30,6 +30,14 @@ export const portableTextComponents: PortableTextComponents = {
     ),
     link: ({ value, children }) => {
       const href = value?.href ?? '#'
+      const isTelOrMailto = href.startsWith('tel:') || href.startsWith('mailto:')
+      if (isTelOrMailto) {
+        return (
+          <a href={href} className="text-primary underline-offset-4 hover:underline">
+            {children}
+          </a>
+        )
+      }
       const isExternal = value?.blank === true || href.startsWith('http')
       return (
         <Link

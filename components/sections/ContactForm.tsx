@@ -36,16 +36,20 @@ const privacyNoticeComponents: PortableTextComponents = {
   marks: {
     strong: ({ children }) => <strong className="font-semibold">{children}</strong>,
     em: ({ children }) => <em className="italic">{children}</em>,
-    link: ({ value, children }) => (
-      <a
-        href={(value?.href as string) ?? '#'}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="hover:text-foreground underline underline-offset-4"
-      >
-        {children}
-      </a>
-    ),
+    link: ({ value, children }) => {
+      const href = (value?.href as string) ?? '#'
+      const isTelOrMailto = href.startsWith('tel:') || href.startsWith('mailto:')
+      const isExternal = !isTelOrMailto && href.startsWith('http')
+      return (
+        <a
+          href={href}
+          className="hover:text-foreground underline underline-offset-4"
+          {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+        >
+          {children}
+        </a>
+      )
+    },
   },
 }
 
@@ -60,7 +64,9 @@ const sidebarComponents: PortableTextComponents = {
     em: ({ children }) => <em className="italic">{children}</em>,
     link: ({ value, children }) => {
       const href = (value?.href as string) ?? '#'
-      const isExternal = (value?.blank as boolean) === true || href.startsWith('http')
+      const isTelOrMailto = href.startsWith('tel:') || href.startsWith('mailto:')
+      const isExternal =
+        !isTelOrMailto && ((value?.blank as boolean) === true || href.startsWith('http'))
       return (
         <a
           href={href}
@@ -68,6 +74,7 @@ const sidebarComponents: PortableTextComponents = {
           {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
         >
           {children}
+          {isExternal && <span className="sr-only"> (otwiera nową kartę)</span>}
         </a>
       )
     },
