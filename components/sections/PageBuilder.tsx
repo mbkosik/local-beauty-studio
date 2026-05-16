@@ -10,21 +10,27 @@ import type {
   SectionBadges,
   SectionTextVideo,
 } from '@/sanity.types'
+import dynamic from 'next/dynamic'
 import { HeroSection } from './HeroSection'
-import { TextImageSection } from './TextImageSection'
-import { ServicesSection } from './ServicesSection'
-import { PricingSection } from './PricingSection'
-import { TestimonialsSection } from './TestimonialsSection'
-import { StatsSection } from './StatsSection'
-import { GallerySection } from './GallerySection'
-import { BlogPreviewSection } from './BlogPreviewSection'
 import { CtaSection } from './CtaSection'
 import { ContactSection } from './ContactSection'
-import { TeamSection } from './TeamSection'
-import { FaqSection } from './FaqSection'
-import { ProcessSection } from './ProcessSection'
-import { BadgesSection } from './BadgesSection'
-import { TextVideoSection } from './TextVideoSection'
+import { ServicesSection } from './ServicesSection'
+
+const TextImageSection = dynamic(() => import('./TextImageSection').then((m) => m.TextImageSection))
+const PricingSection = dynamic(() => import('./PricingSection').then((m) => m.PricingSection))
+const TestimonialsSection = dynamic(() =>
+  import('./TestimonialsSection').then((m) => m.TestimonialsSection)
+)
+const StatsSection = dynamic(() => import('./StatsSection').then((m) => m.StatsSection))
+const GallerySection = dynamic(() => import('./GallerySection').then((m) => m.GallerySection))
+const BlogPreviewSection = dynamic(() =>
+  import('./BlogPreviewSection').then((m) => m.BlogPreviewSection)
+)
+const TeamSection = dynamic(() => import('./TeamSection').then((m) => m.TeamSection))
+const FaqSection = dynamic(() => import('./FaqSection').then((m) => m.FaqSection))
+const ProcessSection = dynamic(() => import('./ProcessSection').then((m) => m.ProcessSection))
+const BadgesSection = dynamic(() => import('./BadgesSection').then((m) => m.BadgesSection))
+const TextVideoSection = dynamic(() => import('./TextVideoSection').then((m) => m.TextVideoSection))
 import {
   PageBlock,
   ServicesSectionData,
