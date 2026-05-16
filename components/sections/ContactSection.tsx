@@ -6,10 +6,10 @@ import { ContactForm } from './ContactForm'
 
 interface ContactSectionProps {
   data: SectionContact
-  id?: string
 }
 
-export async function ContactSection({ data, id }: ContactSectionProps) {
+export async function ContactSection({ data }: ContactSectionProps) {
+  const id = data.anchor?.current ?? undefined
   const settings = await client.fetch(
     contactSiteSettingsQuery,
     {},
@@ -36,6 +36,7 @@ export async function ContactSection({ data, id }: ContactSectionProps) {
           phone={settings?.phone ?? undefined}
           address={settings?.address ?? undefined}
           body={data.body ?? undefined}
+          privacyNotice={data.privacyNotice ?? undefined}
         />
       </div>
     </section>

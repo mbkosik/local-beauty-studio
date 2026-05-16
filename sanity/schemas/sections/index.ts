@@ -13,6 +13,7 @@ import { sectionFaq } from './sectionFaq'
 import { sectionProcess } from './sectionProcess'
 import { sectionBadges } from './sectionBadges'
 import { sectionTextVideo } from './sectionTextVideo'
+import { sectionRichText } from './sectionRichText'
 
 export const sectionSchemas = [
   sectionHero,
@@ -30,4 +31,5 @@ export const sectionSchemas = [
   sectionProcess,
   sectionBadges,
   sectionTextVideo,
+  sectionRichText,
 ]

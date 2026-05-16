@@ -74,6 +74,7 @@ export function HeaderWrapper({ businessName, logoLight, logoDark, navLinks }: H
               )}
             >
               {link.label}
+              {link.openInNewTab && <span className="sr-only"> (otwiera nową kartę)</span>}
             </Link>
           ))}
           <ThemeToggle />

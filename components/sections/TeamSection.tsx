@@ -3,12 +3,12 @@ import { getVariantProps } from '@/lib/color-variant'
 import type { TeamSectionData } from '@/sanity/custom-types'
 
 interface TeamSectionProps {
-  id?: string
   data: TeamSectionData
 }
 
-export function TeamSection({ id, data }: TeamSectionProps) {
-  const { title, subtitle, members, colorVariant } = data
+export function TeamSection({ data }: TeamSectionProps) {
+  const { anchor, title, subtitle, members, colorVariant } = data
+  const id = anchor?.current ?? undefined
 
   if (!members || members.length === 0) return null
 

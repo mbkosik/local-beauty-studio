@@ -46,7 +46,8 @@ export const footerQuery = defineQuery(`
       instagram,
       tiktok
     },
-    openingHours[] { days, hours }
+    openingHours[] { days, hours },
+    footerLinks[] { label, url }
   }
 `)
 
@@ -343,7 +344,8 @@ export const pageQuery = defineQuery(`
         colorVariant,
         heading,
         subheading,
-        body
+        body,
+        privacyNotice
       },
       _type == "sectionTeam" => {
         anchor,
@@ -402,6 +404,12 @@ export const pageQuery = defineQuery(`
         mediaPosition,
         caption,
         cta
+      },
+      _type == "sectionRichText" => {
+        anchor,
+        colorVariant,
+        body,
+        maxWidth
       }
     }
   }

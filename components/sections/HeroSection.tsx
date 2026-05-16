@@ -10,11 +10,11 @@ import type { SectionHero } from '@/sanity.types'
 
 interface HeroSectionProps {
   data: SectionHero
-  id?: string
 }
 
-export function HeroSection({ data, id }: HeroSectionProps) {
+export function HeroSection({ data }: HeroSectionProps) {
   const {
+    anchor,
     heading,
     subheading,
     primaryCta,
@@ -24,6 +24,7 @@ export function HeroSection({ data, id }: HeroSectionProps) {
     videoUrl,
     videoPoster,
   } = data
+  const id = anchor?.current ?? undefined
   const reducedMotion = useReducedMotion()
   const isVideo = mediaType === 'video' && !!videoUrl
   const hasImage = !isVideo && !!backgroundImage?.asset

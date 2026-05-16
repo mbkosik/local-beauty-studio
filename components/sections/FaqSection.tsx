@@ -11,7 +11,6 @@ import { getVariantProps } from '@/lib/color-variant'
 import type { SectionFaq } from '@/sanity.types'
 
 interface FaqSectionProps {
-  id?: string
   data: SectionFaq
 }
 
@@ -54,8 +53,9 @@ const faqPortableTextComponents: PortableTextComponents = {
   },
 }
 
-export function FaqSection({ id, data }: FaqSectionProps) {
-  const { title, subtitle, items, colorVariant } = data
+export function FaqSection({ data }: FaqSectionProps) {
+  const { anchor, title, subtitle, items, colorVariant } = data
+  const id = anchor?.current ?? undefined
 
   if (!items?.length) return null
 

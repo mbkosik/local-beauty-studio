@@ -1,4 +1,5 @@
 import { Clock, Mail, MapPin, Phone } from 'lucide-react'
+import Link from 'next/link'
 import { client } from '@/sanity/client'
 import { footerQuery } from '@/sanity/queries'
 import { SanityImage } from '@/components/shared/SanityImage'
@@ -22,6 +23,7 @@ export async function Footer() {
     googleMapsUrl,
     social,
     openingHours,
+    footerLinks,
   } = settings ?? {}
 
   const hasLogos = Boolean(logoLight?.asset && logoDark?.asset)
@@ -161,6 +163,38 @@ export async function Footer() {
 
         <div className="mt-10">
           <SectionDivider className="mb-6" />
+          {footerLinks && footerLinks.length > 0 && (
+            <nav aria-label="Nawigacja w stopce" className="mb-6">
+              <ul className="flex flex-wrap justify-center gap-x-6 gap-y-2">
+                {footerLinks.map((link, i) => {
+                  if (!link.label || !link.url) return null
+                  const isExternal = link.url.startsWith('http')
+                  return (
+                    <li key={i}>
+                      {isExternal ? (
+                        <a
+                          href={link.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-muted-foreground hover:text-foreground text-sm transition-colors"
+                        >
+                          {link.label}
+                          <span className="sr-only"> (otwiera nową kartę)</span>
+                        </a>
+                      ) : (
+                        <Link
+                          href={link.url}
+                          className="text-muted-foreground hover:text-foreground text-sm transition-colors"
+                        >
+                          {link.label}
+                        </Link>
+                      )}
+                    </li>
+                  )
+                })}
+              </ul>
+            </nav>
+          )}
           <p className="text-muted-foreground text-center text-sm">
             &copy; {year} {businessName}. Wszelkie prawa zastrzeżone.
           </p>

@@ -3,17 +3,17 @@
 import { useReducedMotion } from 'motion/react'
 import { AnimatedSection } from '@/components/shared/AnimatedSection'
 import { getVariantProps } from '@/lib/color-variant'
-import { GridGallery } from './blocks/GridGallery'
-import { MasonryGallery } from './blocks/MasonryGallery'
+import { GridGallery } from '@/components/blocks/GridGallery'
+import { MasonryGallery } from '@/components/blocks/MasonryGallery'
 import { SectionGallery } from '@/sanity.types'
 
 interface GallerySectionProps {
   data: SectionGallery
-  id?: string
 }
 
-export function GallerySection({ data, id }: GallerySectionProps) {
-  const { heading, images, colorVariant, layout = 'grid' } = data
+export function GallerySection({ data }: GallerySectionProps) {
+  const { anchor, heading, images, colorVariant, layout = 'grid' } = data
+  const id = anchor?.current ?? undefined
   const prefersReducedMotion = useReducedMotion() ?? false
 
   if (!images?.length) return null

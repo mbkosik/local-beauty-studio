@@ -11,7 +11,6 @@ import { ServicesSectionData } from '@/sanity/custom-types'
 
 interface ServicesSectionProps {
   data: ServicesSectionData
-  id?: string
 }
 
 const CONTAINER_VARIANTS: Variants = {
@@ -24,8 +23,9 @@ const CARD_VARIANTS: Variants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
 }
 
-export function ServicesSection({ data, id }: ServicesSectionProps) {
-  const { heading, subheading, services, colorVariant } = data
+export function ServicesSection({ data }: ServicesSectionProps) {
+  const { anchor, heading, subheading, services, colorVariant } = data
+  const id = anchor?.current ?? undefined
   const prefersReducedMotion = useReducedMotion()
 
   if (!services?.length) return null

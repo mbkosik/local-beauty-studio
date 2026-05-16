@@ -5,11 +5,11 @@ import type { SectionStats } from '@/sanity.types'
 
 interface StatsSectionProps {
   data: SectionStats
-  id?: string
 }
 
-export function StatsSection({ data, id }: StatsSectionProps) {
-  const { heading, items, colorVariant } = data
+export function StatsSection({ data }: StatsSectionProps) {
+  const { anchor, heading, items, colorVariant } = data
+  const id = anchor?.current ?? undefined
 
   return (
     <section id={id} {...getVariantProps(colorVariant)}>

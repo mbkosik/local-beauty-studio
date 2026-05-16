@@ -9,6 +9,7 @@ import type {
   SectionProcess,
   SectionBadges,
   SectionTextVideo,
+  SectionRichText,
 } from '@/sanity.types'
 import dynamic from 'next/dynamic'
 import { HeroSection } from './HeroSection'
@@ -31,6 +32,7 @@ const FaqSection = dynamic(() => import('./FaqSection').then((m) => m.FaqSection
 const ProcessSection = dynamic(() => import('./ProcessSection').then((m) => m.ProcessSection))
 const BadgesSection = dynamic(() => import('./BadgesSection').then((m) => m.BadgesSection))
 const TextVideoSection = dynamic(() => import('./TextVideoSection').then((m) => m.TextVideoSection))
+const RichTextSection = dynamic(() => import('./RichTextSection').then((m) => m.RichTextSection))
 import {
   PageBlock,
   ServicesSectionData,
@@ -52,80 +54,49 @@ export function PageBuilder({ blocks }: Props) {
   return (
     <>
       {blocks.map((block) => {
-        const id = block.anchor?.current ?? undefined
         switch (block._type) {
           case 'sectionHero':
-            return <HeroSection key={block._key} id={id} data={asSection<SectionHero>(block)} />
+            return <HeroSection key={block._key} data={asSection<SectionHero>(block)} />
           case 'sectionTextImage':
-            return (
-              <TextImageSection
-                key={block._key}
-                id={id}
-                data={asSection<SectionTextImage>(block)}
-              />
-            )
+            return <TextImageSection key={block._key} data={asSection<SectionTextImage>(block)} />
           case 'sectionServices':
-            return (
-              <ServicesSection
-                key={block._key}
-                id={id}
-                data={asSection<ServicesSectionData>(block)}
-              />
-            )
+            return <ServicesSection key={block._key} data={asSection<ServicesSectionData>(block)} />
           case 'sectionPricing':
-            return (
-              <PricingSection
-                key={block._key}
-                id={id}
-                data={asSection<PricingSectionData>(block)}
-              />
-            )
+            return <PricingSection key={block._key} data={asSection<PricingSectionData>(block)} />
           case 'sectionTestimonials':
             return (
               <TestimonialsSection
                 key={block._key}
-                id={id}
                 data={asSection<TestimonialsSectionData>(block)}
               />
             )
           case 'sectionStats':
-            return <StatsSection key={block._key} id={id} data={asSection<SectionStats>(block)} />
+            return <StatsSection key={block._key} data={asSection<SectionStats>(block)} />
           case 'sectionGallery':
-            return (
-              <GallerySection key={block._key} id={id} data={asSection<SectionGallery>(block)} />
-            )
+            return <GallerySection key={block._key} data={asSection<SectionGallery>(block)} />
           case 'sectionBlogPreview':
             return (
               <BlogPreviewSection
                 key={block._key}
-                id={id}
                 data={asSection<BlogPreviewSectionData>(block)}
               />
             )
           case 'sectionCta':
-            return <CtaSection key={block._key} id={id} data={asSection<SectionCta>(block)} />
+            return <CtaSection key={block._key} data={asSection<SectionCta>(block)} />
           case 'sectionContact':
-            return (
-              <ContactSection key={block._key} id={id} data={asSection<SectionContact>(block)} />
-            )
+            return <ContactSection key={block._key} data={asSection<SectionContact>(block)} />
           case 'sectionTeam':
-            return <TeamSection key={block._key} id={id} data={asSection<TeamSectionData>(block)} />
+            return <TeamSection key={block._key} data={asSection<TeamSectionData>(block)} />
           case 'sectionFaq':
-            return <FaqSection key={block._key} id={id} data={asSection<SectionFaq>(block)} />
+            return <FaqSection key={block._key} data={asSection<SectionFaq>(block)} />
           case 'sectionProcess':
-            return (
-              <ProcessSection key={block._key} id={id} data={asSection<SectionProcess>(block)} />
-            )
+            return <ProcessSection key={block._key} data={asSection<SectionProcess>(block)} />
           case 'sectionBadges':
-            return <BadgesSection key={block._key} id={id} data={asSection<SectionBadges>(block)} />
+            return <BadgesSection key={block._key} data={asSection<SectionBadges>(block)} />
           case 'sectionTextVideo':
-            return (
-              <TextVideoSection
-                key={block._key}
-                id={id}
-                data={asSection<SectionTextVideo>(block)}
-              />
-            )
+            return <TextVideoSection key={block._key} data={asSection<SectionTextVideo>(block)} />
+          case 'sectionRichText':
+            return <RichTextSection key={block._key} data={asSection<SectionRichText>(block)} />
           default:
             console.warn('[PageBuilder] Unknown block type:', (block as { _type: string })._type)
             return null

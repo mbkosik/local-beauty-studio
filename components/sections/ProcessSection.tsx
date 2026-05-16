@@ -15,7 +15,6 @@ type ProcessStep = {
 
 interface ProcessSectionProps {
   data: SectionProcess
-  id?: string
 }
 
 function HorizontalLayout({ steps }: { steps: ProcessStep[] }) {
@@ -91,8 +90,9 @@ function VerticalLayout({ steps }: { steps: ProcessStep[] }) {
   )
 }
 
-export function ProcessSection({ data, id }: ProcessSectionProps) {
-  const { title, subtitle, layout, steps, colorVariant } = data
+export function ProcessSection({ data }: ProcessSectionProps) {
+  const { anchor, title, subtitle, layout, steps, colorVariant } = data
+  const id = anchor?.current ?? undefined
 
   if (!steps?.length) return null
 

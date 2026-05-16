@@ -3,12 +3,12 @@ import { SanityImage, SanityImageData } from '@/components/shared/SanityImage'
 import { getVariantProps } from '@/lib/color-variant'
 
 interface BadgesSectionProps {
-  id?: string
   data: SectionBadges
 }
 
-export function BadgesSection({ id, data }: BadgesSectionProps) {
-  const { label, badges, colorVariant } = data
+export function BadgesSection({ data }: BadgesSectionProps) {
+  const { anchor, label, badges, colorVariant } = data
+  const id = anchor?.current ?? undefined
 
   if (!badges?.length) return null
 
@@ -31,7 +31,7 @@ export function BadgesSection({ id, data }: BadgesSectionProps) {
                   href={badge.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={badge.alt || badge.label || 'Odznaka'}
+                  aria-label={`${badge.alt || badge.label || 'Odznaka'} (otwiera nową kartę)`}
                   className="opacity-60 grayscale transition-opacity duration-300 hover:opacity-100 hover:grayscale-0"
                 >
                   <SanityImage

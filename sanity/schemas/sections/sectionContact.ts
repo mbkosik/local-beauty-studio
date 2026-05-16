@@ -77,6 +77,34 @@ export const sectionContact = defineType({
         },
       ],
     }),
+    defineField({
+      name: 'privacyNotice',
+      title: 'Klauzula przy formularzu',
+      description:
+        'Opcjonalny tekst klauzuli wyświetlany pod polami formularza, nad przyciskiem wysyłki.',
+      type: 'array',
+      of: [
+        {
+          type: 'block',
+          styles: [{ title: 'Normalny', value: 'normal' }],
+          lists: [],
+          marks: {
+            decorators: [
+              { title: 'Pogrubienie', value: 'strong' },
+              { title: 'Kursywa', value: 'em' },
+            ],
+            annotations: [
+              {
+                name: 'link',
+                type: 'object',
+                title: 'Link',
+                fields: [{ name: 'href', type: 'url', title: 'URL' }],
+              },
+            ],
+          },
+        },
+      ],
+    }),
     colorVariantField,
   ],
 })

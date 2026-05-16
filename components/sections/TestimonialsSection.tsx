@@ -18,11 +18,11 @@ import type { TestimonialsSectionData } from '@/sanity/custom-types'
 
 interface TestimonialsSectionProps {
   data: TestimonialsSectionData
-  id?: string
 }
 
-export function TestimonialsSection({ data, id }: TestimonialsSectionProps) {
-  const { heading, testimonials, colorVariant } = data
+export function TestimonialsSection({ data }: TestimonialsSectionProps) {
+  const { anchor, heading, testimonials, colorVariant } = data
+  const id = anchor?.current ?? undefined
   const prefersReducedMotion = useReducedMotion()
 
   const [api, setApi] = useState<CarouselApi>()

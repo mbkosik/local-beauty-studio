@@ -10,7 +10,6 @@ import type { SectionCta } from '@/sanity.types'
 
 interface CtaSectionProps {
   data: SectionCta
-  id?: string
 }
 
 const BTN_VARIANTS: Variants = {
@@ -54,8 +53,9 @@ function externalProps(href: string) {
   return href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {}
 }
 
-export function CtaSection({ data, id }: CtaSectionProps) {
-  const { heading, subheading, primaryCta, secondaryCta, colorVariant } = data
+export function CtaSection({ data }: CtaSectionProps) {
+  const { anchor, heading, subheading, primaryCta, secondaryCta, colorVariant } = data
+  const id = anchor?.current ?? undefined
   const prefersReducedMotion = useReducedMotion()
 
   const cfg = BTN_CONFIG[(colorVariant ?? 'light') as ColorVariant]

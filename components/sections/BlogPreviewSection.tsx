@@ -8,11 +8,11 @@ import type { BlogPost } from '@/sanity/custom-types'
 
 interface BlogPreviewSectionProps {
   data: BlogPreviewSectionData
-  id?: string
 }
 
-export function BlogPreviewSection({ data, id }: BlogPreviewSectionProps) {
-  const { heading, subheading, posts, showViewAll, colorVariant } = data
+export function BlogPreviewSection({ data }: BlogPreviewSectionProps) {
+  const { anchor, heading, subheading, posts, showViewAll, colorVariant } = data
+  const id = anchor?.current ?? undefined
 
   if (!posts || posts.length === 0) return null
 

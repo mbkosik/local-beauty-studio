@@ -128,6 +128,22 @@ export const siteSettings = defineType({
       of: [{ type: 'navLink' }],
     }),
     defineField({
+      name: 'footerLinks',
+      title: 'Linki w stopce',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          name: 'footerLink',
+          fields: [
+            defineField({ name: 'label', title: 'Etykieta', type: 'string' }),
+            defineField({ name: 'url', title: 'URL', type: 'string' }),
+          ],
+          preview: { select: { title: 'label', subtitle: 'url' } },
+        },
+      ],
+    }),
+    defineField({
       name: 'seo',
       title: 'SEO',
       type: 'object',
