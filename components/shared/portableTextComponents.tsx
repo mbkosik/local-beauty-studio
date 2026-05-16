@@ -50,8 +50,6 @@ export const portableTextComponents: PortableTextComponents = {
         <div className="relative my-8 aspect-video w-full overflow-hidden rounded-lg">
           <SanityImage
             image={value as SanityImageData}
-            // alt="" — obrazek dekoracyjny gdy redaktor nie wypełnił pola alt w Sanity
-            // Redaktorzy powinni zawsze wypełniać pole alt dla obrazków w treści bloga
             alt={value.alt ?? ''}
             width={1200}
             height={675}

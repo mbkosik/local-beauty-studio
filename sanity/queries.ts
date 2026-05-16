@@ -402,6 +402,12 @@ export const pageQuery = defineQuery(`
         mediaPosition,
         caption,
         cta
+      },
+      _type == "sectionRichText" => {
+        anchor,
+        colorVariant,
+        body,
+        maxWidth
       }
     }
   }
