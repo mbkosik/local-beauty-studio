@@ -48,19 +48,6 @@ export function HeroSection({ data, id }: HeroSectionProps) {
           <div aria-hidden="true" className="absolute inset-0">
             {isVideo ? (
               <>
-                {videoPoster?.asset && posterVisible && (
-                  <SanityImage
-                    image={videoPoster as unknown as SanityImageData}
-                    alt=""
-                    fill
-                    sizes="100vw"
-                    className="object-cover"
-                    loading="eager"
-                    fetchPriority="high"
-                    width={1920}
-                    height={1080}
-                  />
-                )}
                 <video
                   autoPlay
                   muted
@@ -71,6 +58,22 @@ export function HeroSection({ data, id }: HeroSectionProps) {
                 >
                   <source src={videoUrl} type="video/mp4" />
                 </video>
+                {videoPoster?.asset && (
+                  <SanityImage
+                    image={videoPoster as unknown as SanityImageData}
+                    alt=""
+                    fill
+                    sizes="100vw"
+                    className={cn(
+                      'object-cover transition-opacity duration-700',
+                      posterVisible ? 'opacity-100' : 'opacity-0'
+                    )}
+                    loading="eager"
+                    fetchPriority="high"
+                    width={1920}
+                    height={1080}
+                  />
+                )}
               </>
             ) : (
               <SanityImage
