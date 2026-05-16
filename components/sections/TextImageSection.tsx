@@ -39,6 +39,7 @@ export function TextImageSection({ data, id }: TextImageSectionProps) {
               width={800}
               height={600}
               sizes="(max-width: 1024px) 100vw, 50vw"
+              quality={85}
               className="object-cover"
             />
           </div>
