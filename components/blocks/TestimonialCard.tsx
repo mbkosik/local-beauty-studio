@@ -20,7 +20,7 @@ function getInitials(name: string | null): string {
 
 function StarRating({ rating }: { rating: number | null }) {
   return (
-    <div className="flex gap-0.5" aria-label={`Ocena: ${rating ?? 0} na 5`}>
+    <div role="img" className="flex gap-0.5" aria-label={`Ocena: ${rating ?? 0} na 5`}>
       {Array.from({ length: 5 }, (_, i) => (
         <Star
           key={i}
