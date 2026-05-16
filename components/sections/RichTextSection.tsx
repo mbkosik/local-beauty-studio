@@ -5,7 +5,6 @@ import { getVariantProps } from '@/lib/color-variant'
 import type { SectionRichText } from '@/sanity.types'
 
 interface RichTextSectionProps {
-  id?: string
   data: SectionRichText
 }
 
@@ -20,8 +19,9 @@ const maxWidthClass: Record<string, string> = {
   wide: 'max-w-5xl',
 }
 
-export function RichTextSection({ id, data }: RichTextSectionProps) {
-  const { body, maxWidth, colorVariant } = data
+export function RichTextSection({ data }: RichTextSectionProps) {
+  const { anchor, body, maxWidth, colorVariant } = data
+  const id = anchor?.current ?? undefined
 
   if (!body?.length) return null
 

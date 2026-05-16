@@ -6,11 +6,20 @@ import type { SectionTextVideo } from '@/sanity.types'
 
 interface TextVideoSectionProps {
   data: SectionTextVideo
-  id?: string
 }
 
-export function TextVideoSection({ data, id }: TextVideoSectionProps) {
-  const { title, body, videoUrl, mediaPosition = 'right', caption, colorVariant, cta } = data
+export function TextVideoSection({ data }: TextVideoSectionProps) {
+  const {
+    anchor,
+    title,
+    body,
+    videoUrl,
+    mediaPosition = 'right',
+    caption,
+    colorVariant,
+    cta,
+  } = data
+  const id = anchor?.current ?? undefined
   if (!videoUrl) return null
 
   const embedUrl = getEmbedUrl(videoUrl)

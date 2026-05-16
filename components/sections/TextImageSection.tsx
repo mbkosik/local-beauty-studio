@@ -6,11 +6,11 @@ import type { SectionTextImage } from '@/sanity.types'
 
 interface TextImageSectionProps {
   data: SectionTextImage
-  id?: string
 }
 
-export function TextImageSection({ data, id }: TextImageSectionProps) {
-  const { heading, body, image, mediaPosition = 'right', colorVariant, cta } = data
+export function TextImageSection({ data }: TextImageSectionProps) {
+  const { anchor, heading, body, image, mediaPosition = 'right', colorVariant, cta } = data
+  const id = anchor?.current ?? undefined
   if (!image?.asset || !body) return null
 
   return (

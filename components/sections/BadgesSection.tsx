@@ -3,12 +3,12 @@ import { SanityImage, SanityImageData } from '@/components/shared/SanityImage'
 import { getVariantProps } from '@/lib/color-variant'
 
 interface BadgesSectionProps {
-  id?: string
   data: SectionBadges
 }
 
-export function BadgesSection({ id, data }: BadgesSectionProps) {
-  const { label, badges, colorVariant } = data
+export function BadgesSection({ data }: BadgesSectionProps) {
+  const { anchor, label, badges, colorVariant } = data
+  const id = anchor?.current ?? undefined
 
   if (!badges?.length) return null
 

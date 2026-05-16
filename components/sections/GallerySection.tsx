@@ -9,11 +9,11 @@ import { SectionGallery } from '@/sanity.types'
 
 interface GallerySectionProps {
   data: SectionGallery
-  id?: string
 }
 
-export function GallerySection({ data, id }: GallerySectionProps) {
-  const { heading, images, colorVariant, layout = 'grid' } = data
+export function GallerySection({ data }: GallerySectionProps) {
+  const { anchor, heading, images, colorVariant, layout = 'grid' } = data
+  const id = anchor?.current ?? undefined
   const prefersReducedMotion = useReducedMotion() ?? false
 
   if (!images?.length) return null

@@ -14,11 +14,11 @@ import type { PricingSectionData } from '@/sanity/custom-types'
 
 interface PricingSectionProps {
   data: PricingSectionData
-  id?: string
 }
 
-export function PricingSection({ data, id }: PricingSectionProps) {
-  const { heading, subheading, items, colorVariant } = data
+export function PricingSection({ data }: PricingSectionProps) {
+  const { anchor, heading, subheading, items, colorVariant } = data
+  const id = anchor?.current ?? undefined
 
   const validItems = items?.filter((item) => item !== null) ?? []
   if (!validItems.length) return null
