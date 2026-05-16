@@ -83,11 +83,11 @@ export async function Footer() {
                 href={googleMapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={`Otwórz adres w Google Maps (otwiera nową kartę)`}
                 className="text-muted-foreground hover:text-foreground flex items-start gap-2 text-sm transition-colors"
               >
                 <MapPin size={15} className="mt-0.5 shrink-0" aria-hidden="true" />
                 {address}
+                <span className="sr-only">(otwiera nową kartę)</span>
               </a>
             )}
             {address && !googleMapsUrl && (
