@@ -251,7 +251,7 @@ export const pageQuery = defineQuery(`
         secondaryCta,
         backgroundImage ${imageProjection},
         mediaType,
-        videoUrl,
+        videoAsset { asset->{ url } },
         videoPoster ${imageProjection}
       },
       _type == "sectionTextImage" => {
