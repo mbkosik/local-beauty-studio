@@ -102,17 +102,18 @@ export const sectionHero = defineType({
       ],
     }),
     defineField({
-      name: 'videoUrl',
-      title: 'URL wideo (.mp4)',
+      name: 'videoAsset',
+      title: 'Plik wideo',
       description:
-        'Bezpośredni link do pliku .mp4. Wideo będzie odtwarzane automatycznie, bez dźwięku, w pętli.',
-      type: 'url',
+        'Wgraj plik wideo (.mp4). Będzie odtwarzany automatycznie, bez dźwięku, w pętli.',
+      type: 'file',
+      options: { accept: 'video/*' },
       hidden: ({ parent }) => parent?.mediaType !== 'video',
     }),
     defineField({
       name: 'videoPoster',
       title: 'Plakat wideo',
-      description: 'Obrazek wyświetlany przed załadowaniem wideo. Zalecany dla wydajności.',
+      description: 'Obrazek wyświetlany zanim wideo się załaduje.',
       type: 'image',
       options: { hotspot: true },
       hidden: ({ parent }) => parent?.mediaType !== 'video',

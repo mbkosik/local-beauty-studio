@@ -10,8 +10,6 @@ A production-ready landing page and blog for a local beauty salon, built as a po
 
 **[Live demo →](https://local-beauty-studio.netlify.app)**
 
-<!-- Add screenshot -->
-
 ![Preview](docs/preview.png)
 
 ---
@@ -66,6 +64,7 @@ local-beauty-studio/
 │   ├── sections/               # Page builder section components (one file per block type)
 │   │   ├── PageBuilder.tsx
 │   │   ├── HeroSection.tsx
+│   │   ├── RichTextSection.tsx
 │   │   ├── TextImageSection.tsx
 │   │   ├── TextVideoSection.tsx
 │   │   ├── TextMediaSection.tsx
@@ -160,11 +159,12 @@ Open [http://localhost:3000](http://localhost:3000). The Sanity Studio is availa
 
 ## Page Builder Blocks
 
-Content is managed through Sanity Studio. The page builder supports 15 section types:
+Content is managed through Sanity Studio. The page builder supports 16 section types:
 
 | Block type            | Component             | Description                                                               |
 | --------------------- | --------------------- | ------------------------------------------------------------------------- |
 | `sectionHero`         | `HeroSection`         | Full-width hero with image or autoplay background video, two CTA buttons  |
+| `sectionRichText`     | `RichTextSection`     | Standalone Portable Text block — headings, lists, links; configurable width and background |
 | `sectionTextImage`    | `TextImageSection`    | Portable Text body alongside an image, with configurable image position   |
 | `sectionTextVideo`    | `TextVideoSection`    | Portable Text body alongside an embedded YouTube or Vimeo video           |
 | `sectionServices`     | `ServicesSection`     | Grid of service cards pulled from `service` documents                     |
