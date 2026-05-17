@@ -1,5 +1,6 @@
 import { defineField, defineType } from 'sanity'
 import { colorVariantField } from '../fields/colorVariantField'
+import { isValidLinkHref } from '../validations/linkValidation'
 
 export const sectionRichText = defineType({
   name: 'sectionRichText',
@@ -68,10 +69,9 @@ export const sectionRichText = defineType({
                 fields: [
                   defineField({
                     name: 'href',
-                    type: 'url',
+                    type: 'string',
                     title: 'URL',
-                    validation: (Rule) =>
-                      Rule.uri({ scheme: ['http', 'https', 'mailto', 'tel'], allowRelative: true }),
+                    validation: (Rule) => Rule.custom(isValidLinkHref),
                   }),
                   defineField({
                     name: 'blank',

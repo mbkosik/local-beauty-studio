@@ -1,5 +1,6 @@
 import { defineField, defineType } from 'sanity'
 import { colorVariantField } from '../fields/colorVariantField'
+import { isValidLinkHref } from '../validations/linkValidation'
 
 export const sectionContact = defineType({
   name: 'sectionContact',
@@ -65,10 +66,9 @@ export const sectionContact = defineType({
                 fields: [
                   defineField({
                     name: 'href',
-                    type: 'url',
+                    type: 'string',
                     title: 'URL',
-                    validation: (Rule) =>
-                      Rule.uri({ scheme: ['http', 'https', 'mailto', 'tel'], allowRelative: true }),
+                    validation: (Rule) => Rule.custom(isValidLinkHref),
                   }),
                   defineField({
                     name: 'blank',
@@ -111,23 +111,7 @@ export const sectionContact = defineType({
                     title: 'URL',
                     description:
                       'Pełny URL (https://...), ścieżka względna (/polityka-prywatnosci), tel:+48123456789 lub mailto:info@salon.pl',
-                    validation: (Rule) =>
-                      Rule.custom((value: string | undefined) => {
-                        if (!value) return 'URL jest wymagany'
-                        if (
-                          value.startsWith('/') ||
-                          value.startsWith('#') ||
-                          value.startsWith('tel:') ||
-                          value.startsWith('mailto:')
-                        )
-                          return true
-                        try {
-                          new URL(value)
-                          return true
-                        } catch {
-                          return 'Wpisz pełny URL (https://...), ścieżkę względną (/strona), tel:... lub mailto:...'
-                        }
-                      }),
+                    validation: (Rule) => Rule.custom(isValidLinkHref),
                   },
                 ],
               },
