@@ -8,6 +8,8 @@ import { SanityImage, type SanityImageData } from '@/components/shared/SanityIma
 import { cn } from '@/lib/utils'
 import type { SectionHero } from '@/sanity.types'
 
+type ResolvedVideoAsset = { asset?: { url?: string | null } | null } | null
+
 interface HeroSectionProps {
   data: SectionHero
 }
@@ -21,11 +23,12 @@ export function HeroSection({ data }: HeroSectionProps) {
     secondaryCta,
     backgroundImage,
     mediaType,
-    videoUrl,
+    videoAsset,
     videoPoster,
   } = data
   const id = anchor?.current ?? undefined
   const reducedMotion = useReducedMotion()
+  const videoUrl = (videoAsset as unknown as ResolvedVideoAsset)?.asset?.url
   const isVideo = mediaType === 'video' && !!videoUrl
   const hasImage = !isVideo && !!backgroundImage?.asset
   const hasMedia = isVideo || hasImage
