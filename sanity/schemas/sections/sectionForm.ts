@@ -1,25 +1,28 @@
 import { defineField, defineType } from 'sanity'
-import { colorVariantField } from '../fields/colorVariantField'
 import { isValidLinkHref } from '../validations/linkValidation'
 
-export const sectionContact = defineType({
-  name: 'sectionContact',
-  title: 'Sekcja: Kontakt',
+export const sectionForm = defineType({
+  name: 'sectionForm',
+  title: 'Sekcja: Formularz',
   type: 'object',
   preview: {
-    select: { heading: 'heading' },
-    prepare({ heading }) {
+    select: {
+      title: 'title',
+      formTitle: 'form.title',
+    },
+    prepare({ title, formTitle }) {
       return {
-        title: 'Sekcja: Kontakt',
-        subtitle: heading ?? '(bez nagłówka)',
+        title: `Formularz: ${title ?? formTitle ?? '(bez tytułu)'}`,
+        subtitle: formTitle ? `formularz: ${formTitle}` : undefined,
       }
     },
   },
   fields: [
     defineField({
-      name: 'heading',
+      name: 'title',
+      title: 'Tytuł sekcji',
       type: 'string',
-      initialValue: 'Kontakt',
+      description: 'Opcjonalny nagłówek widoczny na stronie nad formularzem',
     }),
     defineField({
       name: 'anchor',
@@ -27,7 +30,7 @@ export const sectionContact = defineType({
       description: 'Unikalny identyfikator sekcji. Używany do linków #anchor.',
       type: 'slug',
       options: {
-        source: (_, options) => (options.parent as { heading?: string | null })?.heading ?? '',
+        source: (_, options) => (options.parent as { title?: string | null })?.title ?? '',
         slugify: (input: string) =>
           input
             .toLowerCase()
@@ -40,19 +43,29 @@ export const sectionContact = defineType({
       },
     }),
     defineField({
-      name: 'subheading',
+      name: 'form',
+      title: 'Formularz',
+      type: 'reference',
+      to: [{ type: 'form' }],
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'asideTitle',
+      title: 'Tytuł panelu bocznego',
       type: 'string',
     }),
     defineField({
-      name: 'body',
-      title: 'Treść boczna (prawa kolumna)',
-      description: 'Tekst wyświetlany obok formularza. Obsługuje pogrubienie, kursywę i linki.',
+      name: 'asideBody',
+      title: 'Treść panelu bocznego',
       type: 'array',
       of: [
         {
           type: 'block',
           styles: [{ title: 'Normalny', value: 'normal' }],
-          lists: [],
+          lists: [
+            { title: 'Bullet', value: 'bullet' },
+            { title: 'Numerowana', value: 'number' },
+          ],
           marks: {
             decorators: [
               { title: 'Pogrubienie', value: 'strong' },
@@ -84,42 +97,10 @@ export const sectionContact = defineType({
       ],
     }),
     defineField({
-      name: 'privacyNotice',
-      title: 'Klauzula przy formularzu',
-      description:
-        'Opcjonalny tekst klauzuli wyświetlany pod polami formularza, nad przyciskiem wysyłki.',
+      name: 'asideBullets',
+      title: 'Punkty listy',
       type: 'array',
-      of: [
-        {
-          type: 'block',
-          styles: [{ title: 'Normalny', value: 'normal' }],
-          lists: [],
-          marks: {
-            decorators: [
-              { title: 'Pogrubienie', value: 'strong' },
-              { title: 'Kursywa', value: 'em' },
-            ],
-            annotations: [
-              {
-                name: 'link',
-                type: 'object',
-                title: 'Link',
-                fields: [
-                  {
-                    name: 'href',
-                    type: 'string',
-                    title: 'URL',
-                    description:
-                      'Pełny URL (https://...), ścieżka względna (/polityka-prywatnosci), tel:+48123456789 lub mailto:info@salon.pl',
-                    validation: (Rule) => Rule.custom(isValidLinkHref),
-                  },
-                ],
-              },
-            ],
-          },
-        },
-      ],
+      of: [{ type: 'string' }],
     }),
-    colorVariantField,
   ],
 })

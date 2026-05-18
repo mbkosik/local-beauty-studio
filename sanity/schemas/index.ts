@@ -9,6 +9,7 @@ import { person } from './person'
 import { category } from './category'
 import { page } from './page'
 import { pricingItem } from './pricingItem'
+import { form } from './form'
 import { sectionSchemas } from './sections'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
@@ -23,6 +24,8 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     post,
     pricingItem,
     person,
+    // Forms
+    form,
     // Auxiliary
     category,
     navLink,
