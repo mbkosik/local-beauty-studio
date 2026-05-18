@@ -7,13 +7,13 @@ import { sectionStats } from './sectionStats'
 import { sectionGallery } from './sectionGallery'
 import { sectionBlogPreview } from './sectionBlogPreview'
 import { sectionCta } from './sectionCta'
-import { sectionContact } from './sectionContact'
 import { sectionTeam } from './sectionTeam'
 import { sectionFaq } from './sectionFaq'
 import { sectionProcess } from './sectionProcess'
 import { sectionBadges } from './sectionBadges'
 import { sectionTextVideo } from './sectionTextVideo'
 import { sectionRichText } from './sectionRichText'
+import { sectionForm } from './sectionForm'
 
 export const sectionSchemas = [
   sectionHero,
@@ -25,11 +25,11 @@ export const sectionSchemas = [
   sectionGallery,
   sectionBlogPreview,
   sectionCta,
-  sectionContact,
   sectionTeam,
   sectionFaq,
   sectionProcess,
   sectionBadges,
   sectionTextVideo,
   sectionRichText,
+  sectionForm,
 ]

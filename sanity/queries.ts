@@ -217,13 +217,21 @@ export const blogCategoriesQuery = defineQuery(`
   }
 `)
 
-export const contactSiteSettingsQuery = defineQuery(`
-  *[_type == "siteSettings"][0] {
-    businessName,
-    email,
-    phone,
-    address,
-    openingHours[] { days, hours }
+export const formQuery = defineQuery(`
+  *[_type == "form" && _id == $formId][0] {
+    _id,
+    title,
+    fields[] {
+      _key,
+      fieldType,
+      label,
+      placeholder,
+      required,
+      options,
+      validation
+    },
+    successMessage,
+    "hasConfirmation": defined(confirmationSubject)
   }
 `)
 
@@ -339,14 +347,6 @@ export const pageQuery = defineQuery(`
         primaryCta,
         secondaryCta
       },
-      _type == "sectionContact" => {
-        anchor,
-        colorVariant,
-        heading,
-        subheading,
-        body,
-        privacyNotice
-      },
       _type == "sectionTeam" => {
         anchor,
         colorVariant,
@@ -410,6 +410,32 @@ export const pageQuery = defineQuery(`
         colorVariant,
         body,
         maxWidth
+      },
+      _type == "sectionForm" => {
+        anchor,
+        title,
+        asideTitle,
+        asideBody,
+        asideBullets,
+        form-> {
+          _id,
+          title,
+          fields[] {
+            _key,
+            fieldType,
+            label,
+            placeholder,
+            required,
+            options,
+            validation
+          },
+          recipientEmail,
+          emailSubject,
+          emailIntro,
+          confirmationSubject,
+          confirmationIntro,
+          successMessage
+        }
       }
     }
   }
