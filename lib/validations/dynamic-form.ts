@@ -70,6 +70,7 @@ export function buildZodSchema(fields: FormField[]): z.ZodObject<Record<string, 
         // HTML inputs submit '' for empty fields; treat it as "not provided"
         schema = schema.or(z.literal(''))
       }
+
       schema = schema.optional()
     }
 
