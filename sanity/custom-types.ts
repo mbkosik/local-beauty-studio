@@ -14,6 +14,7 @@ export type TestimonialsSectionData = Extract<PageBlock, { _type: 'sectionTestim
 export type BlogPreviewSectionData = Extract<PageBlock, { _type: 'sectionBlogPreview' }>
 export type PricingSectionData = Extract<PageBlock, { _type: 'sectionPricing' }>
 export type TeamSectionData = Extract<PageBlock, { _type: 'sectionTeam' }>
+export type FormSectionData = Extract<PageBlock, { _type: 'sectionForm' }>
 
 export type BlogPost = NonNullable<BlogListingQueryResult>['posts'][number]
 export type BlogCategory = BlogCategoriesQueryResult[number]
