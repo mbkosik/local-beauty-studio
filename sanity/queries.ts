@@ -410,6 +410,32 @@ export const pageQuery = defineQuery(`
         colorVariant,
         body,
         maxWidth
+      },
+      _type == "sectionForm" => {
+        anchor,
+        title,
+        asideTitle,
+        asideBody,
+        asideBullets,
+        form-> {
+          _id,
+          title,
+          fields[] {
+            _key,
+            fieldType,
+            label,
+            placeholder,
+            required,
+            options,
+            validation
+          },
+          recipientEmail,
+          emailSubject,
+          emailIntro,
+          confirmationSubject,
+          confirmationIntro,
+          successMessage
+        }
       }
     }
   }

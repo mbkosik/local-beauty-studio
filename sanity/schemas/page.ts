@@ -62,6 +62,7 @@ export const page = defineType({
         { type: 'sectionBadges' },
         { type: 'sectionTextVideo' },
         { type: 'sectionRichText' },
+        { type: 'sectionForm' },
       ],
       validation: (Rule) => Rule.required(),
     }),
