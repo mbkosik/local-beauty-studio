@@ -60,6 +60,41 @@ export type Logo = {
   _type: 'image'
 }
 
+export type FormReference = {
+  _ref: string
+  _type: 'reference'
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: 'form'
+}
+
+export type SectionForm = {
+  _type: 'sectionForm'
+  title?: string
+  anchor?: Slug
+  form?: FormReference
+  asideTitle?: string
+  asideBody?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      blank?: boolean
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  asideBullets?: Array<string>
+}
+
 export type SectionRichText = {
   _type: 'sectionRichText'
   title?: string
@@ -194,51 +229,6 @@ export type SectionTeam = {
       _key: string
     } & PersonReference
   >
-  colorVariant?: 'light' | 'muted' | 'dark' | 'brand'
-}
-
-export type SectionContact = {
-  _type: 'sectionContact'
-  heading?: string
-  anchor?: Slug
-  subheading?: string
-  body?: Array<{
-    children?: Array<{
-      marks?: Array<string>
-      text?: string
-      _type: 'span'
-      _key: string
-    }>
-    style?: 'normal'
-    listItem?: never
-    markDefs?: Array<{
-      href?: string
-      blank?: boolean
-      _type: 'link'
-      _key: string
-    }>
-    level?: number
-    _type: 'block'
-    _key: string
-  }>
-  privacyNotice?: Array<{
-    children?: Array<{
-      marks?: Array<string>
-      text?: string
-      _type: 'span'
-      _key: string
-    }>
-    style?: 'normal'
-    listItem?: never
-    markDefs?: Array<{
-      href?: string
-      _type: 'link'
-      _key: string
-    }>
-    level?: number
-    _type: 'block'
-    _key: string
-  }>
   colorVariant?: 'light' | 'muted' | 'dark' | 'brand'
 }
 
@@ -460,6 +450,38 @@ export type Slug = {
   source?: string
 }
 
+export type Form = {
+  _id: string
+  _type: 'form'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  fields?: Array<{
+    fieldType?: 'text' | 'email' | 'tel' | 'textarea' | 'select' | 'number'
+    label?: string
+    placeholder?: string
+    required?: boolean
+    options?: Array<string>
+    validation?: {
+      minLength?: number
+      maxLength?: number
+      min?: number
+      max?: number
+      pattern?: 'polishPhone' | 'postalCode' | 'nip' | 'url'
+      errorMessage?: string
+    }
+    _type: 'formField'
+    _key: string
+  }>
+  recipientEmail?: string
+  emailSubject?: string
+  emailIntro?: string
+  confirmationSubject?: string
+  confirmationIntro?: string
+  successMessage?: string
+}
+
 export type PricingItem = {
   _id: string
   _type: 'pricingItem'
@@ -673,9 +695,6 @@ export type Page = {
       } & SectionCta)
     | ({
         _key: string
-      } & SectionContact)
-    | ({
-        _key: string
       } & SectionTeam)
     | ({
         _key: string
@@ -692,6 +711,9 @@ export type Page = {
     | ({
         _key: string
       } & SectionRichText)
+    | ({
+        _key: string
+      } & SectionForm)
   >
   seo?: {
     metaTitle?: string
@@ -884,6 +906,8 @@ export type AllSanitySchemaTypes =
   | SectionTextVideoCta
   | SanityImageAssetReference
   | Logo
+  | FormReference
+  | SectionForm
   | SectionRichText
   | SectionTextVideo
   | SectionBadges
@@ -891,7 +915,6 @@ export type AllSanitySchemaTypes =
   | SectionFaq
   | PersonReference
   | SectionTeam
-  | SectionContact
   | SectionCta
   | PostReference
   | SectionBlogPreview
@@ -909,6 +932,7 @@ export type AllSanitySchemaTypes =
   | NavLink
   | Category
   | Slug
+  | Form
   | PricingItem
   | CategoryReference
   | Post
@@ -1516,17 +1540,29 @@ export type BlogCategoriesQueryResult = Array<{
 }>
 
 // Source: sanity/queries.ts
-// Variable: contactSiteSettingsQuery
-// Query: *[_type == "siteSettings"][0] {    businessName,    email,    phone,    address,    openingHours[] { days, hours }  }
-export type ContactSiteSettingsQueryResult = {
-  businessName: string | null
-  email: string | null
-  phone: string | null
-  address: string | null
-  openingHours: Array<{
-    days: string | null
-    hours: string | null
+// Variable: formQuery
+// Query: *[_type == "form" && _id == $formId][0] {    _id,    title,    fields[] {      _key,      fieldType,      label,      placeholder,      required,      options,      validation    },    successMessage,    "hasConfirmation": defined(confirmationSubject)  }
+export type FormQueryResult = {
+  _id: string
+  title: string | null
+  fields: Array<{
+    _key: string
+    fieldType: 'email' | 'number' | 'select' | 'tel' | 'text' | 'textarea' | null
+    label: string | null
+    placeholder: string | null
+    required: boolean | null
+    options: Array<string> | null
+    validation: {
+      minLength?: number
+      maxLength?: number
+      min?: number
+      max?: number
+      pattern?: 'nip' | 'polishPhone' | 'postalCode' | 'url'
+      errorMessage?: string
+    } | null
   }> | null
+  successMessage: string | null
+  hasConfirmation: false | true
 } | null
 
 // Source: sanity/queries.ts
@@ -1538,7 +1574,7 @@ export type AllPagesSlugsQueryResult = Array<{
 
 // Source: sanity/queries.ts
 // Variable: pageQuery
-// Query: *[_type == "page" && slug.current == $slug][0] {    _id,    title,    slug,    seo,    pageBuilder[] {      _type,      _key,      _type == "sectionHero" => {        anchor,        colorVariant,        heading,        subheading,        primaryCta,        secondaryCta,        backgroundImage { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },        mediaType,        videoAsset { asset->{ url } },        videoPoster { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } }      },      _type == "sectionTextImage" => {        anchor,        colorVariant,        heading,        body,        image { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },        mediaPosition,        cta      },      _type == "sectionServices" => {        anchor,        colorVariant,        heading,        subheading,        services[]-> {          _id, title, description, icon,          image { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } }        }      },      _type == "sectionPricing" => {        anchor,        colorVariant,        heading,        subheading,        items[]-> {          _id,          name,          duration,          price,          description        }      },      _type == "sectionTestimonials" => {        anchor,        colorVariant,        heading,        testimonials[]-> {          _id, authorName, position, company, content, rating,          photo { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } }        }      },      _type == "sectionStats" => {        anchor,        colorVariant,        heading,        items      },      _type == "sectionGallery" => {        anchor,        colorVariant,        heading,        layout,        images[] { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } }      },      _type == "sectionBlogPreview" => {        _type,        anchor,        colorVariant,        heading,        subheading,        mode,        showViewAll,        "posts": select(          mode == "manual" => posts[]->{            _id, title, slug, excerpt,            mainImage { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },            publishedAt,            "categories": categories[]->{title}          },          *[_type == "post"] | order(publishedAt desc) [0..2] {            _id, title, slug, excerpt,            mainImage { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },            publishedAt,            "categories": categories[]->{title}          }        )      },      _type == "sectionCta" => {        anchor,        colorVariant,        heading,        subheading,        primaryCta,        secondaryCta      },      _type == "sectionContact" => {        anchor,        colorVariant,        heading,        subheading,        body,        privacyNotice      },      _type == "sectionTeam" => {        anchor,        colorVariant,        title,        subtitle,        members[]-> {          _id,          name,          role,          bio,          photo { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },          socialMedia        }      },      _type == "sectionFaq" => {        anchor,        colorVariant,        title,        subtitle,        items[] {          question,          answer        }      },      _type == "sectionProcess" => {        _type,        anchor,        colorVariant,        title,        subtitle,        layout,        steps[] {          icon,          title,          description        }      },      _type == "sectionBadges" => {        anchor,        colorVariant,        label,        badges[] {          logo { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },          alt,          url,          label        }      },      _type == "sectionTextVideo" => {        anchor,        colorVariant,        title,        body,        videoUrl,        mediaPosition,        caption,        cta      },      _type == "sectionRichText" => {        anchor,        colorVariant,        body,        maxWidth      }    }  }
+// Query: *[_type == "page" && slug.current == $slug][0] {    _id,    title,    slug,    seo,    pageBuilder[] {      _type,      _key,      _type == "sectionHero" => {        anchor,        colorVariant,        heading,        subheading,        primaryCta,        secondaryCta,        backgroundImage { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },        mediaType,        videoAsset { asset->{ url } },        videoPoster { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } }      },      _type == "sectionTextImage" => {        anchor,        colorVariant,        heading,        body,        image { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },        mediaPosition,        cta      },      _type == "sectionServices" => {        anchor,        colorVariant,        heading,        subheading,        services[]-> {          _id, title, description, icon,          image { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } }        }      },      _type == "sectionPricing" => {        anchor,        colorVariant,        heading,        subheading,        items[]-> {          _id,          name,          duration,          price,          description        }      },      _type == "sectionTestimonials" => {        anchor,        colorVariant,        heading,        testimonials[]-> {          _id, authorName, position, company, content, rating,          photo { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } }        }      },      _type == "sectionStats" => {        anchor,        colorVariant,        heading,        items      },      _type == "sectionGallery" => {        anchor,        colorVariant,        heading,        layout,        images[] { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } }      },      _type == "sectionBlogPreview" => {        _type,        anchor,        colorVariant,        heading,        subheading,        mode,        showViewAll,        "posts": select(          mode == "manual" => posts[]->{            _id, title, slug, excerpt,            mainImage { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },            publishedAt,            "categories": categories[]->{title}          },          *[_type == "post"] | order(publishedAt desc) [0..2] {            _id, title, slug, excerpt,            mainImage { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },            publishedAt,            "categories": categories[]->{title}          }        )      },      _type == "sectionCta" => {        anchor,        colorVariant,        heading,        subheading,        primaryCta,        secondaryCta      },      _type == "sectionTeam" => {        anchor,        colorVariant,        title,        subtitle,        members[]-> {          _id,          name,          role,          bio,          photo { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },          socialMedia        }      },      _type == "sectionFaq" => {        anchor,        colorVariant,        title,        subtitle,        items[] {          question,          answer        }      },      _type == "sectionProcess" => {        _type,        anchor,        colorVariant,        title,        subtitle,        layout,        steps[] {          icon,          title,          description        }      },      _type == "sectionBadges" => {        anchor,        colorVariant,        label,        badges[] {          logo { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },          alt,          url,          label        }      },      _type == "sectionTextVideo" => {        anchor,        colorVariant,        title,        body,        videoUrl,        mediaPosition,        caption,        cta      },      _type == "sectionRichText" => {        anchor,        colorVariant,        body,        maxWidth      },      _type == "sectionForm" => {        anchor,        title,        asideTitle,        asideBody,        asideBullets,        form-> {          _id,          title,          fields[] {            _key,            fieldType,            label,            placeholder,            required,            options,            validation          },          recipientEmail,          emailSubject,          emailIntro,          confirmationSubject,          confirmationIntro,          successMessage        }      }    }  }
 export type PageQueryResult = {
   _id: string
   title: string | null
@@ -1622,51 +1658,6 @@ export type PageQueryResult = {
         }> | null
       }
     | {
-        _type: 'sectionContact'
-        _key: string
-        anchor: Slug | null
-        colorVariant: 'brand' | 'dark' | 'light' | 'muted' | null
-        heading: string | null
-        subheading: string | null
-        body: Array<{
-          children?: Array<{
-            marks?: Array<string>
-            text?: string
-            _type: 'span'
-            _key: string
-          }>
-          style?: 'normal'
-          listItem?: never
-          markDefs?: Array<{
-            href?: string
-            blank?: boolean
-            _type: 'link'
-            _key: string
-          }>
-          level?: number
-          _type: 'block'
-          _key: string
-        }> | null
-        privacyNotice: Array<{
-          children?: Array<{
-            marks?: Array<string>
-            text?: string
-            _type: 'span'
-            _key: string
-          }>
-          style?: 'normal'
-          listItem?: never
-          markDefs?: Array<{
-            href?: string
-            _type: 'link'
-            _key: string
-          }>
-          level?: number
-          _type: 'block'
-          _key: string
-        }> | null
-      }
-    | {
         _type: 'sectionCta'
         _key: string
         anchor: Slug | null
@@ -1705,6 +1696,59 @@ export type PageQueryResult = {
             _key: string
           }> | null
         }> | null
+      }
+    | {
+        _type: 'sectionForm'
+        _key: string
+        anchor: Slug | null
+        title: string | null
+        asideTitle: string | null
+        asideBody: Array<{
+          children?: Array<{
+            marks?: Array<string>
+            text?: string
+            _type: 'span'
+            _key: string
+          }>
+          style?: 'normal'
+          listItem?: 'bullet' | 'number'
+          markDefs?: Array<{
+            href?: string
+            blank?: boolean
+            _type: 'link'
+            _key: string
+          }>
+          level?: number
+          _type: 'block'
+          _key: string
+        }> | null
+        asideBullets: Array<string> | null
+        form: {
+          _id: string
+          title: string | null
+          fields: Array<{
+            _key: string
+            fieldType: 'email' | 'number' | 'select' | 'tel' | 'text' | 'textarea' | null
+            label: string | null
+            placeholder: string | null
+            required: boolean | null
+            options: Array<string> | null
+            validation: {
+              minLength?: number
+              maxLength?: number
+              min?: number
+              max?: number
+              pattern?: 'nip' | 'polishPhone' | 'postalCode' | 'url'
+              errorMessage?: string
+            } | null
+          }> | null
+          recipientEmail: string | null
+          emailSubject: string | null
+          emailIntro: string | null
+          confirmationSubject: string | null
+          confirmationIntro: string | null
+          successMessage: string | null
+        } | null
       }
     | {
         _type: 'sectionGallery'
@@ -2044,8 +2088,8 @@ declare module '@sanity/client' {
     '\n  *[_type == "post" && (!defined($excludeSlugs) || !(slug.current in $excludeSlugs))] | order(publishedAt desc) [0...$limit] {\n    _id,\n    title,\n    "slug": slug.current,\n    excerpt,\n    mainImage { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },\n    publishedAt,\n    "categories": categories[]-> { title, "slug": slug.current }\n  }\n': LatestPostsQueryResult
     '\n  {\n    "posts": *[_type == "post" && (!defined($category) || $category == "" || $category in categories[]->slug.current)] | order(publishedAt desc) [$from...$to] {\n      _id,\n      title,\n      "slug": slug.current,\n      excerpt,\n      mainImage { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },\n      publishedAt,\n      "categories": categories[]-> { title, "slug": slug.current }\n    },\n    "total": count(*[_type == "post" && (!defined($category) || $category == "" || $category in categories[]->slug.current)])\n  }\n': BlogListingQueryResult
     '\n  *[_type == "category"] | order(title asc) {\n    _id,\n    title,\n    "slug": slug.current\n  }\n': BlogCategoriesQueryResult
-    '\n  *[_type == "siteSettings"][0] {\n    businessName,\n    email,\n    phone,\n    address,\n    openingHours[] { days, hours }\n  }\n': ContactSiteSettingsQueryResult
+    '\n  *[_type == "form" && _id == $formId][0] {\n    _id,\n    title,\n    fields[] {\n      _key,\n      fieldType,\n      label,\n      placeholder,\n      required,\n      options,\n      validation\n    },\n    successMessage,\n    "hasConfirmation": defined(confirmationSubject)\n  }\n': FormQueryResult
     '\n  *[_type == "page" && defined(slug.current) && slug.current != "home"] {\n    "slug": slug.current\n  }\n': AllPagesSlugsQueryResult
-    '\n  *[_type == "page" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    seo,\n    pageBuilder[] {\n      _type,\n      _key,\n      _type == "sectionHero" => {\n        anchor,\n        colorVariant,\n        heading,\n        subheading,\n        primaryCta,\n        secondaryCta,\n        backgroundImage { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },\n        mediaType,\n        videoAsset { asset->{ url } },\n        videoPoster { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } }\n      },\n      _type == "sectionTextImage" => {\n        anchor,\n        colorVariant,\n        heading,\n        body,\n        image { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },\n        mediaPosition,\n        cta\n      },\n      _type == "sectionServices" => {\n        anchor,\n        colorVariant,\n        heading,\n        subheading,\n        services[]-> {\n          _id, title, description, icon,\n          image { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } }\n        }\n      },\n      _type == "sectionPricing" => {\n        anchor,\n        colorVariant,\n        heading,\n        subheading,\n        items[]-> {\n          _id,\n          name,\n          duration,\n          price,\n          description\n        }\n      },\n      _type == "sectionTestimonials" => {\n        anchor,\n        colorVariant,\n        heading,\n        testimonials[]-> {\n          _id, authorName, position, company, content, rating,\n          photo { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } }\n        }\n      },\n      _type == "sectionStats" => {\n        anchor,\n        colorVariant,\n        heading,\n        items\n      },\n      _type == "sectionGallery" => {\n        anchor,\n        colorVariant,\n        heading,\n        layout,\n        images[] { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } }\n      },\n      _type == "sectionBlogPreview" => {\n        _type,\n        anchor,\n        colorVariant,\n        heading,\n        subheading,\n        mode,\n        showViewAll,\n        "posts": select(\n          mode == "manual" => posts[]->{\n            _id, title, slug, excerpt,\n            mainImage { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },\n            publishedAt,\n            "categories": categories[]->{title}\n          },\n          *[_type == "post"] | order(publishedAt desc) [0..2] {\n            _id, title, slug, excerpt,\n            mainImage { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },\n            publishedAt,\n            "categories": categories[]->{title}\n          }\n        )\n      },\n      _type == "sectionCta" => {\n        anchor,\n        colorVariant,\n        heading,\n        subheading,\n        primaryCta,\n        secondaryCta\n      },\n      _type == "sectionContact" => {\n        anchor,\n        colorVariant,\n        heading,\n        subheading,\n        body,\n        privacyNotice\n      },\n      _type == "sectionTeam" => {\n        anchor,\n        colorVariant,\n        title,\n        subtitle,\n        members[]-> {\n          _id,\n          name,\n          role,\n          bio,\n          photo { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },\n          socialMedia\n        }\n      },\n      _type == "sectionFaq" => {\n        anchor,\n        colorVariant,\n        title,\n        subtitle,\n        items[] {\n          question,\n          answer\n        }\n      },\n      _type == "sectionProcess" => {\n        _type,\n        anchor,\n        colorVariant,\n        title,\n        subtitle,\n        layout,\n        steps[] {\n          icon,\n          title,\n          description\n        }\n      },\n      _type == "sectionBadges" => {\n        anchor,\n        colorVariant,\n        label,\n        badges[] {\n          logo { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },\n          alt,\n          url,\n          label\n        }\n      },\n      _type == "sectionTextVideo" => {\n        anchor,\n        colorVariant,\n        title,\n        body,\n        videoUrl,\n        mediaPosition,\n        caption,\n        cta\n      },\n      _type == "sectionRichText" => {\n        anchor,\n        colorVariant,\n        body,\n        maxWidth\n      }\n    }\n  }\n': PageQueryResult
+    '\n  *[_type == "page" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    seo,\n    pageBuilder[] {\n      _type,\n      _key,\n      _type == "sectionHero" => {\n        anchor,\n        colorVariant,\n        heading,\n        subheading,\n        primaryCta,\n        secondaryCta,\n        backgroundImage { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },\n        mediaType,\n        videoAsset { asset->{ url } },\n        videoPoster { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } }\n      },\n      _type == "sectionTextImage" => {\n        anchor,\n        colorVariant,\n        heading,\n        body,\n        image { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },\n        mediaPosition,\n        cta\n      },\n      _type == "sectionServices" => {\n        anchor,\n        colorVariant,\n        heading,\n        subheading,\n        services[]-> {\n          _id, title, description, icon,\n          image { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } }\n        }\n      },\n      _type == "sectionPricing" => {\n        anchor,\n        colorVariant,\n        heading,\n        subheading,\n        items[]-> {\n          _id,\n          name,\n          duration,\n          price,\n          description\n        }\n      },\n      _type == "sectionTestimonials" => {\n        anchor,\n        colorVariant,\n        heading,\n        testimonials[]-> {\n          _id, authorName, position, company, content, rating,\n          photo { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } }\n        }\n      },\n      _type == "sectionStats" => {\n        anchor,\n        colorVariant,\n        heading,\n        items\n      },\n      _type == "sectionGallery" => {\n        anchor,\n        colorVariant,\n        heading,\n        layout,\n        images[] { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } }\n      },\n      _type == "sectionBlogPreview" => {\n        _type,\n        anchor,\n        colorVariant,\n        heading,\n        subheading,\n        mode,\n        showViewAll,\n        "posts": select(\n          mode == "manual" => posts[]->{\n            _id, title, slug, excerpt,\n            mainImage { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },\n            publishedAt,\n            "categories": categories[]->{title}\n          },\n          *[_type == "post"] | order(publishedAt desc) [0..2] {\n            _id, title, slug, excerpt,\n            mainImage { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },\n            publishedAt,\n            "categories": categories[]->{title}\n          }\n        )\n      },\n      _type == "sectionCta" => {\n        anchor,\n        colorVariant,\n        heading,\n        subheading,\n        primaryCta,\n        secondaryCta\n      },\n      _type == "sectionTeam" => {\n        anchor,\n        colorVariant,\n        title,\n        subtitle,\n        members[]-> {\n          _id,\n          name,\n          role,\n          bio,\n          photo { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },\n          socialMedia\n        }\n      },\n      _type == "sectionFaq" => {\n        anchor,\n        colorVariant,\n        title,\n        subtitle,\n        items[] {\n          question,\n          answer\n        }\n      },\n      _type == "sectionProcess" => {\n        _type,\n        anchor,\n        colorVariant,\n        title,\n        subtitle,\n        layout,\n        steps[] {\n          icon,\n          title,\n          description\n        }\n      },\n      _type == "sectionBadges" => {\n        anchor,\n        colorVariant,\n        label,\n        badges[] {\n          logo { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },\n          alt,\n          url,\n          label\n        }\n      },\n      _type == "sectionTextVideo" => {\n        anchor,\n        colorVariant,\n        title,\n        body,\n        videoUrl,\n        mediaPosition,\n        caption,\n        cta\n      },\n      _type == "sectionRichText" => {\n        anchor,\n        colorVariant,\n        body,\n        maxWidth\n      },\n      _type == "sectionForm" => {\n        anchor,\n        title,\n        asideTitle,\n        asideBody,\n        asideBullets,\n        form-> {\n          _id,\n          title,\n          fields[] {\n            _key,\n            fieldType,\n            label,\n            placeholder,\n            required,\n            options,\n            validation\n          },\n          recipientEmail,\n          emailSubject,\n          emailIntro,\n          confirmationSubject,\n          confirmationIntro,\n          successMessage\n        }\n      }\n    }\n  }\n': PageQueryResult
   }
 }
