@@ -227,6 +227,24 @@ export const contactSiteSettingsQuery = defineQuery(`
   }
 `)
 
+export const formQuery = defineQuery(`
+  *[_type == "form" && _id == $formId][0] {
+    _id,
+    title,
+    fields[] {
+      _key,
+      fieldType,
+      label,
+      placeholder,
+      required,
+      options,
+      validation
+    },
+    successMessage,
+    "hasConfirmation": defined(confirmationSubject)
+  }
+`)
+
 export const allPagesSlugsQuery = defineQuery(`
   *[_type == "page" && defined(slug.current) && slug.current != "home"] {
     "slug": slug.current

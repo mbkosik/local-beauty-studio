@@ -33,6 +33,7 @@ const ProcessSection = dynamic(() => import('./ProcessSection').then((m) => m.Pr
 const BadgesSection = dynamic(() => import('./BadgesSection').then((m) => m.BadgesSection))
 const TextVideoSection = dynamic(() => import('./TextVideoSection').then((m) => m.TextVideoSection))
 const RichTextSection = dynamic(() => import('./RichTextSection').then((m) => m.RichTextSection))
+const FormSection = dynamic(() => import('./FormSection').then((m) => m.FormSection))
 import {
   PageBlock,
   ServicesSectionData,
@@ -40,6 +41,7 @@ import {
   BlogPreviewSectionData,
   PricingSectionData,
   TeamSectionData,
+  FormSectionData,
 } from '@/sanity/custom-types'
 
 type Props = {
@@ -97,6 +99,8 @@ export function PageBuilder({ blocks }: Props) {
             return <TextVideoSection key={block._key} data={asSection<SectionTextVideo>(block)} />
           case 'sectionRichText':
             return <RichTextSection key={block._key} data={asSection<SectionRichText>(block)} />
+          case 'sectionForm':
+            return <FormSection key={block._key} data={asSection<FormSectionData>(block)} />
           default:
             console.warn('[PageBuilder] Unknown block type:', (block as { _type: string })._type)
             return null
