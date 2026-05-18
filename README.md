@@ -45,8 +45,6 @@ The site owner manages all page content through an embedded Sanity Studio (`/stu
 - **Page Builder pattern** — the client arranges sections via drag & drop in Sanity Studio; the frontend maps `_type` to React components. No code changes needed to reorder or remove sections.
 - **ISR + Sanity webhook** — on-demand revalidation via `revalidateTag`, triggered by a Sanity webhook on content publish. No full rebuild, no fixed revalidation interval.
 - **Embedded Sanity Studio at `/studio`** — one domain, one deploy, no separate CMS hosting.
-- **Server → Client composition in Navbar** — data fetched in a Server Component, interactive state (mobile menu, theme toggle) handled in a Client Component receiving props.
-- **Unified `person` document** — blog post authors and salon staff members share the same Sanity document type, avoiding data duplication.
 - **Dynamic icon loading with cache** — Lucide icons are loaded by kebab-case string from CMS using `lucide-react/dynamicIconImports` + `next/dynamic`, with a module-level cache to avoid reinstantiating components on every render.
 
 ---
@@ -161,24 +159,24 @@ Open [http://localhost:3000](http://localhost:3000). The Sanity Studio is availa
 
 Content is managed through Sanity Studio. The page builder supports 16 section types:
 
-| Block type            | Component             | Description                                                               |
-| --------------------- | --------------------- | ------------------------------------------------------------------------- |
-| `sectionHero`         | `HeroSection`         | Full-width hero with image or autoplay background video, two CTA buttons  |
+| Block type            | Component             | Description                                                                                |
+| --------------------- | --------------------- | ------------------------------------------------------------------------------------------ |
+| `sectionHero`         | `HeroSection`         | Full-width hero with image or autoplay background video, two CTA buttons                   |
 | `sectionRichText`     | `RichTextSection`     | Standalone Portable Text block — headings, lists, links; configurable width and background |
-| `sectionTextImage`    | `TextImageSection`    | Portable Text body alongside an image, with configurable image position   |
-| `sectionTextVideo`    | `TextVideoSection`    | Portable Text body alongside an embedded YouTube or Vimeo video           |
-| `sectionServices`     | `ServicesSection`     | Grid of service cards pulled from `service` documents                     |
-| `sectionPricing`      | `PricingSection`      | Pricing table with name, description, price string, and duration          |
-| `sectionTestimonials` | `TestimonialsSection` | Carousel of client testimonials from `testimonial` documents              |
-| `sectionStats`        | `StatsSection`        | Animated counters for key numbers (years, clients, treatments, etc.)      |
-| `sectionGallery`      | `GallerySection`      | Photo gallery with grid or masonry layout                                 |
-| `sectionBlogPreview`  | `BlogPreviewSection`  | Latest N posts pulled automatically from the blog                         |
-| `sectionCta`          | `CtaSection`          | Call-to-action strip with heading, two buttons, and background style      |
-| `sectionContact`      | `ContactSection`      | Contact form + optional Google Maps embed; contact data from siteSettings |
-| `sectionTeam`         | `TeamSection`         | Staff member cards from `person` documents                                |
-| `sectionFaq`          | `FaqSection`          | Accordion FAQ with Portable Text answers                                  |
-| `sectionProcess`      | `ProcessSection`      | Numbered process steps in horizontal or vertical layout                   |
-| `sectionBadges`       | `BadgesSection`       | Trust badges / partner logos strip (max 6)                                |
+| `sectionTextImage`    | `TextImageSection`    | Portable Text body alongside an image, with configurable image position                    |
+| `sectionTextVideo`    | `TextVideoSection`    | Portable Text body alongside an embedded YouTube or Vimeo video                            |
+| `sectionServices`     | `ServicesSection`     | Grid of service cards pulled from `service` documents                                      |
+| `sectionPricing`      | `PricingSection`      | Pricing table with name, description, price string, and duration                           |
+| `sectionTestimonials` | `TestimonialsSection` | Carousel of client testimonials from `testimonial` documents                               |
+| `sectionStats`        | `StatsSection`        | Animated counters for key numbers (years, clients, treatments, etc.)                       |
+| `sectionGallery`      | `GallerySection`      | Photo gallery with grid or masonry layout                                                  |
+| `sectionBlogPreview`  | `BlogPreviewSection`  | Latest N posts pulled automatically from the blog                                          |
+| `sectionCta`          | `CtaSection`          | Call-to-action strip with heading, two buttons, and background style                       |
+| `sectionContact`      | `ContactSection`      | Contact form, contact data from siteSettings                                               |
+| `sectionTeam`         | `TeamSection`         | Staff member cards from `person` documents                                                 |
+| `sectionFaq`          | `FaqSection`          | Accordion FAQ with Portable Text answers                                                   |
+| `sectionProcess`      | `ProcessSection`      | Numbered process steps in horizontal or vertical layout                                    |
+| `sectionBadges`       | `BadgesSection`       | Trust badges / partner logos strip (max 6)                                                 |
 
 Each block supports an optional `anchor` field for same-page navigation (`#section-id`).
 
