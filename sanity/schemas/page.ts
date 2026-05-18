@@ -55,7 +55,6 @@ export const page = defineType({
         { type: 'sectionGallery' },
         { type: 'sectionBlogPreview' },
         { type: 'sectionCta' },
-        { type: 'sectionContact' },
         { type: 'sectionTeam' },
         { type: 'sectionFaq' },
         { type: 'sectionProcess' },

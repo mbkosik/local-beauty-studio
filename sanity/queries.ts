@@ -217,16 +217,6 @@ export const blogCategoriesQuery = defineQuery(`
   }
 `)
 
-export const contactSiteSettingsQuery = defineQuery(`
-  *[_type == "siteSettings"][0] {
-    businessName,
-    email,
-    phone,
-    address,
-    openingHours[] { days, hours }
-  }
-`)
-
 export const formQuery = defineQuery(`
   *[_type == "form" && _id == $formId][0] {
     _id,
@@ -356,14 +346,6 @@ export const pageQuery = defineQuery(`
         subheading,
         primaryCta,
         secondaryCta
-      },
-      _type == "sectionContact" => {
-        anchor,
-        colorVariant,
-        heading,
-        subheading,
-        body,
-        privacyNotice
       },
       _type == "sectionTeam" => {
         anchor,

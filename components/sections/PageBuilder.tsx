@@ -4,7 +4,6 @@ import type {
   SectionStats,
   SectionGallery,
   SectionCta,
-  SectionContact,
   SectionFaq,
   SectionProcess,
   SectionBadges,
@@ -14,7 +13,6 @@ import type {
 import dynamic from 'next/dynamic'
 import { HeroSection } from './HeroSection'
 import { CtaSection } from './CtaSection'
-import { ContactSection } from './ContactSection'
 import { ServicesSection } from './ServicesSection'
 
 const TextImageSection = dynamic(() => import('./TextImageSection').then((m) => m.TextImageSection))
@@ -85,8 +83,6 @@ export function PageBuilder({ blocks }: Props) {
             )
           case 'sectionCta':
             return <CtaSection key={block._key} data={asSection<SectionCta>(block)} />
-          case 'sectionContact':
-            return <ContactSection key={block._key} data={asSection<SectionContact>(block)} />
           case 'sectionTeam':
             return <TeamSection key={block._key} data={asSection<TeamSectionData>(block)} />
           case 'sectionFaq':
