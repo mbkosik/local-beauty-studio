@@ -71,6 +71,7 @@ export function buildZodSchema(fields: FormField[]): z.ZodObject<Record<string, 
         schema = schema.or(z.literal(''))
       }
 
+
       schema = schema.optional()
     }
 
