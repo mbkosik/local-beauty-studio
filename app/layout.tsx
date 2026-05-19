@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Playfair_Display, Lato } from 'next/font/google'
+import { GoogleTagManager } from '@next/third-parties/google'
 import './globals.css'
 import { ThemeProvider } from '@/components/shared/ThemeProvider'
 import { client } from '@/sanity/client'
@@ -69,7 +70,19 @@ export default function RootLayout({
       data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
+      <head>
+        {/* Cookiebot must load before GTM so consent is available when GTM fires */}
+        <script
+          id="Cookiebot"
+          src="https://consent.cookiebot.com/uc.js"
+          data-cbid={process.env.NEXT_PUBLIC_COOKIEBOT_ID}
+          data-blockingmode="auto"
+          type="text/javascript"
+          async
+        />
+      </head>
       <body className="flex min-h-full flex-col">
+        <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID!} />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
