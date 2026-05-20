@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import { getVariantProps } from '@/lib/color-variant'
 import type { SectionEmbed } from '@/sanity.types'
 
 interface EmbedSectionProps {
@@ -22,10 +23,8 @@ export function EmbedSection({ data }: EmbedSectionProps) {
     const scripts = Array.from(temp.querySelectorAll('script'))
     scripts.forEach((originalScript) => originalScript.remove())
 
-    // Inject non-script HTML (iframes, divs, etc.) via dangerouslySetInnerHTML equivalent
     container.innerHTML = temp.innerHTML
 
-    // Re-create and append each script so the browser executes it
     scripts.forEach((originalScript) => {
       const script = document.createElement('script')
       Array.from(originalScript.attributes).forEach((attr) => {
@@ -38,5 +37,11 @@ export function EmbedSection({ data }: EmbedSectionProps) {
     })
   }, [data.embedCode])
 
-  return <div ref={containerRef} />
+  return (
+    <section className="py-16 md:py-24" {...getVariantProps(data.colorVariant)}>
+      <div className="container mx-auto px-4">
+        <div ref={containerRef} />
+      </div>
+    </section>
+  )
 }
