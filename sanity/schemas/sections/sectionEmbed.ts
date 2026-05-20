@@ -2,6 +2,7 @@ import { defineField, defineType } from 'sanity'
 
 export const sectionEmbed = defineType({
   name: 'sectionEmbed',
+  title: 'Sekcja: Własny skrypt',
   type: 'object',
   fields: [
     defineField({
