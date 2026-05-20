@@ -62,6 +62,7 @@ export const page = defineType({
         { type: 'sectionTextVideo' },
         { type: 'sectionRichText' },
         { type: 'sectionForm' },
+        { type: 'sectionEmbed' },
       ],
       validation: (Rule) => Rule.required(),
     }),

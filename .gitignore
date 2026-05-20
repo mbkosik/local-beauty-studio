@@ -47,3 +47,5 @@ next-env.d.ts
 # vendor CSS copied by postinstall (generated from node_modules)
 /app/tw-animate.css
 /app/shadcn.css
+
+.claude
