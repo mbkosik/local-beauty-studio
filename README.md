@@ -65,7 +65,6 @@ local-beauty-studio/
 │   │   ├── RichTextSection.tsx
 │   │   ├── TextImageSection.tsx
 │   │   ├── TextVideoSection.tsx
-│   │   ├── TextMediaSection.tsx
 │   │   ├── ServicesSection.tsx
 │   │   ├── PricingSection.tsx
 │   │   ├── TestimonialsSection.tsx
@@ -73,7 +72,9 @@ local-beauty-studio/
 │   │   ├── GallerySection.tsx
 │   │   ├── BlogPreviewSection.tsx
 │   │   ├── CtaSection.tsx
-│   │   ├── ContactSection.tsx
+│   │   ├── FormSection.tsx
+│   │   ├── DynamicForm.tsx
+│   │   ├── EmbedSection.tsx
 │   │   ├── TeamSection.tsx
 │   │   ├── FaqSection.tsx
 │   │   ├── ProcessSection.tsx
@@ -157,7 +158,7 @@ Open [http://localhost:3000](http://localhost:3000). The Sanity Studio is availa
 
 ## Page Builder Blocks
 
-Content is managed through Sanity Studio. The page builder supports 16 section types:
+Content is managed through Sanity Studio. The page builder supports 17 section types:
 
 | Block type            | Component             | Description                                                                                |
 | --------------------- | --------------------- | ------------------------------------------------------------------------------------------ |
@@ -172,7 +173,8 @@ Content is managed through Sanity Studio. The page builder supports 16 section t
 | `sectionGallery`      | `GallerySection`      | Photo gallery with grid or masonry layout                                                  |
 | `sectionBlogPreview`  | `BlogPreviewSection`  | Latest N posts pulled automatically from the blog                                          |
 | `sectionCta`          | `CtaSection`          | Call-to-action strip with heading, two buttons, and background style                       |
-| `sectionContact`      | `ContactSection`      | Contact form, contact data from siteSettings                                               |
+| `sectionForm`         | `FormSection`         | Contact form with optional aside panel; form config and recipient pulled from `form` document |
+| `sectionEmbed`        | `EmbedSection`        | Raw HTML/script embed (widgets, booking, social); no anchor — Client Component             |
 | `sectionTeam`         | `TeamSection`         | Staff member cards from `person` documents                                                 |
 | `sectionFaq`          | `FaqSection`          | Accordion FAQ with Portable Text answers                                                   |
 | `sectionProcess`      | `ProcessSection`      | Numbered process steps in horizontal or vertical layout                                    |
