@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity'
+import { colorVariantField } from '../fields/colorVariantField'
 
 export const sectionEmbed = defineType({
   name: 'sectionEmbed',
@@ -13,6 +14,7 @@ export const sectionEmbed = defineType({
       type: 'text',
       validation: (Rule) => Rule.required(),
     }),
+    colorVariantField,
   ],
   preview: {
     prepare() {

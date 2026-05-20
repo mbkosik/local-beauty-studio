@@ -412,7 +412,8 @@ export const pageQuery = defineQuery(`
         maxWidth
       },
       _type == "sectionEmbed" => {
-        embedCode
+        embedCode,
+        colorVariant
       },
       _type == "sectionForm" => {
         anchor,
