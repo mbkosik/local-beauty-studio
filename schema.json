@@ -216,6 +216,29 @@
     }
   },
   {
+    "name": "sectionEmbed",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "sectionEmbed"
+          }
+        },
+        "embedCode": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
     "type": "type",
     "name": "form.reference",
     "value": {
@@ -4681,6 +4704,21 @@
                 "rest": {
                   "type": "inline",
                   "name": "sectionForm"
+                }
+              },
+              {
+                "type": "object",
+                "attributes": {
+                  "_key": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "rest": {
+                  "type": "inline",
+                  "name": "sectionEmbed"
                 }
               }
             ]

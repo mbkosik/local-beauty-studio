@@ -9,6 +9,7 @@ import type {
   SectionBadges,
   SectionTextVideo,
   SectionRichText,
+  SectionEmbed,
 } from '@/sanity.types'
 import dynamic from 'next/dynamic'
 import { HeroSection } from './HeroSection'
@@ -32,6 +33,7 @@ const BadgesSection = dynamic(() => import('./BadgesSection').then((m) => m.Badg
 const TextVideoSection = dynamic(() => import('./TextVideoSection').then((m) => m.TextVideoSection))
 const RichTextSection = dynamic(() => import('./RichTextSection').then((m) => m.RichTextSection))
 const FormSection = dynamic(() => import('./FormSection').then((m) => m.FormSection))
+const EmbedSection = dynamic(() => import('./EmbedSection').then((m) => m.EmbedSection))
 import {
   PageBlock,
   ServicesSectionData,
@@ -97,6 +99,8 @@ export function PageBuilder({ blocks }: Props) {
             return <RichTextSection key={block._key} data={asSection<SectionRichText>(block)} />
           case 'sectionForm':
             return <FormSection key={block._key} data={asSection<FormSectionData>(block)} />
+          case 'sectionEmbed':
+            return <EmbedSection key={block._key} data={asSection<SectionEmbed>(block)} />
           default:
             console.warn('[PageBuilder] Unknown block type:', (block as { _type: string })._type)
             return null

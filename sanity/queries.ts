@@ -411,6 +411,9 @@ export const pageQuery = defineQuery(`
         body,
         maxWidth
       },
+      _type == "sectionEmbed" => {
+        embedCode
+      },
       _type == "sectionForm" => {
         anchor,
         title,
