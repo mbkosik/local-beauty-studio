@@ -57,7 +57,7 @@
     "@sanity/client": "^7.22.0",
     "@sanity/types": "^5.23.0",
     "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
+    "@types/node": "^25.9.1",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "dotenv": "^17.4.2",
