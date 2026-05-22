@@ -1,9 +1,8 @@
 'use client'
 
-import Link from 'next/link'
 import { motion, useReducedMotion, type Variants } from 'motion/react'
-import { Button } from '@/components/ui/button'
 import { AnimatedSection } from '@/components/shared/AnimatedSection'
+import { CtaButton } from '@/components/shared/CtaButton'
 import { cn } from '@/lib/utils'
 import { getVariantProps, type ColorVariant } from '@/lib/color-variant'
 import type { SectionCta } from '@/sanity.types'
@@ -49,10 +48,6 @@ const BTN_CONFIG: Record<
   },
 }
 
-function externalProps(href: string) {
-  return href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {}
-}
-
 export function CtaSection({ data }: CtaSectionProps) {
   const { anchor, heading, subheading, primaryCta, secondaryCta, colorVariant } = data
   const id = anchor?.current ?? undefined
@@ -86,28 +81,24 @@ export function CtaSection({ data }: CtaSectionProps) {
                 transition={{ duration: 0.5, ease: 'easeOut', delay: 0.2 }}
               >
                 {hasPrimary && (
-                  <Button
-                    asChild
+                  <CtaButton
+                    href={primaryCta!.href!}
+                    label={primaryCta!.label ?? 'CTA'}
+                    section="cta"
                     size="lg"
                     variant={cfg.primaryBtn.variant}
                     className={cfg.primaryBtn.className}
-                  >
-                    <Link href={primaryCta!.href!} {...externalProps(primaryCta!.href!)}>
-                      {primaryCta!.label}
-                    </Link>
-                  </Button>
+                  />
                 )}
                 {hasSecondary && (
-                  <Button
-                    asChild
+                  <CtaButton
+                    href={secondaryCta!.href!}
+                    label={secondaryCta!.label ?? ''}
+                    section="cta"
                     size="lg"
                     variant={cfg.secondaryBtn.variant}
                     className={cfg.secondaryBtn.className}
-                  >
-                    <Link href={secondaryCta!.href!} {...externalProps(secondaryCta!.href!)}>
-                      {secondaryCta!.label}
-                    </Link>
-                  </Button>
+                  />
                 )}
               </motion.div>
             )}

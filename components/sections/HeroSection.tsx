@@ -1,10 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import Link from 'next/link'
 import { motion, useReducedMotion } from 'motion/react'
-import { Button } from '@/components/ui/button'
 import { SanityImage, type SanityImageData } from '@/components/shared/SanityImage'
+import { CtaButton } from '@/components/shared/CtaButton'
 import { cn } from '@/lib/utils'
 import type { SectionHero } from '@/sanity.types'
 
@@ -117,18 +116,21 @@ export function HeroSection({ data }: HeroSectionProps) {
           {primaryCta?.label && primaryCta?.href && (
             <motion.div {...fadeUp(0.25)}>
               <div className="mt-8 flex flex-wrap justify-center gap-4">
-                <Button asChild size="lg">
-                  <Link href={primaryCta.href}>{primaryCta.label}</Link>
-                </Button>
+                <CtaButton
+                  href={primaryCta.href}
+                  label={primaryCta.label ?? ''}
+                  section="hero_primary"
+                  size="lg"
+                />
                 {secondaryCta?.label && secondaryCta?.href && (
-                  <Button
-                    asChild
+                  <CtaButton
+                    href={secondaryCta.href}
+                    label={secondaryCta.label}
+                    section="hero_secondary"
                     variant="ghost"
                     size="lg"
                     className="border border-white/40 text-white hover:bg-white/10 hover:text-white"
-                  >
-                    <Link href={secondaryCta.href}>{secondaryCta.label}</Link>
-                  </Button>
+                  />
                 )}
               </div>
             </motion.div>

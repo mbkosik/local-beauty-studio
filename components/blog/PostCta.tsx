@@ -1,5 +1,4 @@
-import Link from 'next/link'
-import { Button } from '@/components/ui/button'
+import { CtaButton } from '@/components/shared/CtaButton'
 
 interface PostCtaProps {
   cta: {
@@ -18,9 +17,7 @@ export function PostCta({ cta }: PostCtaProps) {
       )}
       {cta.text && <p className="text-muted-foreground mb-6">{cta.text}</p>}
       {cta.buttonLabel && cta.buttonUrl && (
-        <Button asChild>
-          <Link href={cta.buttonUrl}>{cta.buttonLabel}</Link>
-        </Button>
+        <CtaButton href={cta.buttonUrl} label={cta.buttonLabel} section="post_cta" />
       )}
     </div>
   )
