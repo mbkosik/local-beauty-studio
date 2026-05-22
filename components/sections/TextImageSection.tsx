@@ -1,6 +1,6 @@
 import { type PortableTextBlock } from '@portabletext/react'
 import { SanityImage, type SanityImageData } from '@/components/shared/SanityImage'
-import { Button } from '@/components/ui/button'
+import { CtaButton } from '@/components/shared/CtaButton'
 import { TextMediaSection } from './TextMediaSection'
 import type { SectionTextImage } from '@/sanity.types'
 
@@ -23,9 +23,13 @@ export function TextImageSection({ data }: TextImageSectionProps) {
       ctaSlot={
         cta?.label && cta?.href ? (
           <div key="cta" className="mt-8">
-            <Button asChild variant="outline" size="lg">
-              <a href={cta.href}>{cta.label}</a>
-            </Button>
+            <CtaButton
+              href={cta.href}
+              label={cta.label}
+              section="text_image"
+              variant="outline"
+              size="lg"
+            />
           </div>
         ) : undefined
       }

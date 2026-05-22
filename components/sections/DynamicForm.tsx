@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form'
 import { standardSchemaResolver } from '@hookform/resolvers/standard-schema'
 import { toast } from 'sonner'
 import type { Form as SanityForm } from '@/sanity.types'
+import { trackEvent } from '@/lib/gtm'
 import { buildZodSchema } from '@/lib/validations/dynamic-form'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -59,6 +60,7 @@ export function DynamicForm({ fields, formId, successMessage }: DynamicFormProps
       })
       if (!res.ok) throw new Error()
       toast.success(successMessage)
+      trackEvent('form_submit', { form_name: formId })
       form.reset({ ...fieldDefaults, address_line_2: '', loadedAt: new Date().toISOString() })
     } catch {
       toast.error('Wystąpił błąd. Spróbuj ponownie.')
