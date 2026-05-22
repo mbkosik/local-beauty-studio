@@ -8,8 +8,15 @@ interface EmbedSectionProps {
   data: SectionEmbed & { _key?: string }
 }
 
+const maxWidthClass: Record<string, string> = {
+  narrow: 'max-w-prose',
+  normal: 'max-w-3xl',
+  wide: 'max-w-5xl',
+}
+
 export function EmbedSection({ data }: EmbedSectionProps) {
   const containerRef = useRef<HTMLDivElement>(null)
+  const widthClass = maxWidthClass[data.maxWidth ?? 'normal'] ?? 'max-w-3xl'
 
   useEffect(() => {
     const container = containerRef.current
@@ -39,7 +46,7 @@ export function EmbedSection({ data }: EmbedSectionProps) {
 
   return (
     <section className="py-16 md:py-24" {...getVariantProps(data.colorVariant)}>
-      <div className="container mx-auto px-4">
+      <div className={`${widthClass} mx-auto px-4`}>
         <div ref={containerRef} />
       </div>
     </section>

@@ -14,6 +14,20 @@ export const sectionEmbed = defineType({
       type: 'text',
       validation: (Rule) => Rule.required(),
     }),
+    defineField({
+      name: 'maxWidth',
+      title: 'Szerokość treści',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Wąski (65ch)', value: 'narrow' },
+          { title: 'Normalny', value: 'normal' },
+          { title: 'Szeroki', value: 'wide' },
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'normal',
+    }),
     colorVariantField,
   ],
   preview: {
