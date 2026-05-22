@@ -1,5 +1,5 @@
 import { type PortableTextBlock } from '@portabletext/react'
-import { Button } from '@/components/ui/button'
+import { CtaButton } from '@/components/shared/CtaButton'
 import { getEmbedUrl } from '@/lib/video-utils'
 import { TextMediaSection } from './TextMediaSection'
 import type { SectionTextVideo } from '@/sanity.types'
@@ -35,9 +35,13 @@ export function TextVideoSection({ data }: TextVideoSectionProps) {
       ctaSlot={
         cta?.label && cta?.href ? (
           <div key="cta" className="mt-8">
-            <Button asChild variant="outline" size="lg">
-              <a href={cta.href}>{cta.label}</a>
-            </Button>
+            <CtaButton
+              href={cta.href}
+              label={cta.label}
+              section="text_video"
+              variant="outline"
+              size="lg"
+            />
           </div>
         ) : undefined
       }

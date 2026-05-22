@@ -1,4 +1,4 @@
-import { Clock, Mail, MapPin, Phone } from 'lucide-react'
+import { Clock, Mail, MapPin } from 'lucide-react'
 import Link from 'next/link'
 import { client } from '@/sanity/client'
 import { footerQuery } from '@/sanity/queries'
@@ -7,6 +7,7 @@ import { SectionDivider } from '@/components/shared/SectionDivider'
 import { FacebookIcon } from '@/components/icons/FacebookIcon'
 import { InstagramIcon } from '@/components/icons/InstagramIcon'
 import { TikTokIcon } from '@/components/icons/TikTokIcon'
+import { PhoneLink } from '@/components/layout/PhoneLink'
 
 export async function Footer() {
   const settings = await client.fetch(footerQuery, {}, { next: { tags: ['settings'] } })
@@ -71,15 +72,7 @@ export async function Footer() {
                 {email}
               </a>
             )}
-            {phone && (
-              <a
-                href={`tel:${phone.replace(/\s/g, '')}`}
-                className="text-muted-foreground hover:text-foreground flex items-center gap-2 text-sm transition-colors"
-              >
-                <Phone size={15} aria-hidden="true" />
-                {phone}
-              </a>
-            )}
+            {phone && <PhoneLink phone={phone} />}
             {address && googleMapsUrl && (
               <a
                 href={googleMapsUrl}
