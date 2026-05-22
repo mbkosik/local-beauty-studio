@@ -47,6 +47,7 @@ export function EmbedSection({ data }: EmbedSectionProps) {
   return (
     <section className="py-16 md:py-24" {...getVariantProps(data.colorVariant)}>
       <div className={`${widthClass} mx-auto px-4`}>
+
         <div ref={containerRef} />
       </div>
     </section>
