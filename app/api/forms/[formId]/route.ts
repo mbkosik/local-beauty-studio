@@ -7,14 +7,14 @@ import { buildZodSchema } from '@/lib/validations/dynamic-form'
 import { client } from '@/sanity/client'
 import { Form } from '@/sanity.types'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
-
 const MIN_FORM_FILL_MS = 3000
 
 export async function POST(request: Request, props: { params: Promise<{ formId: string }> }) {
-  if (!process.env.CONTACT_FROM_EMAIL) {
+  if (!process.env.RESEND_API_KEY || !process.env.CONTACT_FROM_EMAIL) {
     return Response.json({ error: 'Brak konfiguracji email' }, { status: 500 })
   }
+
+  const resend = new Resend(process.env.RESEND_API_KEY)
 
   const { formId } = await props.params
 
