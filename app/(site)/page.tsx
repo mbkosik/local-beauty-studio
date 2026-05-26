@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
-import { client } from '@/sanity/client'
+import { draftMode } from 'next/headers'
+import { client, getClient } from '@/sanity/client'
 import { pageQuery, siteSettingsQuery } from '@/sanity/queries'
 import { PageBuilder } from '@/components/sections/PageBuilder'
 import { JsonLd } from '@/components/shared/JsonLd'
@@ -38,9 +39,12 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function HomePage() {
+  const { isEnabled: isDraftMode } = await draftMode()
+  const sanityClient = getClient(isDraftMode)
+
   const [page, settings] = await Promise.all([
-    client.fetch(pageQuery, { slug: 'home' }, { next: { tags: ['page'] } }),
-    client.fetch(siteSettingsQuery, {}, { next: { tags: ['settings'] } }),
+    sanityClient.fetch(pageQuery, { slug: 'home' }, { next: { tags: ['page'] } }),
+    sanityClient.fetch(siteSettingsQuery, {}, { next: { tags: ['settings'] } }),
   ])
 
   if (!page) {
