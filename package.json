@@ -14,7 +14,9 @@
     "prepare": "husky",
     "postinstall": "node scripts/copy-vendor-css.mjs",
     "typegen": "sanity schema extract && sanity typegen generate",
-    "import-posts": "npx tsx scripts/import-posts.ts"
+    "import-posts": "npx tsx scripts/import-posts.ts",
+    "seed-demo": "npx tsx scripts/seed-demo.ts",
+    "reset-demo": "npx tsx scripts/reset-demo.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
