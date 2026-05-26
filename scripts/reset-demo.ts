@@ -5,7 +5,7 @@
  * Required in .env.local:
  *   NEXT_PUBLIC_SANITY_PROJECT_ID
  *   NEXT_PUBLIC_SANITY_API_VERSION
- *   SANITY_DEMO_TOKEN  (Editor role, access to both datasets)
+ *   SANITY_SEED_API_TOKEN  (Editor role, access to both datasets)
  */
 
 import { createClient } from '@sanity/client'
@@ -19,7 +19,7 @@ dotenv.config({ path: '.env.local' })
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID
 const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION ?? '2024-01-01'
-const token = process.env.SANITY_DEMO_TOKEN
+const token = process.env.SANITY_SEED_API_TOKEN
 
 const MUTATION_BATCH = 250
 
@@ -27,7 +27,7 @@ const MUTATION_BATCH = 250
 
 async function deleteDemoDocuments(): Promise<void> {
   if (!projectId) throw new Error('Missing NEXT_PUBLIC_SANITY_PROJECT_ID in .env.local')
-  if (!token) throw new Error('Missing SANITY_DEMO_TOKEN in .env.local')
+  if (!token) throw new Error('Missing SANITY_SEED_API_TOKEN in .env.local')
 
   const client = createClient({ projectId, dataset: 'demo', apiVersion, useCdn: false, token })
 
