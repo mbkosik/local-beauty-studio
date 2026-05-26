@@ -6,7 +6,7 @@ export async function GET(request: NextRequest) {
   const secret = request.nextUrl.searchParams.get('secret')
   const redirectTo = request.nextUrl.searchParams.get('redirect') ?? '/'
 
-  if (secret !== process.env.SANITY_PREVIEW_SECRET) {
+  if (secret !== process.env.NEXT_PUBLIC_SANITY_PREVIEW_SECRET) {
     return new Response('Invalid secret', { status: 401 })
   }
 

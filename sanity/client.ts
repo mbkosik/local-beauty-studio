@@ -16,6 +16,10 @@ export const previewClient = createClient({
   useCdn: false,
   token: process.env.SANITY_API_READ_TOKEN,
   perspective: 'previewDrafts',
+  stega: {
+    enabled: true,
+    studioUrl: '/studio',
+  },
 })
 
 export function getClient(isDraftMode: boolean) {

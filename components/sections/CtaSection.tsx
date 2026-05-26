@@ -53,7 +53,7 @@ export function CtaSection({ data }: CtaSectionProps) {
   const id = anchor?.current ?? undefined
   const prefersReducedMotion = useReducedMotion()
 
-  const cfg = BTN_CONFIG[(colorVariant ?? 'light') as ColorVariant]
+  const cfg = BTN_CONFIG[(colorVariant || 'light') as ColorVariant] ?? BTN_CONFIG['light']
   const hasPrimary = !!(primaryCta?.label && primaryCta?.href)
   const hasSecondary = !!(secondaryCta?.label && secondaryCta?.href)
 
