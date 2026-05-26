@@ -1,12 +1,18 @@
-import { Navbar } from '@/components/layout/Navbar'
-import { Footer } from '@/components/layout/Footer'
+import { draftMode } from 'next/headers'
 
-export default function SiteLayout({ children }: { children: React.ReactNode }) {
+import { Footer } from '@/components/layout/Footer'
+import { Navbar } from '@/components/layout/Navbar'
+import { VisualEditingLoader } from '@/components/shared/VisualEditingLoader'
+
+export default async function SiteLayout({ children }: { children: React.ReactNode }) {
+  const { isEnabled } = await draftMode()
+
   return (
     <>
       <Navbar />
       <main className="flex-1">{children}</main>
       <Footer />
+      {isEnabled && <VisualEditingLoader />}
     </>
   )
 }

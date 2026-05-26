@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { draftMode } from 'next/headers'
 import { Playfair_Display, Lato } from 'next/font/google'
 import { GoogleTagManager } from '@next/third-parties/google'
 import './globals.css'
@@ -57,11 +58,12 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const { isEnabled: isDraftMode } = await draftMode()
   return (
     // suppressHydrationWarning needed — next-themes sets class on html before hydration
     <html
@@ -72,14 +74,16 @@ export default function RootLayout({
     >
       <head>
         {/* Cookiebot must load before GTM so consent is available when GTM fires */}
-        <script
-          id="Cookiebot"
-          src="https://consent.cookiebot.com/uc.js"
-          data-cbid={process.env.NEXT_PUBLIC_COOKIEBOT_ID}
-          data-blockingmode="auto"
-          type="text/javascript"
-          async
-        />
+        {process.env.NODE_ENV === 'production' && !isDraftMode && (
+          <script
+            id="Cookiebot"
+            src="https://consent.cookiebot.com/uc.js"
+            data-cbid={process.env.NEXT_PUBLIC_COOKIEBOT_ID}
+            data-blockingmode="auto"
+            type="text/javascript"
+            async
+          />
+        )}
       </head>
       <body className="flex min-h-full flex-col">
         <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID!} />
