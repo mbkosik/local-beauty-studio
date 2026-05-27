@@ -1,6 +1,7 @@
 import { SectionBadges } from '@/sanity.types'
 import { SanityImage, SanityImageData } from '@/components/shared/SanityImage'
 import { getVariantProps } from '@/lib/color-variant'
+import { cleanAnchor } from '@/lib/sanity-utils'
 
 interface BadgesSectionProps {
   data: SectionBadges
@@ -8,7 +9,7 @@ interface BadgesSectionProps {
 
 export function BadgesSection({ data }: BadgesSectionProps) {
   const { anchor, label, badges, colorVariant } = data
-  const id = anchor?.current ?? undefined
+  const id = cleanAnchor(anchor)
 
   if (!badges?.length) return null
 

@@ -14,6 +14,7 @@ import {
 import { AnimatedSection } from '@/components/shared/AnimatedSection'
 import { TestimonialCard } from '@/components/blocks/TestimonialCard'
 import { getVariantProps } from '@/lib/color-variant'
+import { cleanAnchor } from '@/lib/sanity-utils'
 import type { TestimonialsSectionData } from '@/sanity/custom-types'
 
 interface TestimonialsSectionProps {
@@ -22,7 +23,7 @@ interface TestimonialsSectionProps {
 
 export function TestimonialsSection({ data }: TestimonialsSectionProps) {
   const { anchor, heading, testimonials, colorVariant } = data
-  const id = anchor?.current ?? undefined
+  const id = cleanAnchor(anchor)
   const prefersReducedMotion = useReducedMotion()
 
   const [api, setApi] = useState<CarouselApi>()

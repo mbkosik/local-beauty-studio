@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button'
 import { AnimatedSection } from '@/components/shared/AnimatedSection'
 import { PostCard } from '@/components/blog/PostCard'
 import { getVariantProps } from '@/lib/color-variant'
+import { cleanAnchor } from '@/lib/sanity-utils'
 import type { BlogPreviewSectionData } from '@/sanity/custom-types'
 import type { BlogPost } from '@/sanity/custom-types'
 
@@ -12,7 +13,7 @@ interface BlogPreviewSectionProps {
 
 export function BlogPreviewSection({ data }: BlogPreviewSectionProps) {
   const { anchor, heading, subheading, posts, showViewAll, colorVariant } = data
-  const id = anchor?.current ?? undefined
+  const id = cleanAnchor(anchor)
 
   if (!posts || posts.length === 0) return null
 

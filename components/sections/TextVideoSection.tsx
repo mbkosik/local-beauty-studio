@@ -2,6 +2,7 @@ import { type PortableTextBlock } from '@portabletext/react'
 import { CtaButton } from '@/components/shared/CtaButton'
 import { getEmbedUrl } from '@/lib/video-utils'
 import { TextMediaSection } from './TextMediaSection'
+import { cleanAnchor } from '@/lib/sanity-utils'
 import type { SectionTextVideo } from '@/sanity.types'
 
 interface TextVideoSectionProps {
@@ -19,7 +20,7 @@ export function TextVideoSection({ data }: TextVideoSectionProps) {
     colorVariant,
     cta,
   } = data
-  const id = anchor?.current ?? undefined
+  const id = cleanAnchor(anchor)
   if (!videoUrl) return null
 
   const embedUrl = getEmbedUrl(videoUrl)

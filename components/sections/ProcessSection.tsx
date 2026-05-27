@@ -5,6 +5,7 @@ import { ArrowRight, ArrowDown } from 'lucide-react'
 import { AnimatedSection } from '@/components/shared/AnimatedSection'
 import { getDynamicIcon } from '@/lib/icon-service'
 import { getVariantProps } from '@/lib/color-variant'
+import { cleanAnchor } from '@/lib/sanity-utils'
 import type { SectionProcess } from '@/sanity.types'
 
 type ProcessStep = {
@@ -92,7 +93,7 @@ function VerticalLayout({ steps }: { steps: ProcessStep[] }) {
 
 export function ProcessSection({ data }: ProcessSectionProps) {
   const { anchor, title, subtitle, layout, steps, colorVariant } = data
-  const id = anchor?.current ?? undefined
+  const id = cleanAnchor(anchor)
 
   if (!steps?.length) return null
 
