@@ -7,6 +7,7 @@ import { AnimatedSection } from '@/components/shared/AnimatedSection'
 import { SanityImage, type SanityImageData } from '@/components/shared/SanityImage'
 import { getDynamicIcon } from '@/lib/icon-service'
 import { getVariantProps } from '@/lib/color-variant'
+import { cleanAnchor } from '@/lib/sanity-utils'
 import { ServicesSectionData } from '@/sanity/custom-types'
 
 interface ServicesSectionProps {
@@ -25,7 +26,7 @@ const CARD_VARIANTS: Variants = {
 
 export function ServicesSection({ data }: ServicesSectionProps) {
   const { anchor, heading, subheading, services, colorVariant } = data
-  const id = anchor?.current ?? undefined
+  const id = cleanAnchor(anchor)
   const prefersReducedMotion = useReducedMotion()
 
   if (!services?.length) return null

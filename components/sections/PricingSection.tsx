@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/table'
 import { AnimatedSection } from '@/components/shared/AnimatedSection'
 import { getVariantProps } from '@/lib/color-variant'
+import { cleanAnchor } from '@/lib/sanity-utils'
 import type { PricingSectionData } from '@/sanity/custom-types'
 
 interface PricingSectionProps {
@@ -18,7 +19,7 @@ interface PricingSectionProps {
 
 export function PricingSection({ data }: PricingSectionProps) {
   const { anchor, heading, subheading, items, colorVariant } = data
-  const id = anchor?.current ?? undefined
+  const id = cleanAnchor(anchor)
 
   const validItems = items?.filter((item) => item !== null) ?? []
   if (!validItems.length) return null

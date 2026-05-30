@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { stegaClean } from '@sanity/client/stega'
 import { cn } from '@/lib/utils'
 import type { BlogCategory } from '@/sanity/custom-types'
 
@@ -27,11 +28,12 @@ export function CategoryFilter({ categories, activeCategory }: CategoryFilterPro
 
       {categories.map((cat) => {
         if (!cat.slug) return null
-        const isActive = activeCategory === cat.slug
+        const cleanSlug = stegaClean(cat.slug) ?? cat.slug
+        const isActive = activeCategory === cleanSlug
         return (
           <Link
             key={cat._id}
-            href={`/blog?category=${cat.slug}`}
+            href={`/blog?category=${cleanSlug}`}
             className={cn(
               'focus-visible:ring-ring inline-flex items-center rounded-full border px-4 py-1.5 text-sm font-medium transition-colors duration-200 focus-visible:ring-2 focus-visible:outline-none',
               isActive

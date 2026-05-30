@@ -1,7 +1,9 @@
 import { type PortableTextBlock } from '@portabletext/react'
+import { stegaClean } from '@sanity/client/stega'
 import { SanityImage, type SanityImageData } from '@/components/shared/SanityImage'
 import { CtaButton } from '@/components/shared/CtaButton'
 import { TextMediaSection } from './TextMediaSection'
+import { cleanAnchor } from '@/lib/sanity-utils'
 import type { SectionTextImage } from '@/sanity.types'
 
 interface TextImageSectionProps {
@@ -9,8 +11,17 @@ interface TextImageSectionProps {
 }
 
 export function TextImageSection({ data }: TextImageSectionProps) {
-  const { anchor, heading, body, image, mediaPosition = 'right', colorVariant, cta } = data
-  const id = anchor?.current ?? undefined
+  const {
+    anchor,
+    heading,
+    body,
+    image,
+    mediaPosition: rawMediaPosition = 'right',
+    colorVariant,
+    cta,
+  } = data
+  const id = cleanAnchor(anchor)
+  const mediaPosition = (stegaClean(rawMediaPosition) ?? 'right') as 'left' | 'right'
   if (!image?.asset || !body) return null
 
   return (
@@ -19,7 +30,7 @@ export function TextImageSection({ data }: TextImageSectionProps) {
       colorVariant={colorVariant}
       title={heading}
       body={body as PortableTextBlock[]}
-      mediaPosition={mediaPosition as 'left' | 'right'}
+      mediaPosition={mediaPosition}
       ctaSlot={
         cta?.label && cta?.href ? (
           <div key="cta" className="mt-8">

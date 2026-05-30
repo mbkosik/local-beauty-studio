@@ -1,6 +1,7 @@
 import { PortableText, type PortableTextComponents } from '@portabletext/react'
 import { CheckCircle2 } from 'lucide-react'
 import { AnimatedSection } from '@/components/shared/AnimatedSection'
+import { cleanAnchor } from '@/lib/sanity-utils'
 import type { FormSectionData } from '@/sanity/custom-types'
 import { DynamicForm } from './DynamicForm'
 import type { Form as SanityForm } from '@/sanity.types'
@@ -56,7 +57,7 @@ const asideBodyComponents: PortableTextComponents = {
 
 export function FormSection({ data, id }: FormSectionProps) {
   const { anchor, title, asideTitle, asideBody, asideBullets, form } = data
-  const sectionId = id ?? anchor?.current ?? undefined
+  const sectionId = id ?? cleanAnchor(anchor)
 
   if (!form) return null
 

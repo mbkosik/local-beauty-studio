@@ -1,6 +1,7 @@
 import { AnimatedSection } from '@/components/shared/AnimatedSection'
 import { StatCard } from '@/components/blocks/StatCard'
 import { getVariantProps } from '@/lib/color-variant'
+import { cleanAnchor } from '@/lib/sanity-utils'
 import type { SectionStats } from '@/sanity.types'
 
 interface StatsSectionProps {
@@ -9,7 +10,7 @@ interface StatsSectionProps {
 
 export function StatsSection({ data }: StatsSectionProps) {
   const { anchor, heading, items, colorVariant } = data
-  const id = anchor?.current ?? undefined
+  const id = cleanAnchor(anchor)
 
   return (
     <section id={id} {...getVariantProps(colorVariant)}>
