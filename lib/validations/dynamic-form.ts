@@ -35,7 +35,10 @@ export function buildZodSchema(fields: FormField[]): z.ZodObject<Record<string, 
           s = s.max(field.validation.maxLength, errorMessage)
         }
         if (field.validation?.pattern) {
-          s = s.regex(PATTERNS[field.validation.pattern], errorMessage)
+          const patternKey = (stegaClean(field.validation.pattern) ??
+            field.validation.pattern) as keyof typeof PATTERNS
+          const regex = PATTERNS[patternKey]
+          if (regex) s = s.regex(regex, errorMessage)
         }
         schema = s
         break
