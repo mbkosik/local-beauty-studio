@@ -1,3 +1,4 @@
+import { stegaClean } from '@sanity/client/stega'
 import { SectionBadges } from '@/sanity.types'
 import { SanityImage, SanityImageData } from '@/components/shared/SanityImage'
 import { getVariantProps } from '@/lib/color-variant'
@@ -29,7 +30,7 @@ export function BadgesSection({ data }: BadgesSectionProps) {
             <div key={badge._key ?? index} className="flex flex-col items-center gap-2">
               {badge.url ? (
                 <a
-                  href={badge.url}
+                  href={stegaClean(badge.url) ?? badge.url ?? undefined}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`${badge.alt || badge.label || 'Odznaka'} (otwiera nową kartę)`}

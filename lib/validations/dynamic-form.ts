@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { stegaClean } from '@sanity/client/stega'
 
 import { Form } from '@/sanity.types'
 
@@ -17,11 +18,12 @@ export function buildZodSchema(fields: FormField[]): z.ZodObject<Record<string, 
   for (const field of fields) {
     if (!field.fieldType || !field._key) continue
 
+    const fieldType = stegaClean(field.fieldType) ?? field.fieldType
     const errorMessage = field.validation?.errorMessage
 
     let schema: z.ZodTypeAny
 
-    switch (field.fieldType) {
+    switch (fieldType) {
       case 'text':
       case 'tel':
       case 'textarea': {
@@ -62,11 +64,7 @@ export function buildZodSchema(fields: FormField[]): z.ZodObject<Record<string, 
     }
 
     if (!field.required) {
-      if (
-        field.fieldType === 'text' ||
-        field.fieldType === 'tel' ||
-        field.fieldType === 'textarea'
-      ) {
+      if (fieldType === 'text' || fieldType === 'tel' || fieldType === 'textarea') {
         // HTML inputs submit '' for empty fields; treat it as "not provided"
         schema = schema.or(z.literal(''))
       }

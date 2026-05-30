@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
+import { stegaClean } from '@sanity/client/stega'
 import { SanityImage, type SanityImageData } from '@/components/shared/SanityImage'
 import { CtaButton } from '@/components/shared/CtaButton'
 import { cn } from '@/lib/utils'
@@ -29,7 +30,7 @@ export function HeroSection({ data }: HeroSectionProps) {
   const id = cleanAnchor(anchor)
   const reducedMotion = useReducedMotion()
   const videoUrl = (videoAsset as unknown as ResolvedVideoAsset)?.asset?.url
-  const isVideo = mediaType === 'video' && !!videoUrl
+  const isVideo = stegaClean(mediaType) === 'video' && !!videoUrl
   const hasImage = !isVideo && !!backgroundImage?.asset
   const hasMedia = isVideo || hasImage
   const [posterVisible, setPosterVisible] = useState(true)

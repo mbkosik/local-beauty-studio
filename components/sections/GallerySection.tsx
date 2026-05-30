@@ -1,6 +1,7 @@
 'use client'
 
 import { useReducedMotion } from 'motion/react'
+import { stegaClean } from '@sanity/client/stega'
 import { AnimatedSection } from '@/components/shared/AnimatedSection'
 import { getVariantProps } from '@/lib/color-variant'
 import { cleanAnchor } from '@/lib/sanity-utils'
@@ -29,7 +30,7 @@ export function GallerySection({ data }: GallerySectionProps) {
             </h2>
           )}
 
-          {layout === 'masonry' ? (
+          {stegaClean(layout) === 'masonry' ? (
             <MasonryGallery images={images} prefersReducedMotion={prefersReducedMotion} />
           ) : (
             <GridGallery images={images} prefersReducedMotion={prefersReducedMotion} />

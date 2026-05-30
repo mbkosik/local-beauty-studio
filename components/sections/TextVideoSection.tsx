@@ -1,4 +1,5 @@
 import { type PortableTextBlock } from '@portabletext/react'
+import { stegaClean } from '@sanity/client/stega'
 import { CtaButton } from '@/components/shared/CtaButton'
 import { getEmbedUrl } from '@/lib/video-utils'
 import { TextMediaSection } from './TextMediaSection'
@@ -15,15 +16,16 @@ export function TextVideoSection({ data }: TextVideoSectionProps) {
     title,
     body,
     videoUrl,
-    mediaPosition = 'right',
+    mediaPosition: rawMediaPosition = 'right',
     caption,
     colorVariant,
     cta,
   } = data
   const id = cleanAnchor(anchor)
+  const mediaPosition = (stegaClean(rawMediaPosition) ?? 'right') as 'left' | 'right'
   if (!videoUrl) return null
 
-  const embedUrl = getEmbedUrl(videoUrl)
+  const embedUrl = getEmbedUrl(stegaClean(videoUrl) ?? videoUrl)
   if (!embedUrl) return null
 
   return (
@@ -32,7 +34,7 @@ export function TextVideoSection({ data }: TextVideoSectionProps) {
       colorVariant={colorVariant}
       title={title}
       body={body as PortableTextBlock[]}
-      mediaPosition={mediaPosition as 'left' | 'right'}
+      mediaPosition={mediaPosition}
       ctaSlot={
         cta?.label && cta?.href ? (
           <div key="cta" className="mt-8">

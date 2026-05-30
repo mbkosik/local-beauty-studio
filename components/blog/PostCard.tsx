@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import dayjs from 'dayjs'
 import 'dayjs/locale/pl'
+import { stegaClean } from '@sanity/client/stega'
 import { SanityImage, type SanityImageData } from '@/components/shared/SanityImage'
 import type { BlogPost } from '@/sanity/custom-types'
 import { DATE_FORMAT_POST } from '@/config/date-formats'
@@ -18,7 +19,7 @@ export function PostCard({ post }: PostCardProps) {
 
   return (
     <Link
-      href={`/blog/${slug}`}
+      href={`/blog/${stegaClean(slug) ?? slug}`}
       className="group border-border bg-card focus-visible:ring-ring flex flex-col overflow-hidden rounded-xl border shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md focus-visible:ring-2 focus-visible:outline-none"
     >
       <div className="bg-muted relative aspect-video overflow-hidden">

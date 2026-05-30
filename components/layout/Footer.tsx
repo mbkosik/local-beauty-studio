@@ -1,5 +1,6 @@
 import { Clock, Mail, MapPin } from 'lucide-react'
 import Link from 'next/link'
+import { stegaClean } from '@sanity/client/stega'
 import { client } from '@/sanity/client'
 import { footerQuery } from '@/sanity/queries'
 import { SanityImage } from '@/components/shared/SanityImage'
@@ -65,7 +66,7 @@ export async function Footer() {
             <h3 className="text-sm font-semibold tracking-wider uppercase">Kontakt</h3>
             {email && (
               <a
-                href={`mailto:${email}`}
+                href={`mailto:${stegaClean(email) ?? email}`}
                 className="text-muted-foreground hover:text-foreground flex items-center gap-2 text-sm transition-colors"
               >
                 <Mail size={15} aria-hidden="true" />
@@ -75,7 +76,7 @@ export async function Footer() {
             {phone && <PhoneLink phone={phone} />}
             {address && googleMapsUrl && (
               <a
-                href={googleMapsUrl}
+                href={stegaClean(googleMapsUrl) ?? googleMapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-foreground flex items-start gap-2 text-sm transition-colors"
@@ -119,7 +120,7 @@ export async function Footer() {
             <div className="flex gap-4">
               {social?.facebook && (
                 <a
-                  href={social.facebook}
+                  href={stegaClean(social.facebook) ?? social.facebook}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Facebook (otwiera nową kartę)"
@@ -130,7 +131,7 @@ export async function Footer() {
               )}
               {social?.instagram && (
                 <a
-                  href={social.instagram}
+                  href={stegaClean(social.instagram) ?? social.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Instagram (otwiera nową kartę)"
@@ -141,7 +142,7 @@ export async function Footer() {
               )}
               {social?.tiktok && (
                 <a
-                  href={social.tiktok}
+                  href={stegaClean(social.tiktok) ?? social.tiktok}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="TikTok (otwiera nową kartę)"
@@ -161,12 +162,13 @@ export async function Footer() {
               <ul className="flex flex-wrap justify-center gap-x-6 gap-y-2">
                 {footerLinks.map((link, i) => {
                   if (!link.label || !link.url) return null
-                  const isExternal = link.url.startsWith('http')
+                  const cleanLinkUrl = stegaClean(link.url) ?? link.url
+                  const isExternal = cleanLinkUrl.startsWith('http')
                   return (
                     <li key={i}>
                       {isExternal ? (
                         <a
-                          href={link.url}
+                          href={cleanLinkUrl}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-muted-foreground hover:text-foreground text-sm transition-colors"
@@ -176,7 +178,7 @@ export async function Footer() {
                         </a>
                       ) : (
                         <Link
-                          href={link.url}
+                          href={cleanLinkUrl}
                           className="text-muted-foreground hover:text-foreground text-sm transition-colors"
                         >
                           {link.label}

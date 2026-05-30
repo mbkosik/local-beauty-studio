@@ -2,6 +2,7 @@
 
 import { createElement, Fragment } from 'react'
 import { ArrowRight, ArrowDown } from 'lucide-react'
+import { stegaClean } from '@sanity/client/stega'
 import { AnimatedSection } from '@/components/shared/AnimatedSection'
 import { getDynamicIcon } from '@/lib/icon-service'
 import { getVariantProps } from '@/lib/color-variant'
@@ -113,7 +114,7 @@ export function ProcessSection({ data }: ProcessSectionProps) {
             <p className="text-muted-foreground mx-auto mt-4 max-w-2xl text-lg">{subtitle}</p>
           )}
         </div>
-        {layout === 'horizontal' ? (
+        {stegaClean(layout) === 'horizontal' ? (
           <HorizontalLayout steps={steps} />
         ) : (
           <VerticalLayout steps={steps} />
