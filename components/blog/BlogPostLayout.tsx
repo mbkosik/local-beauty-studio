@@ -2,6 +2,7 @@ import dayjs from 'dayjs'
 import 'dayjs/locale/pl'
 import Link from 'next/link'
 import { Clock } from 'lucide-react'
+import { stegaClean } from '@sanity/client/stega'
 import { SanityImage, type SanityImageData } from '@/components/shared/SanityImage'
 import type { SinglePost } from '@/sanity/custom-types'
 import { DATE_FORMAT_POST } from '@/config/date-formats'
@@ -25,17 +26,18 @@ export function BlogPostLayout({ post, readingTime, children }: BlogPostLayoutPr
       <header className="mb-4">
         {categories && categories.length > 0 && (
           <div className="mb-4 flex flex-wrap gap-2">
-            {categories.map((cat) =>
-              cat.slug?.current ? (
+            {categories.map((cat) => {
+              const catSlug = stegaClean(cat.slug?.current)
+              return catSlug ? (
                 <Link
-                  key={cat.slug.current}
-                  href={`/blog?category=${cat.slug.current}`}
+                  key={catSlug}
+                  href={`/blog?category=${catSlug}`}
                   className="bg-brand/10 text-brand hover:bg-brand/20 inline-block rounded-full px-3 py-1 text-sm font-medium transition-colors"
                 >
                   {cat.title}
                 </Link>
               ) : null
-            )}
+            })}
           </div>
         )}
 
@@ -80,7 +82,7 @@ export function BlogPostLayout({ post, readingTime, children }: BlogPostLayoutPr
         <div className="my-4">
           <ShareButtons
             title={post.title ?? ''}
-            slug={post.slug?.current ?? ''}
+            slug={stegaClean(post.slug?.current) ?? ''}
             excerpt={post.excerpt ?? undefined}
           />
         </div>

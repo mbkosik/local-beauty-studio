@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { Share2, Link, Check } from 'lucide-react'
+import { stegaClean } from '@sanity/client/stega'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { FacebookIcon } from '@/components/icons/FacebookIcon'
@@ -18,7 +19,7 @@ interface ShareButtonsProps {
 export function ShareButtons({ title, slug, excerpt }: ShareButtonsProps) {
   const [copied, setCopied] = useState(false)
 
-  const url = `${process.env.NEXT_PUBLIC_SITE_URL}/blog/${slug}`
+  const url = `${process.env.NEXT_PUBLIC_SITE_URL}/blog/${stegaClean(slug) ?? slug}`
 
   async function handleNativeShare() {
     if (typeof navigator !== 'undefined' && navigator.share) {

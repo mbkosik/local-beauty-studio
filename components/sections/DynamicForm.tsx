@@ -2,6 +2,7 @@
 
 import { useForm } from 'react-hook-form'
 import { standardSchemaResolver } from '@hookform/resolvers/standard-schema'
+import { stegaClean } from '@sanity/client/stega'
 import { toast } from 'sonner'
 import type { Form as SanityForm } from '@/sanity.types'
 import { trackEvent } from '@/lib/gtm'
@@ -82,10 +83,12 @@ export function DynamicForm({ fields, formId, successMessage }: DynamicFormProps
         {fields.map((field) => {
           if (!field._key || !field.fieldType) return null
 
+          const fieldType = stegaClean(field.fieldType) ?? field.fieldType
           const label = field.label ?? field._key
           const required = field.required ?? false
 
-          if (field.fieldType === 'select') {
+          if (fieldType === 'select') {
+            const options = (field.options ?? []).map((opt) => stegaClean(opt) ?? opt)
             return (
               <FormField
                 key={field._key}
@@ -104,7 +107,7 @@ export function DynamicForm({ fields, formId, successMessage }: DynamicFormProps
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        {(field.options ?? []).map((option) => (
+                        {options.map((option) => (
                           <SelectItem key={option} value={option}>
                             {option}
                           </SelectItem>
@@ -118,7 +121,7 @@ export function DynamicForm({ fields, formId, successMessage }: DynamicFormProps
             )
           }
 
-          if (field.fieldType === 'textarea') {
+          if (fieldType === 'textarea') {
             return (
               <FormField
                 key={field._key}
@@ -147,11 +150,11 @@ export function DynamicForm({ fields, formId, successMessage }: DynamicFormProps
           }
 
           const inputType =
-            field.fieldType === 'number'
+            fieldType === 'number'
               ? 'number'
-              : field.fieldType === 'email'
+              : fieldType === 'email'
                 ? 'email'
-                : field.fieldType === 'tel'
+                : fieldType === 'tel'
                   ? 'tel'
                   : 'text'
 

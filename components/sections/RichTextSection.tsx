@@ -2,6 +2,7 @@ import { PortableText } from '@portabletext/react'
 import { portableTextComponents } from '@/components/shared/portableTextComponents'
 import { AnimatedSection } from '@/components/shared/AnimatedSection'
 import { getVariantProps } from '@/lib/color-variant'
+import { cleanAnchor } from '@/lib/sanity-utils'
 import type { SectionRichText } from '@/sanity.types'
 
 interface RichTextSectionProps {
@@ -21,7 +22,7 @@ const maxWidthClass: Record<string, string> = {
 
 export function RichTextSection({ data }: RichTextSectionProps) {
   const { anchor, body, maxWidth, colorVariant } = data
-  const id = anchor?.current ?? undefined
+  const id = cleanAnchor(anchor)
 
   if (!body?.length) return null
 

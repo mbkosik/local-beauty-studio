@@ -5,6 +5,7 @@ import { AnimatedSection } from '@/components/shared/AnimatedSection'
 import { CtaButton } from '@/components/shared/CtaButton'
 import { cn } from '@/lib/utils'
 import { getVariantProps, type ColorVariant } from '@/lib/color-variant'
+import { cleanAnchor } from '@/lib/sanity-utils'
 import type { SectionCta } from '@/sanity.types'
 
 interface CtaSectionProps {
@@ -50,7 +51,7 @@ const BTN_CONFIG: Record<
 
 export function CtaSection({ data }: CtaSectionProps) {
   const { anchor, heading, subheading, primaryCta, secondaryCta, colorVariant } = data
-  const id = anchor?.current ?? undefined
+  const id = cleanAnchor(anchor)
   const prefersReducedMotion = useReducedMotion()
 
   const cfg = BTN_CONFIG[(colorVariant || 'light') as ColorVariant] ?? BTN_CONFIG['light']

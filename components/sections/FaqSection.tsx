@@ -8,6 +8,7 @@ import {
 } from '@/components/ui/accordion'
 import { AnimatedSection } from '@/components/shared/AnimatedSection'
 import { getVariantProps } from '@/lib/color-variant'
+import { cleanAnchor } from '@/lib/sanity-utils'
 import type { SectionFaq } from '@/sanity.types'
 
 interface FaqSectionProps {
@@ -59,7 +60,7 @@ const faqPortableTextComponents: PortableTextComponents = {
 
 export function FaqSection({ data }: FaqSectionProps) {
   const { anchor, title, subtitle, items, colorVariant } = data
-  const id = anchor?.current ?? undefined
+  const id = cleanAnchor(anchor)
 
   if (!items?.length) return null
 

@@ -1,9 +1,11 @@
+import { stegaClean } from '@sanity/client/stega'
+
 // Average adult reading speed in words per minute (Nielsen Norman Group research)
 const WORDS_PER_MINUTE = 200
 
 export function estimateReadingTime(body: unknown[]): number {
   const text = (body as Array<{ _type: string; children?: Array<{ text?: string }> }>)
-    .filter((block) => block._type === 'block')
+    .filter((block) => stegaClean(block._type) === 'block')
     .flatMap((block) => (block.children ?? []).map((child) => child.text ?? ''))
     .join(' ')
 

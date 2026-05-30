@@ -1,5 +1,6 @@
 import { TeamCard } from '@/components/blocks/TeamCard'
 import { getVariantProps } from '@/lib/color-variant'
+import { cleanAnchor } from '@/lib/sanity-utils'
 import type { TeamSectionData } from '@/sanity/custom-types'
 
 interface TeamSectionProps {
@@ -8,7 +9,7 @@ interface TeamSectionProps {
 
 export function TeamSection({ data }: TeamSectionProps) {
   const { anchor, title, subtitle, members, colorVariant } = data
-  const id = anchor?.current ?? undefined
+  const id = cleanAnchor(anchor)
 
   if (!members || members.length === 0) return null
 
