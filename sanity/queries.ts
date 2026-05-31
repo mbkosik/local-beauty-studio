@@ -9,6 +9,7 @@ export const siteSettingsQuery = defineQuery(`
     tagline,
     logoLight ${logoProjection},
     logoDark ${logoProjection},
+    favicon { asset-> { _id, url } },
     email,
     phone,
     address,

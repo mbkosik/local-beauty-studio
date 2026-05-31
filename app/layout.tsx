@@ -8,7 +8,7 @@ import { client } from '@/sanity/client'
 import { siteSettingsQuery } from '@/sanity/queries'
 import { Toaster } from '@/components/ui/sonner'
 import { ScrollToTop } from '@/components/shared/ScrollToTop'
-import { buildOgImageUrl } from '@/lib/metadata'
+import { buildOgImageUrl, buildFaviconUrl } from '@/lib/metadata'
 
 const playfairDisplay = Playfair_Display({
   variable: '--font-heading',
@@ -30,6 +30,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const description = settings?.seo?.metaDescription ?? ''
 
   const ogImageUrl = buildOgImageUrl(settings?.seo?.ogImage)
+  const faviconUrl = buildFaviconUrl(settings?.favicon)
 
   return {
     title: {
@@ -38,6 +39,9 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     description,
     metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL!),
+    ...(faviconUrl && {
+      icons: { icon: faviconUrl },
+    }),
     openGraph: {
       type: 'website',
       locale: 'pl_PL',
