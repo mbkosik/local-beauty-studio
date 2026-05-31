@@ -762,6 +762,13 @@ export type SiteSettings = {
     alt?: string
     _type: 'image'
   }
+  favicon?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  }
   email?: string
   phone?: string
   address?: string
@@ -967,7 +974,7 @@ export type AllSanitySchemaTypes =
 
 // Source: sanity/queries.ts
 // Variable: siteSettingsQuery
-// Query: *[_type == "siteSettings"][0] {    businessName,    tagline,    logoLight { asset-> { _id, url, metadata { dimensions } } },    logoDark { asset-> { _id, url, metadata { dimensions } } },    email,    phone,    address,    googleMapsUrl,    social {      facebook,      instagram,      tiktok    },    "navLinks": navLinks[] {      label,      href,      openInNewTab    },    seo {      metaTitle,      metaDescription,      ogImage { ..., asset-> }    }  }
+// Query: *[_type == "siteSettings"][0] {    businessName,    tagline,    logoLight { asset-> { _id, url, metadata { dimensions } } },    logoDark { asset-> { _id, url, metadata { dimensions } } },    favicon { asset-> { _id, url } },    email,    phone,    address,    googleMapsUrl,    social {      facebook,      instagram,      tiktok    },    "navLinks": navLinks[] {      label,      href,      openInNewTab    },    seo {      metaTitle,      metaDescription,      ogImage { ..., asset-> }    }  }
 export type SiteSettingsQueryResult = {
   businessName: string | null
   tagline: string | null
@@ -987,6 +994,12 @@ export type SiteSettingsQueryResult = {
       metadata: {
         dimensions: SanityImageDimensions | null
       } | null
+    } | null
+  } | null
+  favicon: {
+    asset: {
+      _id: string
+      url: string | null
     } | null
   } | null
   email: string | null
@@ -2091,7 +2104,7 @@ export type PageQueryResult = {
 import '@sanity/client'
 declare module '@sanity/client' {
   interface SanityQueries {
-    '\n  *[_type == "siteSettings"][0] {\n    businessName,\n    tagline,\n    logoLight { asset-> { _id, url, metadata { dimensions } } },\n    logoDark { asset-> { _id, url, metadata { dimensions } } },\n    email,\n    phone,\n    address,\n    googleMapsUrl,\n    social {\n      facebook,\n      instagram,\n      tiktok\n    },\n    "navLinks": navLinks[] {\n      label,\n      href,\n      openInNewTab\n    },\n    seo {\n      metaTitle,\n      metaDescription,\n      ogImage { ..., asset-> }\n    }\n  }\n': SiteSettingsQueryResult
+    '\n  *[_type == "siteSettings"][0] {\n    businessName,\n    tagline,\n    logoLight { asset-> { _id, url, metadata { dimensions } } },\n    logoDark { asset-> { _id, url, metadata { dimensions } } },\n    favicon { asset-> { _id, url } },\n    email,\n    phone,\n    address,\n    googleMapsUrl,\n    social {\n      facebook,\n      instagram,\n      tiktok\n    },\n    "navLinks": navLinks[] {\n      label,\n      href,\n      openInNewTab\n    },\n    seo {\n      metaTitle,\n      metaDescription,\n      ogImage { ..., asset-> }\n    }\n  }\n': SiteSettingsQueryResult
     '\n  *[_type == "siteSettings"][0] {\n    businessName,\n    tagline,\n    logoLight { asset-> { _id, url, metadata { dimensions } } },\n    logoDark { asset-> { _id, url, metadata { dimensions } } },\n    email,\n    phone,\n    address,\n    googleMapsUrl,\n    social {\n      facebook,\n      instagram,\n      tiktok\n    },\n    openingHours[] { days, hours },\n    footerLinks[] { label, url }\n  }\n': FooterQueryResult
     '\n  *[_type == "service"] | order(_createdAt asc) {\n    _id,\n    title,\n    slug,\n    description,\n    icon,\n    image { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } }\n  }\n': AllServicesQueryResult
     '\n  *[_type == "testimonial"] | order(_createdAt asc) {\n    _id,\n    authorName,\n    position,\n    company,\n    content,\n    rating,\n    photo { alt, hotspot, crop, asset-> { _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },\n    publishedAt\n  }\n': AllTestimonialsQueryResult
