@@ -15,3 +15,17 @@ export function buildOgImageUrl(ogImage: unknown): string | null {
     return null
   }
 }
+
+export function buildFaviconUrl(favicon: unknown): string | null {
+  if (!favicon || typeof favicon !== 'object') return null
+  try {
+    return builder
+      .image(favicon as Parameters<typeof builder.image>[0])
+      .width(64)
+      .height(64)
+      .format('png')
+      .url()
+  } catch {
+    return null
+  }
+}

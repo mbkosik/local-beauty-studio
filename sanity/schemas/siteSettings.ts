@@ -50,6 +50,14 @@ export const siteSettings = defineType({
       ],
     }),
     defineField({
+      name: 'favicon',
+      title: 'Favicon',
+      type: 'image',
+      description:
+        'Ikona strony wyświetlana w zakładce przeglądarki. Zalecany format: PNG, min. 64×64 px, proporcje 1:1.',
+      options: { hotspot: false },
+    }),
+    defineField({
       name: 'email',
       title: 'Adres email',
       type: 'string',
