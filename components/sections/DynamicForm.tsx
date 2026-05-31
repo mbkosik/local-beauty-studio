@@ -59,6 +59,17 @@ export function DynamicForm({ fields, formId, successMessage }: DynamicFormProps
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       })
+
+      if (res.status === 429) {
+        const body = await res.json().catch(() => null)
+        toast.error(
+          typeof body?.error === 'string'
+            ? body.error
+            : 'Zbyt wiele prób. Spróbuj ponownie za kilka minut.'
+        )
+        return
+      }
+
       if (!res.ok) throw new Error()
       toast.success(successMessage)
       trackEvent('form_submit', { form_name: formId })

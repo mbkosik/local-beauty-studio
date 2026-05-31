@@ -1,17 +1,37 @@
+import { type NextRequest } from 'next/server'
 import { render } from '@react-email/components'
 import { Resend } from 'resend'
 
 import { DynamicConfirmationEmail } from '@/emails/DynamicConfirmationEmail'
 import { DynamicNotificationEmail } from '@/emails/DynamicNotificationEmail'
+import { checkRateLimit } from '@/lib/rate-limit'
 import { buildZodSchema } from '@/lib/validations/dynamic-form'
 import { client } from '@/sanity/client'
 import { Form } from '@/sanity.types'
 
 const MIN_FORM_FILL_MS = 3000
 
-export async function POST(request: Request, props: { params: Promise<{ formId: string }> }) {
+function extractIp(request: NextRequest): string {
+  return (
+    request.headers.get('cf-connecting-ip') ??
+    request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ??
+    request.headers.get('x-real-ip') ??
+    'unknown'
+  )
+}
+
+export async function POST(request: NextRequest, props: { params: Promise<{ formId: string }> }) {
   if (!process.env.RESEND_API_KEY || !process.env.CONTACT_FROM_EMAIL) {
     return Response.json({ error: 'Brak konfiguracji email' }, { status: 500 })
+  }
+
+  const ip = extractIp(request)
+  const { limited, retryAfterSeconds } = checkRateLimit(ip)
+  if (limited) {
+    return Response.json(
+      { error: 'Zbyt wiele prób. Spróbuj ponownie za kilka minut.' },
+      { status: 429, headers: { 'Retry-After': String(retryAfterSeconds) } }
+    )
   }
 
   const resend = new Resend(process.env.RESEND_API_KEY)
