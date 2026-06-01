@@ -14,9 +14,9 @@
     "prepare": "husky",
     "postinstall": "node scripts/copy-vendor-css.mjs",
     "typegen": "sanity schema extract && sanity typegen generate",
-    "import-posts": "npx tsx scripts/import-posts.ts",
-    "seed-demo": "npx tsx scripts/seed-demo.ts",
-    "reset-demo": "npx tsx scripts/reset-demo.ts"
+    "import-posts": "tsx scripts/import-posts.ts",
+    "seed-demo": "tsx scripts/seed-demo.ts",
+    "reset-demo": "tsx scripts/reset-demo.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -65,6 +65,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "dotenv": "^17.4.2",
+    "tsx": "^4.19.4",
     "eslint": "^9",
     "eslint-config-next": "16.2.6",
     "eslint-config-prettier": "^10.1.8",
