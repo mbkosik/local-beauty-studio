@@ -46,6 +46,8 @@ The site owner manages all page content through an embedded Sanity Studio (`/stu
 - **ISR + Sanity webhook** — on-demand revalidation via `revalidateTag`, triggered by a Sanity webhook on content publish. No full rebuild, no fixed revalidation interval.
 - **Embedded Sanity Studio at `/studio`** — one domain, one deploy, no separate CMS hosting.
 - **Dynamic icon loading with cache** — Lucide icons are loaded by kebab-case string from CMS using `lucide-react/dynamicIconImports` + `next/dynamic`, with a module-level cache to avoid reinstantiating components on every render.
+- **Sanity Presentation Tool (live preview)** — editors can preview unpublished drafts in real time inside Sanity Studio, with click-to-edit overlays on every content element. Draft mode is toggled via a secret-protected API route (`/api/draft/enable`); overlays are scoped to the Studio iframe and never leak onto the live site.
+- **Stega encoding compatibility** — string values from Sanity used in CSS classes, URL segments, or enum comparisons are sanitized with `stegaClean()` before use, so invisible stega metadata does not break class lookups or string comparisons during preview.
 
 ---
 
