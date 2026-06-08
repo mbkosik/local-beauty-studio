@@ -31,22 +31,21 @@ async function deleteDemoDocuments(): Promise<void> {
 
   const client = createClient({ projectId, dataset: 'demo', apiVersion, useCdn: false, token })
 
-  // Fetch all deletable document IDs:
-  //   - content documents + their drafts
-  //   - asset documents (sanity.imageAsset, sanity.fileAsset)
-  // Skip internal system config docs (_.preferences.*)
-  console.warn('🗑  Fetching all documents from demo...')
-  const ids = await client.fetch<string[]>(`*[!(_id in path("_.preferences.*"))][].  _id`)
+  // Fetch content document IDs (drafts included).
+  // Skip asset documents (image-*, file-*) — deleting them requires the
+  // "manage" permission which an Editor token does not have. Orphaned assets
+  // accumulate over time but stay well within the free-tier 10 GB storage limit.
+  // Skip internal system config docs (_.preferences.*).
+  console.warn('🗑  Fetching content documents from demo...')
+  const ids = await client.fetch<string[]>(
+    `*[!(_id in path("_.preferences.*")) && !(_id match "image-*") && !(_id match "file-*")][].  _id`
+  )
   console.warn(`   Found ${ids.length} documents to delete\n`)
 
   if (ids.length === 0) {
     console.warn('   Demo dataset is already empty\n')
     return
   }
-
-  // Delete content documents first (they reference assets), then assets
-  const contentIds = ids.filter((id) => !id.startsWith('image-') && !id.startsWith('file-'))
-  const assetIds = ids.filter((id) => id.startsWith('image-') || id.startsWith('file-'))
 
   let deleted = 0
   const total = ids.length
@@ -64,8 +63,7 @@ async function deleteDemoDocuments(): Promise<void> {
     }
   }
 
-  await deleteInBatches(contentIds)
-  await deleteInBatches(assetIds)
+  await deleteInBatches(ids)
 
   console.warn(`\n   Deleted ${deleted} documents\n`)
 }
